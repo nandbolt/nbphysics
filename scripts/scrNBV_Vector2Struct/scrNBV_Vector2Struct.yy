@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scrMat22Struct",
+  "name": "scrNBV_Vector2Struct",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {

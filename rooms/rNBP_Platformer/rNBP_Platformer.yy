@@ -1,7 +1,7 @@
 {
   "resourceType": "GMRoom",
   "resourceVersion": "1.0",
-  "name": "Room1",
+  "name": "rNBP_Platformer",
   "isDnd": false,
   "volume": 1.0,
   "parentRoom": null,
@@ -45,7 +45,7 @@
     "PhysicsWorldPixToMetres": 0.1,
   },
   "parent": {
-    "name": "Rooms",
-    "path": "folders/Rooms.yy",
+    "name": "Demos",
+    "path": "folders/Rooms/NB/Demos.yy",
   },
 }
