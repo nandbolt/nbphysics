@@ -1,20 +1,14 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "oNBP_TopDownPlayer",
-  "spriteId": {
-    "name": "sNBP_SquareOutline",
-    "path": "sprites/sNBP_SquareOutline/sNBP_SquareOutline.yy",
-  },
+  "name": "oNBP_RainWorld",
+  "spriteId": null,
   "solid": false,
   "visible": true,
   "managed": true,
   "spriteMaskId": null,
   "persistent": false,
-  "parentObjectId": {
-    "name": "oNBP_RigidBody",
-    "path": "objects/oNBP_RigidBody/oNBP_RigidBody.yy",
-  },
+  "parentObjectId": null,
   "physicsObject": false,
   "physicsSensor": false,
   "physicsShape": 1,
@@ -27,11 +21,14 @@
   "physicsStartAwake": true,
   "physicsKinematic": false,
   "physicsShapePoints": [],
-  "eventList": [],
+  "eventList": [
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":3,"collisionObjectId":null,},
+  ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "TopDown",
-    "path": "folders/Objects/NB/Demos/Physics/TopDown.yy",
+    "name": "Rain",
+    "path": "folders/Objects/NB/Demos/Physics/Rain.yy",
   },
 }

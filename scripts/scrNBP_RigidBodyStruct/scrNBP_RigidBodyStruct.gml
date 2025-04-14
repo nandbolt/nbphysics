@@ -7,6 +7,7 @@ function RigidBody(_body=other.id, _mass=1, _damping=0.995) constructor
 {
 	// Physics world
 	physicsWorld = undefined;
+	forceGens = [];
 	
 	// Body
 	body = _body;
@@ -142,6 +143,16 @@ function RigidBody(_body=other.id, _mass=1, _damping=0.995) constructor
 	///	@desc	Sets the body object of the rigid body.
 	static setBody = function(_body){ body = _body; }
 	
+	///	@func	getWidth();
+	///	@return	{real}	The width of the body.
+	///	@desc	Returns the width of the body.
+	static getWidth = function(){ return body.bbox_right - body.bbox_left; }
+	
+	///	@func	getHeight();
+	///	@return	{real}	The width of the body.
+	///	@desc	Returns the width of the body.
+	static getHeight = function(){ return body.bbox_bottom - body.bbox_top; }
+	
 	#endregion
 	
 	#region Properties
@@ -159,7 +170,7 @@ function RigidBody(_body=other.id, _mass=1, _damping=0.995) constructor
 	static cleanup = function()
 	{
 		// Remove self from a physics world
-		if (is_struct(physicsWorld)) physicsWorld.remove(self);
+		if (is_struct(physicsWorld)) physicsWorld.removeBody(self);
 		
 		// Vectors
 		delete force;
@@ -171,9 +182,9 @@ function RigidBody(_body=other.id, _mass=1, _damping=0.995) constructor
 	
 	#region Simulation
 	
-	///	@func	clearForce();
+	///	@func	clearForces();
 	///	@desc	Clears the forces acting on the body.
-	static clearForce = function(){ force.set(); }
+	static clearForces = function(){ force.set(); }
 	
 	///	@func	addForce(fx, fy);
 	///	@param	{real}	fx	The force x-coordinate to add.	
@@ -182,7 +193,7 @@ function RigidBody(_body=other.id, _mass=1, _damping=0.995) constructor
 	static addForce = function(_fx, _fy){ force.add(_fx, _fy); }
 	
 	///	@func	addForceVector(f);
-	///	@param	{Struct.Vector2}	fx	The force vector to add.	
+	///	@param	{Struct.Vector2}	f	The force vector to add.	
 	///	@desc	Adds the force to the net force.
 	static addForceVector = function(_f){ force.addVector(_f); }
 	
@@ -209,7 +220,7 @@ function RigidBody(_body=other.id, _mass=1, _damping=0.995) constructor
 		body.y += velocity.y;
 		
 		// Clear forces
-		clearForce();
+		clearForces();
 	}
 	
 	#endregion

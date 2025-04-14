@@ -1,7 +1,7 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "oNBP_TopDownPlayer",
+  "name": "oNBP_Raindrop",
   "spriteId": {
     "name": "sNBP_SquareOutline",
     "path": "sprites/sNBP_SquareOutline/sNBP_SquareOutline.yy",
@@ -27,11 +27,14 @@
   "physicsStartAwake": true,
   "physicsKinematic": false,
   "physicsShapePoints": [],
-  "eventList": [],
+  "eventList": [
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":3,"collisionObjectId":null,},
+  ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "TopDown",
-    "path": "folders/Objects/NB/Demos/Physics/TopDown.yy",
+    "name": "Rain",
+    "path": "folders/Objects/NB/Demos/Physics/Rain.yy",
   },
 }
