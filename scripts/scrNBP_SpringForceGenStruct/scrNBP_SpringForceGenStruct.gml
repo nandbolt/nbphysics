@@ -2,8 +2,8 @@
 ///	@paran	{real}	rb			The rigid body.
 ///	@paran	{real}	k			The spring constant.
 ///	@paran	{real}	restLength	The rest length of the spring.
-///	@desc	A force generator representing the spring force.
-function SpringForceGen(_rb, _k, _restLength) : ForceGen() constructor
+///	@desc	A force generator representing a spring.
+function SpringForceGen(_rb, _k=1, _restLength=0) : ForceGen() constructor
 {
 	// Spring
 	rb = _rb;

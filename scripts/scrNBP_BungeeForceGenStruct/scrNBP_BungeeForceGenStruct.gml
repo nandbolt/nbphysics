@@ -1,12 +1,12 @@
-/// @func	AnchoredSpringForceGen(anchor, k, restLength);
-///	@paran	{Struct.Vector2}	anchor		The anchor position.
+/// @func	BungeeForceGen(rb, k, restLength);
+///	@paran	{real}	rb			The rigid body.
 ///	@paran	{real}	k			The spring constant.
-///	@paran	{real}	restLength	The rest length of the spring.
-///	@desc	A force generator representing an anchored spring.
-function AnchoredSpringForceGen(_anchor, _k=1, _restLength=0) : ForceGen() constructor
+///	@paran	{real}	restLength	The rest length of the bungee cord.
+///	@desc	A force generator representing a bungee cord.
+function BungeeForceGen(_rb, _k=1, _restLength=128) : ForceGen() constructor
 {
 	// Spring
-	anchor = _anchor;
+	rb = _rb;
 	k = _k;
 	restLength = _restLength;
 	
@@ -17,10 +17,13 @@ function AnchoredSpringForceGen(_anchor, _k=1, _restLength=0) : ForceGen() const
 	static updateForce = function(_rb, _dt)
 	{
 		// Calculate force direction
-		var _force = new Vector2(anchor.x - _rb.x, anchor.y - _rb.y);
+		var _force = new Vector2(rb.x - _rb.x, rb.y - _rb.y);
+		
+		// Return if cord is compressed
+		var _len = _force.magnitude();
+		if (_len <= restLength) return;
 		
 		// Calculate magnitude
-		var _len = _force.magnitude();
 		var _dir = sign(_len - restLength);
 		_len = abs(_len - restLength);
 		_len *= k;

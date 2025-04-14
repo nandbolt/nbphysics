@@ -20,3 +20,7 @@ with (oNBP_BoxTD)
 	image_yscale = other.image_yscale;
 	nbpAddForceGen(self.id, _fgSpring);
 }
+
+// Set bungee
+fgBungee = new AnchoredBungeeForceGen(new Vector2(x, y), 1, 256);
+nbpAddForceGen(self.id, fgBungee);

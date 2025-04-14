@@ -4,6 +4,7 @@
   "name": "nbphysics",
   "resources": [
     {"id":{"name":"scrNBV_Mat22Struct","path":"scripts/scrNBV_Mat22Struct/scrNBV_Mat22Struct.yy",},"order":2,},
+    {"id":{"name":"scrNBP_BungeeForceGenStruct","path":"scripts/scrNBP_BungeeForceGenStruct/scrNBP_BungeeForceGenStruct.yy",},"order":4,},
     {"id":{"name":"scrNBP_SpringForceGenStruct","path":"scripts/scrNBP_SpringForceGenStruct/scrNBP_SpringForceGenStruct.yy",},"order":2,},
     {"id":{"name":"sNBP_Cloud","path":"sprites/sNBP_Cloud/sNBP_Cloud.yy",},"order":1,},
     {"id":{"name":"oNBP_RainWorld","path":"objects/oNBP_RainWorld/oNBP_RainWorld.yy",},"order":0,},
@@ -15,6 +16,7 @@
     {"id":{"name":"scrNBV_Vector2Struct","path":"scripts/scrNBV_Vector2Struct/scrNBV_Vector2Struct.yy",},"order":3,},
     {"id":{"name":"sNBP_SquareOutline","path":"sprites/sNBP_SquareOutline/sNBP_SquareOutline.yy",},"order":0,},
     {"id":{"name":"scrNBP_AnchoredSpringForceGenStruct","path":"scripts/scrNBP_AnchoredSpringForceGenStruct/scrNBP_AnchoredSpringForceGenStruct.yy",},"order":3,},
+    {"id":{"name":"scrNBP_AnchoredBungeeForceGenStruct","path":"scripts/scrNBP_AnchoredBungeeForceGenStruct/scrNBP_AnchoredBungeeForceGenStruct.yy",},"order":5,},
     {"id":{"name":"oNBP_BoxTD","path":"objects/oNBP_BoxTD/oNBP_BoxTD.yy",},"order":2,},
     {"id":{"name":"oNBP_Cloud","path":"objects/oNBP_Cloud/oNBP_Cloud.yy",},"order":2,},
     {"id":{"name":"sNBP_RainDrop","path":"sprites/sNBP_RainDrop/sNBP_RainDrop.yy",},"order":0,},
