@@ -1,4 +1,7 @@
 /// @func	WindForceGen(fx, fy);
+///	@paran	{real}	fx	The wind x-strength.
+///	@paran	{real}	fy	The wind y-strength.
+///	@desc	A force generator representing the force of wind.
 function WindForceGen(_fx=1, _fy=0) : ForceGen() constructor
 {
 	// Gravity vector
@@ -12,9 +15,6 @@ function WindForceGen(_fx=1, _fy=0) : ForceGen() constructor
 	///	@desc	Applies the force to the body. Should be overwritten.
 	static updateForce = function(_rb, _dt)
 	{
-		// Return if infinite mass
-		if (!nbpHasFiniteMass(_rb)) return;
-		
 		// Calculate wind drag coefficients
 		var _w = nbpGetWidth(_rb), _h = nbpGetHeight(_rb);
 		var _wc = calibrationFactor / _w, _hc = calibrationFactor / _h;
