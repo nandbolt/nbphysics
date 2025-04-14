@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "oNBP_Raindrop",
   "spriteId": {
-    "name": "sNBP_SquareOutline",
-    "path": "sprites/sNBP_SquareOutline/sNBP_SquareOutline.yy",
+    "name": "sNBP_RainDrop",
+    "path": "sprites/sNBP_RainDrop/sNBP_RainDrop.yy",
   },
   "solid": false,
   "visible": true,

@@ -1,10 +1,10 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "oNBP_TopDownPlayer",
+  "name": "oNBP_Cloud",
   "spriteId": {
-    "name": "sNBP_SquareOutline",
-    "path": "sprites/sNBP_SquareOutline/sNBP_SquareOutline.yy",
+    "name": "sNBP_Cloud",
+    "path": "sprites/sNBP_Cloud/sNBP_Cloud.yy",
   },
   "solid": false,
   "visible": true,
@@ -27,11 +27,13 @@
   "physicsStartAwake": true,
   "physicsKinematic": false,
   "physicsShapePoints": [],
-  "eventList": [],
+  "eventList": [
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,},
+  ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "TopDown",
-    "path": "folders/Objects/NB/Demos/Physics/TopDown.yy",
+    "name": "Rain",
+    "path": "folders/Objects/NB/Demos/Physics/Rain.yy",
   },
 }

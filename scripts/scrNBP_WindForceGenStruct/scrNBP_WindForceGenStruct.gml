@@ -4,6 +4,7 @@ function WindForceGen(_fx=1, _fy=0) : ForceGen() constructor
 	// Gravity vector
 	windForce = new Vector2(_fx, _fy);
 	windStrength = windForce.magnitude();
+	calibrationFactor = 4;
 	
 	///	@func	updateForce(rigidBody, dt);
 	///	@param	{Struct.RigidBody}	rigidBody	The rigid body the force is being applied to.
@@ -14,9 +15,12 @@ function WindForceGen(_fx=1, _fy=0) : ForceGen() constructor
 		// Return if infinite mass
 		if (!nbpHasFiniteMass(_rb)) return;
 		
+		// Calculate wind drag coefficients
+		var _w = nbpGetWidth(_rb), _h = nbpGetHeight(_rb);
+		var _wc = calibrationFactor / _w, _hc = calibrationFactor / _h;
+		
 		// Apply wind
-		nbpAddForce(_rb, windForce.x * nbpGetHeight(_rb),
-			windForce.y * nbpGetWidth(_rb));
+		nbpAddForce(_rb, windForce.x * _h * _wc, windForce.y * _w * _hc);
 	}
 	
 	///	@func	setWindDir(dx, dy);

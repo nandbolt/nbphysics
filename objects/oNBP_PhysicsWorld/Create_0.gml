@@ -7,6 +7,7 @@ but this one showcases what should be present to simulate it.
 
 // Physics
 deltaTime = 1 / game_get_speed(gamespeed_fps);
+simulationSpeed = 1;
 
 // Bodies
 rbObject = oNBP_RigidBody;
