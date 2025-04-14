@@ -8,15 +8,8 @@ damping = 0.25;
 moveInput = new Vector2();
 moveStrength = 20;
 
-// Create 4 boxes
-var _r = 128;
-var _leftBox = instance_create_layer(x - _r, y, "Instances", oNBP_BoxTD);
-var _rightBox = instance_create_layer(x + _r, y, "Instances", oNBP_BoxTD);
-var _bottomBox = instance_create_layer(x, y - _r, "Instances", oNBP_BoxTD);
-var _topBox = instance_create_layer(x, y + _r, "Instances", oNBP_BoxTD);
-
 // Create spring force generator
-var _fgSpring = new SpringForceGen(self.id, 1, _r);
+var _fgSpring = new SpringForceGen(self.id, 1, 128);
 
 // Set box sizes
 with (oNBP_BoxTD)
