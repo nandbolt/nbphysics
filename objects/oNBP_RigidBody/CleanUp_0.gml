@@ -1,6 +1,6 @@
-// Rigid body
-if (is_struct(rb))
-{
-	rb.cleanup();
-	delete rb;
-}
+// Vectors
+delete grav;
+delete prevForce;
+delete force;
+delete acceleration;
+delete velocity;

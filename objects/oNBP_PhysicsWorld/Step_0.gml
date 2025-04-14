@@ -12,10 +12,10 @@ Runs all of the physics, applying all of the accumulated forces, then resolving 
 This is run in Step so you can add forces in Begin Step and have things follow physics
 bodies in End Step.
 */
-physicsWorld.runPhysics(_dt);
+nbpRunPhysics(self.id, _dt);
 
 /*
 Clears all of the forces for the next frame. It's called after the physics simulation to allow
 forces to be added from generally anywhere rather than within a certain window.
 */
-physicsWorld.startFrame();
+nbpInitNextPhysicsFrame(self.id);

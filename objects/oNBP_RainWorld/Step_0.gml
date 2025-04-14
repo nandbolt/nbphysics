@@ -5,14 +5,12 @@ fgWind.windForce.x = (mouse_x - room_width * 0.5) / room_width * 0.5 * 50;
 repeat (8)
 {
 	var _x = random(room_width), _y = random_range(-64, -4);
-	var _raindrop = instance_create_layer(_x, _y, "Instances", oNBP_Raindrop);
-	with (pwRain)
+	with (instance_create_layer(_x, _y, "Instances", oNBP_Raindrop))
 	{
-		// Add to physics world
-		physicsWorld.addBody(_raindrop.rb);
-	
-		// Register forces
-		physicsWorld.forceRegisty.addReg(_raindrop.rb, other.fgGravity);
-		physicsWorld.forceRegisty.addReg(_raindrop.rb, other.fgWind);
+		// Gravity
+		grav.y = 100;
+		
+		// Wind
+		nbpAddForceGen(self.id, other.fgWind);
 	}
 }

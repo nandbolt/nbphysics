@@ -12,11 +12,11 @@ function WindForceGen(_fx=1, _fy=0) : ForceGen() constructor
 	static updateForce = function(_rb, _dt)
 	{
 		// Return if infinite mass
-		if (!is_struct(_rb) || !_rb.hasFiniteMass()) return;
+		if (!nbpHasFiniteMass(_rb)) return;
 		
 		// Apply wind
-		var _windXForce = windForce.x * _rb.getHeight(), _windYForce = windForce.y * _rb.getWidth();
-		_rb.addForce(_windXForce, _windYForce);
+		nbpAddForce(_rb, windForce.x * nbpGetHeight(_rb),
+			windForce.y * nbpGetWidth(_rb));
 	}
 	
 	///	@func	setWindDir(dx, dy);
@@ -26,5 +26,14 @@ function WindForceGen(_fx=1, _fy=0) : ForceGen() constructor
 	static setWindDir = function(_dx, _dy)
 	{
 		windForce.setScaled(_dx, _dy, windStrength);
+	}
+	
+	///	@func	setWindStrength(windStrength);
+	///	@param	{real}	windStrength	The wind's strength.
+	///	@desc	Set the wind strength, keeping the same direction.
+	static setWindStrength = function(_windStrength)
+	{
+		windStrength = _windStrength;
+		windForce.setScaled(windForce.x, windForce.y, windStrength);
 	}
 }
