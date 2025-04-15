@@ -12,6 +12,6 @@ nbpAddForceGen(rightBox, fgRightSpring);
 fgTopSpring = new AnchoredSpringForceGen(new Vector2(_px, _py-128));
 topBox = instance_create_layer(_px, _py-128, "Instances", oNBP_BoxTD);
 nbpAddForceGen(topBox, fgTopSpring);
-fgBottomSpring = new AnchoredSpringForceGen(new Vector2(_px, _py+128));
+fgBottomSpring = new FakeSpringForceGen(new Vector2(_px, _py+128));
 bottomBox = instance_create_layer(_px, _py+128, "Instances", oNBP_BoxTD);
 nbpAddForceGen(bottomBox, fgBottomSpring);

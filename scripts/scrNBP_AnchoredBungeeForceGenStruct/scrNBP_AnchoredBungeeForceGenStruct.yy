@@ -5,7 +5,7 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "ForceGens",
-    "path": "folders/Scripts/NB/Physics/ForceGens.yy",
+    "name": "Springs",
+    "path": "folders/Scripts/NB/Physics/ForceGens/Springs.yy",
   },
 }

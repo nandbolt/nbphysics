@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scrNBP_BuoyancyForceGenStruct",
+  "name": "scrNBP_FakeSpringForceGenStruct",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
