@@ -69,7 +69,7 @@ with (rbBall)
 }
 `
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Step 2: Define the 'force gens'.
 
 A body at rest will stay at rest! Create force generators and add them to the
@@ -78,10 +78,10 @@ corresponding rigid bodies. Force generators can be reused between rigid bodies.
 `
 /// @desc	Create (in some sort of actor/entity object)
 fgWind = new WindForceGen();
-nbpAddForceGen(rbBall, fgWind)
+nbpAddForceGen(rbBall, fgWind);
 `
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Step 3: Remove the 'rigid body'.
 
 Hate to see you go! To remove a rigid body from a simulation, you can simply destroy
