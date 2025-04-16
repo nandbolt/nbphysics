@@ -112,6 +112,39 @@ function nbpApplyForceGens(_rb, _dt)
 	}
 }
 
+///	@func	nbpAddContactGen(rb, cg);
+///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Struct.ContactGen}	cg	The contact gen.
+///	@desc	Adds a contact generator to the rigid body.
+function nbpAddContactGen(_rb, _cg)
+{
+	array_push(_rb.contactGens, _cg);
+}
+
+///	@func	nbpRemoveContactGen(rb, cg);
+///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Struct.ContactGen}	cg	The contact gen.
+///	@desc	Removes a contact generator from the rigid body.
+function nbpRemoveContactGen(_rb, _cg)
+{
+	// Go through contact gens
+	for (var _i = 0; _i < array_length(_rb.contactGens); _i++)
+	{
+		// If found contact gen
+		if (_rb.contactGens[_i] == _cg)
+		{
+			// Remove contact gen and exit loop
+			array_delete(_rb.contactGens, _i, 1);
+			break;
+		}
+	}
+}
+
+///	@func	nbpClearContactGens(rb);
+///	@param	{Instance.Id}	rb	The rigid body.
+///	@desc	Clears all contact generators from the rigid body.
+function nbpClearContactGens(_rb){ _rb.contactGens = []; }
+
 ///	@func	nbpIntegrate(rb, dt);
 ///	@param	{Instance.Id}	rb	The rigid body.
 ///	@param	{real}	dt	The change in time of the simulation.
@@ -194,7 +227,48 @@ function nbpRunPhysics(_pw, _dt)
 		nbpIntegrate(self.id, _dt);
 	}
 		
+	// Generate contacts
+	var _usedContacts = nbpGenerateContacts(_pw);
+	
 	// Process contacts
+	if (_usedContacts > 0)
+	{
+		with (_pw)
+		{
+			if (calculateIterations) contactResolver.setIterations(_usedContacts * 2);
+			contactResolver.resolveContacts(contacts, _usedContacts, _dt);
+		}
+	}
+}
+
+///	@func	nbpGenerateContacts(pw);
+///	@param	{Id.Instance}	pw	The physics world.
+///	@return	{real}	The number of contacts.
+///	@desc	Calls all contact generators and reports their contacts, returning the number of contacts.
+function nbpGenerateContacts(_pw)
+{
+	// Init contact cursor
+	var _limit = _pw.maxContacts;
+	_pw.nextContactIdx = 0;
+	
+	// Loop through bodies
+	with (_pw.rbObject)
+	{
+		// Loop through registered contact generators
+		for (var _i = 0; _i < array_length(contactGens); _i++)
+		{
+			// Check for contacts
+			var _used = contactGens[_i].addContact(self.id, _pw, _limit);
+			_limit -= _used;
+			_pw.nextContactIdx += _used;
+			
+			// Return if limit reached (meaning we'll have to ignore some contacts this step)
+			if (_limit <= 0) return _pw.maxContacts;
+		}
+	}
+	
+	// Return contacts used
+	return _pw.maxContacts - _limit;
 }
 	
 #endregion

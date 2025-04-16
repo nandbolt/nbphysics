@@ -1,5 +1,6 @@
 // Body
 inverseMass = 1;
+shape = NBPShape.RECT_ROTATED;
 	
 // Movement
 velocity = new Vector2();
@@ -13,5 +14,6 @@ grav = new Vector2();
 // Damping
 damping = 0.995;
 
-// Force gens
+// Physics generators
 forceGens = [];
+contactGens = [];

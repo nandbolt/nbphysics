@@ -11,3 +11,14 @@ simulationSpeed = 1;
 
 // Bodies
 rbObject = oNBP_RigidBody;
+
+// Contacts
+maxContacts = 32;
+calculateIterations = false;
+contactResolver = new ContactResolver(64);
+contacts = array_create(maxContacts, undefined);
+for (var _i = 0; _i < maxContacts; _i++)
+{
+	contacts[_i] = new Contact();
+}
+nextContactIdx = 0;

@@ -15,3 +15,6 @@ nbpAddForceGen(topBox, fgTopSpring);
 fgBottomSpring = new FakeSpringForceGen(new Vector2(_px, _py+128));
 bottomBox = instance_create_layer(_px, _py+128, "Instances", oNBP_BoxTD);
 nbpAddForceGen(bottomBox, fgBottomSpring);
+
+// Show debugger
+show_debug_overlay(true);

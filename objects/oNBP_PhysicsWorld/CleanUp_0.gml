@@ -1,1 +1,2 @@
-// Cleanup
+// Contact resolvers
+delete contactResolver;

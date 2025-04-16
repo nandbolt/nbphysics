@@ -3,7 +3,7 @@
 ///	@param	{Id.Instance}	rb2	The second rigid body.
 ///	@desc	Holds contact data between two rigid bodies. Resolves through the removal of
 ///			interpenetration and then applying sufficient impulse to keep apart.
-function Contact(_rb1, _rb2=undefined)
+function Contact(_rb1=undefined, _rb2=undefined) constructor
 {
 	rb1 = _rb1;					// The first body involved. Undefined == infinite mass/environment.
 	rb2 = _rb2;					// The second body involved.
@@ -11,11 +11,22 @@ function Contact(_rb1, _rb2=undefined)
 	normal = new Vector2();		// The contact normal from the perspective of the first body.
 	penetration = 0;			// How much the bodies are intersecting.
 	
+	///	@func	cleanup();
+	///	@desc	Cleans up the contact data.
+	static cleanup = function()
+	{
+		// Vectors
+		delete normal;
+	}
+	
 	///	@func	resolve(dt);
 	///	@param	{real}	dt	The change in time of the simulation.
 	///	@desc	Resolves the contact, both for separating velocity and interpenetration.
 	static resolve = function(_dt)
 	{
+		// Return if first rigid body is undefined
+		if (!instance_exists(rb1)) return;
+		
 		// Resolve
 		resolveVelocity(_dt);
 		resolveInterpenetration(_dt);
@@ -28,7 +39,7 @@ function Contact(_rb1, _rb2=undefined)
 	static calculateSeparatingVelocity = function()
 	{
 		// Get first body's velocity
-		var _relativeVel = new Vector2(rb1.velocity.x, rb2.velocity.y);
+		var _relativeVel = new Vector2(rb1.velocity.x, rb1.velocity.y);
 		
 		// Subtract second body's velocity if it exists
 		if (instance_exists(rb2)) _relativeVel.add(-rb2.velocity.x, -rb2.velocity.y);
@@ -55,7 +66,7 @@ function Contact(_rb1, _rb2=undefined)
 		var _rb2Exists = instance_exists(rb2);
 		
 		// Check velocity buildup due to acceleration
-		var _accelCausedVel = new Vector2(rb1.acceleration.x, rb2.acceleration.y);
+		var _accelCausedVel = new Vector2(rb1.acceleration.x, rb1.acceleration.y);
 		if (_rb2Exists) _accelCausedVel.add(-rb2.acceleration.x, -rb2.acceleration.y);
 		var _accelCausedSepVel = _accelCausedVel.dotProduct(normal.x * _dt, normal.y * _dt);
 		
@@ -121,8 +132,24 @@ function Contact(_rb1, _rb2=undefined)
 		_movePerIMass.scale(penetration / _totalIMass);
 		
 		// Apply penetration resolution for first body
-		rb1.set(rb1.x + _movePerIMass.x * rb1.inverseMass, rb1.y + _movePerIMass.y * rb1.inverseMass);
-		if (_rb2Moveable) rb2.set(rb2.x - _movePerIMass.x * rb1.inverseMass, rb1.y - _movePerIMass.y * rb1.inverseMass);
+		rb1.x += _movePerIMass.x * rb1.inverseMass;
+		rb1.y += _movePerIMass.y * rb1.inverseMass;
+		if (_rb2Moveable)
+		{
+			rb2.x -= _movePerIMass.x * rb2.inverseMass;
+			rb2.y -= _movePerIMass.y * rb2.inverseMass;
+		}
+	}
+	
+	///	@func	clear();
+	///	@desc	Clears the data in the contact for reuse.
+	static clear = function()
+	{
+		rb1 = undefined;
+		rb2 = undefined;
+		restitution = 1;
+		normal.set();
+		penetration = 0;
 	}
 }
 
@@ -137,7 +164,7 @@ function ContactResolver(_iterations=1) constructor
 	///	@func	setIterations(iterations);
 	///	@param	{real}	iterations	The number of iterations that can be used.
 	///	@desc	Sets the iterations the resolver can use.
-	static setIterations(_iterations){ iterations = _iterations; }
+	static setIterations = function(_iterations){ iterations = _iterations; }
 	
 	///	@func	getIterationsUsed();
 	///	@return	{real}	The number of iterations used.
@@ -170,8 +197,10 @@ function ContactResolver(_iterations=1) constructor
 					_max = _sepVel;
 					_maxIdx = _i;
 				}
-				
 			}
+			
+			// Break if found nothing
+			if (_maxIdx == _contactCount) break;
 			
 			// Resolve this contact
 			_contacts[_maxIdx].resolve(_dt);
@@ -180,4 +209,16 @@ function ContactResolver(_iterations=1) constructor
 			iterationsUsed++;
 		}
 	}
+}
+
+///	@func	ContactGen();
+///	@desc	Adds contacts applied to registered bodies. Only inherited contact generators will be instanced.
+function ContactGen() constructor
+{
+	///	@func	addContact(rb, pw, limit);
+	///	@param	{Id.Instance}	rb	The rigid body.
+	///	@param	{Id.Instance}	pw	The physics world.
+	///	@param	{real}	limit		The number of contacts that can be written to.
+	///	@desc	Fills the contact structure with generated contacts.
+	static addContact = function(_rb, _pw, _limit){ return 0; }
 }
