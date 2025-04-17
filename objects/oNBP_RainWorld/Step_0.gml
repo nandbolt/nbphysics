@@ -1,7 +1,3 @@
-// Set simulation speed
-if (mouse_check_button(mb_left)) oNBP_PhysicsWorld.simulationSpeed = 0.25;
-else oNBP_PhysicsWorld.simulationSpeed = 1;
-
 // Update wind direction
 fgWind.windForce.x = (mouse_x - room_width * 0.5) / room_width * 0.5 * 50;
 
@@ -16,5 +12,11 @@ repeat (8 * oNBP_PhysicsWorld.simulationSpeed)
 		
 		// Wind
 		nbpAddForceGen(self.id, other.fgWind);
+		
+		// Hide outlines
+		outlines = false;
 	}
 }
+
+// Inherit the parent event
+event_inherited();

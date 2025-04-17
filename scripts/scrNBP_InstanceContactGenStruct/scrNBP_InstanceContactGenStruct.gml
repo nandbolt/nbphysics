@@ -34,20 +34,66 @@ function InstContactGen() : ContactGen() constructor
 			// Get and clear contact
 			var _contact = _pw.contacts[_contactIdx];
 			
-			// Check circle-circle collision
-			if (_rb.shape == NBPShape.CIRCLE && _inst.shape == NBPShape.CIRCLE &&
-				circleCircleCollision(_contact, _rb, _inst))
+			// Check collision
+			switch (_rb.shape)
 			{
-				// Increment contacts
-				_used++;
-				_contactIdx++;
-			}
-			else if (_rb.shape == NBPShape.RECT && _inst.shape == NBPShape.RECT &&
-				rectRectCollision(_contact, _rb, _inst))
-			{
-				// Increment contacts
-				_used++;
-				_contactIdx++;
+				case NBPShape.RECT:
+					switch (_inst.shape)
+					{
+						case NBPShape.RECT:
+							// RECT x RECT
+							if (rectRectCollision(_contact, _rb, _inst))
+							{
+								_used++;
+								_contactIdx++;
+							}
+							break;
+						case NBPShape.CIRCLE:
+							// RECT x CIRCLE
+							if (circleRectCollision(_contact, _inst, _rb))
+							{
+								_used++;
+								_contactIdx++;
+							}
+							break;
+						case NBPShape.RECT_ROTATED:
+							break;
+					}
+					break;
+				case NBPShape.CIRCLE:
+					switch (_inst.shape)
+					{
+						case NBPShape.RECT:
+							// CIRCLE x RECT
+							if (circleRectCollision(_contact, _rb, _inst))
+							{
+								_used++;
+								_contactIdx++;
+							}
+							break;
+						case NBPShape.CIRCLE:
+							// CIRCLE x CIRCLE
+							if (circleCircleCollision(_contact, _rb, _inst))
+							{
+								_used++;
+								_contactIdx++;
+							}
+							break;
+						case NBPShape.RECT_ROTATED:
+							break;
+					}
+					break;
+				case NBPShape.RECT_ROTATED:
+					switch (_inst.shape)
+					{
+						case NBPShape.RECT:
+							break;
+						case NBPShape.CIRCLE:
+							break;
+						case NBPShape.RECT_ROTATED:
+							break;
+					}
+					break;
 			}
 		}
 		
@@ -55,28 +101,28 @@ function InstContactGen() : ContactGen() constructor
 		return _used;
 	}
 	
-	/// @func	circleCircleCollision(contact, c1, c2);
+	/// @func	circleCircleCollision(contact, circ1, circ2);
 	///	@param	{Struct.Contact}	contact		The contact data.
-	///	@param	{Id.Instance}		c1			The first circle.
-	///	@param	{Id.Instance}		c2			The second circle.
-	///	@desc	Returns whether or not there was a collision between two circles.
-	static circleCircleCollision = function(_contact, _c1, _c2)
+	///	@param	{Id.Instance}		circ1		The first circle.
+	///	@param	{Id.Instance}		circ2		The second circle.
+	///	@desc	Returns whether or not there was a collision between two circles (and fills out the contact data).
+	static circleCircleCollision = function(_contact, _circ1, _circ2)
 	{
 		// Get distances
-		var _dist = point_distance(_c1.x, _c1.y, _c2.x, _c2.y);  
-		var _r1 = (_c1.bbox_right - _c1.bbox_left) * 0.5;
-		var _r2 = (_c2.bbox_right - _c2.bbox_left) * 0.5;
+		var _dist = point_distance(_circ1.x, _circ1.y, _circ2.x, _circ2.y);  
+		var _r1 = nbpGetRadius(_circ1);
+		var _r2 = nbpGetRadius(_circ2);
 		if (_dist < (_r1 + _r2))
 		{
 			// Clear contact
 			_contact.clear();
 		
 			// Set rigid bodies
-			_contact.rb1 = _c1;
-			_contact.rb2 = _c2;
+			_contact.rb1 = _circ1;
+			_contact.rb2 = _circ2;
 			
 			// Normal
-			_contact.normal.set(_c1.x - _c2.x, _c1.y - _c2.y);
+			_contact.normal.set(_circ1.x - _circ2.x, _circ1.y - _circ2.y);
 			_contact.normal.normalize();
 		
 			// Penetration
@@ -86,26 +132,26 @@ function InstContactGen() : ContactGen() constructor
 		return false;
 	}
 	
-	/// @func	rectRectCollision(contact, r1, r2);
+	/// @func	rectRectCollision(contact, rect1, rect2);
 	///	@param	{Struct.Contact}	contact		The contact data.
-	///	@param	{Id.Instance}		r1			The first rectangle.
-	///	@param	{Id.Instance}		r2			The second rectangle.
-	///	@desc	Returns whether or not there was a collision between two rectangles (non-rotating).
-	static rectRectCollision = function(_contact, _r1, _r2)
+	///	@param	{Id.Instance}		rect1		The first rectangle.
+	///	@param	{Id.Instance}		rect2		The second rectangle.
+	///	@desc	Returns whether or not there was a collision between two non-rotating rectangles (and fills out the contact data).
+	static rectRectCollision = function(_contact, _rect1, _rect2)
 	{
 		// Clear contact
 		_contact.clear();
 		
 		// Set rigid bodies
-		_contact.rb1 = _r1;
-		_contact.rb2 = _r2;
+		_contact.rb1 = _rect1;
+		_contact.rb2 = _rect2;
 		
 		// Get penetration depth
 		var _dx = 0, _dy = 0;
-		if (_r1.x < _r2.x) _dx = _r2.bbox_left - _r1.bbox_right;
-		else _dx = _r2.bbox_right - _r1.bbox_left;
-		if (_r1.y < _r2.y) _dy = _r2.bbox_top - _r1.bbox_bottom;
-		else _dy = _r2.bbox_bottom - _r1.bbox_top;
+		if (_rect1.x < _rect2.x) _dx = _rect2.bbox_left - _rect1.bbox_right;
+		else _dx = _rect2.bbox_right - _rect1.bbox_left;
+		if (_rect1.y < _rect2.y) _dy = _rect2.bbox_top - _rect1.bbox_bottom;
+		else _dy = _rect2.bbox_bottom - _rect1.bbox_top;
 		if (abs(_dx) > abs(_dy)) _dx = 0;
 		else _dy = 0;
 		
@@ -118,5 +164,87 @@ function InstContactGen() : ContactGen() constructor
 		// Normalize normal
 		_contact.normal.normalize();
 		return true;
+	}
+	
+	/// @func	circleRectCollision(contact, circ, rect);
+	///	@param	{Struct.Contact}	contact		The contact data.
+	///	@param	{Id.Instance}		circ		The circle.
+	///	@param	{Id.Instance}		rect		The rectangle.
+	///	@desc	Returns whether or not there was a collision between a circle and rectangle (and fills out the contact data).
+	static circleRectCollision = function(_contact, _circ, _rect)
+	{
+		// Get distances
+		var _r = nbpGetRadius(_circ);
+		var _hw = (_rect.bbox_right - _rect.bbox_left) * 0.5, _hh = (_rect.bbox_bottom - _rect.bbox_top) * 0.5;
+		var _cdx = abs(_circ.x - _rect.x), _cdy = abs(_circ.y - _rect.y);
+		
+		// Rectangle check
+		if (_cdx > (_hw + _r)) return false;
+		if (_cdy > (_hh + _r)) return false;
+		
+		// If vertical side hit
+		if (_cdx <= _hw)
+		{
+			// Clear contact
+			_contact.clear();
+		
+			// Set rigid bodies
+			_contact.rb1 = _rect;
+			_contact.rb2 = _circ;
+			
+			// Set collision normal direction
+			var _dy = _rect.y - _circ.y;
+			_contact.normal.set(0, _dy);
+			_contact.normal.normalize();
+			
+			// Calculate penetration
+			_contact.penetration = (_hh + _r) - abs(_dy);
+			return true;
+		}
+		
+		// If horizontal side hit
+		if (_cdy <= _hh)
+		{
+			// HORIZONTAL SIDE HIT
+			
+			// Clear contact
+			_contact.clear();
+		
+			// Set rigid bodies
+			_contact.rb1 = _rect;
+			_contact.rb2 = _circ;
+			
+			// Set collision normal direction
+			var _dx = _rect.x - _circ.x;
+			_contact.normal.set(_dx, 0);
+			_contact.normal.normalize();
+			
+			// Calculate penetration
+			_contact.penetration = (_hw + _r) - abs(_dx);
+			return true;
+		}
+		
+		// If corner hit
+		var _cornerDistSquared = sqr(_cdx - _hw) + sqr(_cdy - _hh);
+		if (_cornerDistSquared <= (_r * _r))
+		{
+			// Clear contact
+			_contact.clear();
+		
+			// Set rigid bodies
+			_contact.rb1 = _rect;
+			_contact.rb2 = _circ;
+			
+			// Set collision normal direction
+			var _dx = _rect.x - _circ.x, _dy = _rect.y - _circ.y;
+			_contact.normal.set(_dx, _dy);
+			_contact.normal.normalize();
+			
+			// Calculate penetration
+			var _rdx = clamp(abs(_dx), 0, _hw) * sign(_dx), _rdy = clamp(abs(_dy), 0, _hh) * sign(_dy);
+			_contact.penetration = _r - (sqrt(_dx * _dx + _dy * _dy) - sqrt(_rdx * _rdx + _rdy * _rdy));
+			return true;
+		}
+		return false;
 	}
 }

@@ -1,4 +1,6 @@
-// Title
-draw_set_halign(fa_right);
-draw_set_valign(fa_top);
-draw_text(room_width - 8, 24, "Rain World");
+// Inherit the parent event
+event_inherited();
+
+// Wind
+yCursor += ySpacing;
+draw_text(xCursor, yCursor, "wind force : mouse x");

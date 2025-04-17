@@ -1,5 +1,8 @@
-// Create physics world object
-instance_create_layer(0, 0, "Instances", oNBP_PhysicsWorld);
+// Inherit the parent event
+event_inherited();
+
+// Name
+name = "Springs";
 
 // Anchored spring
 var _px = 608, _py = 352;
@@ -22,6 +25,3 @@ with (oNBP_BoxTD)
 	image_xscale = 9;
 	image_yscale = 9;
 }
-
-// Show debugger
-show_debug_overlay(true);

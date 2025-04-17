@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "oNBP_Cloud",
   "spriteId": {
-    "name": "sNBP_Cloud",
-    "path": "sprites/sNBP_Cloud/sNBP_Cloud.yy",
+    "name": "sNBP_SquareOutline",
+    "path": "sprites/sNBP_SquareOutline/sNBP_SquareOutline.yy",
   },
   "solid": false,
   "visible": true,

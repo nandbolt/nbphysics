@@ -2,7 +2,7 @@
 event_inherited();
 
 // Name
-name = "Circle Collisions";
+name = "Circle Rectangle Collisions";
 
 // Contact generator
 cgInst = new InstContactGen();

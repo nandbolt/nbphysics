@@ -1,19 +1,16 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "oNBP_BoxSV",
-  "spriteId": {
-    "name": "sNBP_SquareOutline",
-    "path": "sprites/sNBP_SquareOutline/sNBP_SquareOutline.yy",
-  },
+  "name": "oNBP_CircleRectCollisionsWorld",
+  "spriteId": null,
   "solid": false,
   "visible": true,
   "managed": true,
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": {
-    "name": "oNBP_RigidBody",
-    "path": "objects/oNBP_RigidBody/oNBP_RigidBody.yy",
+    "name": "oNBP_World",
+    "path": "objects/oNBP_World/oNBP_World.yy",
   },
   "physicsObject": false,
   "physicsSensor": false,
@@ -28,12 +25,14 @@
   "physicsKinematic": false,
   "physicsShapePoints": [],
   "eventList": [
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":4,"eventType":7,"collisionObjectId":null,},
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":64,"eventType":8,"collisionObjectId":null,},
   ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Physics",
-    "path": "folders/Objects/NB/Demos/Physics.yy",
+    "name": "CircleRectCollisions",
+    "path": "folders/Objects/NB/Demos/Physics/CircleRectCollisions.yy",
   },
 }

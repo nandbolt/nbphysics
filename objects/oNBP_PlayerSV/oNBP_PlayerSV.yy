@@ -1,7 +1,7 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "oNBP_BoxSV",
+  "name": "oNBP_PlayerSV",
   "spriteId": {
     "name": "sNBP_SquareOutline",
     "path": "sprites/sNBP_SquareOutline/sNBP_SquareOutline.yy",
@@ -28,6 +28,7 @@
   "physicsKinematic": false,
   "physicsShapePoints": [],
   "eventList": [
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":3,"collisionObjectId":null,},
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,},
   ],
   "properties": [],

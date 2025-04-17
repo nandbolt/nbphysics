@@ -3,7 +3,7 @@
 #region Setters/Getters
 	
 ///	@func	nbpGetMass(rb);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@return	{real}	The body's mass.	
 ///	@desc	Returns the mass of the rigid body.
 function nbpGetMass(_rb)
@@ -13,7 +13,7 @@ function nbpGetMass(_rb)
 }
 	
 ///	@func	nbpSetMass(rb, mass);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@param	{real}	mass	The new mass.	
 ///	@desc	Sets the mass of the rigid body.
 function nbpSetMass(_rb, _mass)
@@ -23,16 +23,27 @@ function nbpSetMass(_rb, _mass)
 }
 
 ///	@func	nbpGetWidth(rb);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@return	{real}	The width of the body.
 ///	@desc	Returns the width of the body.
 function nbpGetWidth(_rb){ return _rb.bbox_right - _rb.bbox_left; }
 	
 ///	@func	nbpGetHeight(rb);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@return	{real}	The width of the body.
 ///	@desc	Returns the width of the body.
 function nbpGetHeight(_rb){ return _rb.bbox_bottom - _rb.bbox_top; }
+
+///	@func	nbpGetRadius(rb);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@return	{real}	The radius of the body.
+///	@desc	Returns the radius of the body.
+function nbpGetRadius(_rb)
+{
+	var _w = _rb.bbox_right - _rb.bbox_left, _h = _rb.bbox_bottom - _rb.bbox_top;
+	if (_w > _h) return _h * 0.5;
+	return _w * 0.5;
+}
 	
 #endregion
 	

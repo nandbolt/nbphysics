@@ -1,9 +1,12 @@
 // Inherit the parent event
 event_inherited();
 
-// Color
-var _c = random_range(100, 255);
-image_blend = make_color_rgb(_c, _c, _c);
+// Size
+image_xscale = 36;
+image_yscale = 3;
 
 // Add wind force gen
 nbpAddForceGen(self.id, oNBP_RainWorld.fgWind);
+
+// Hide outlines
+outlines = false;

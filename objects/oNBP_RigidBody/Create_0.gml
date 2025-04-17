@@ -17,3 +17,7 @@ damping = 0.995;
 // Physics generators
 forceGens = [];
 contactGens = [];
+
+// Draw
+color = c_white;
+outlines = true;
