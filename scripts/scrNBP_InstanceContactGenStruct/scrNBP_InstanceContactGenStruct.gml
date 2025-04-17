@@ -42,6 +42,13 @@ function InstContactGen() : ContactGen() constructor
 				_used++;
 				_contactIdx++;
 			}
+			else if (_rb.shape == NBPShape.RECT && _inst.shape == NBPShape.RECT &&
+				rectRectCollision(_contact, _rb, _inst))
+			{
+				// Increment contacts
+				_used++;
+				_contactIdx++;
+			}
 		}
 		
 		// Return contacts used
@@ -56,7 +63,7 @@ function InstContactGen() : ContactGen() constructor
 	static circleCircleCollision = function(_contact, _c1, _c2)
 	{
 		// Get distances
-		var _dist = point_distance(_c1.x, _c1.y, _c2.x, _c2.y)
+		var _dist = point_distance(_c1.x, _c1.y, _c2.x, _c2.y);  
 		var _r1 = (_c1.bbox_right - _c1.bbox_left) * 0.5;
 		var _r2 = (_c2.bbox_right - _c2.bbox_left) * 0.5;
 		if (_dist < (_r1 + _r2))
@@ -77,5 +84,39 @@ function InstContactGen() : ContactGen() constructor
 			return true;
 		}
 		return false;
+	}
+	
+	/// @func	rectRectCollision(contact, r1, r2);
+	///	@param	{Struct.Contact}	contact		The contact data.
+	///	@param	{Id.Instance}		r1			The first rectangle.
+	///	@param	{Id.Instance}		r2			The second rectangle.
+	///	@desc	Returns whether or not there was a collision between two rectangles (non-rotating).
+	static rectRectCollision = function(_contact, _r1, _r2)
+	{
+		// Clear contact
+		_contact.clear();
+		
+		// Set rigid bodies
+		_contact.rb1 = _r1;
+		_contact.rb2 = _r2;
+		
+		// Get penetration depth
+		var _dx = 0, _dy = 0;
+		if (_r1.x < _r2.x) _dx = _r2.bbox_left - _r1.bbox_right;
+		else _dx = _r2.bbox_right - _r1.bbox_left;
+		if (_r1.y < _r2.y) _dy = _r2.bbox_top - _r1.bbox_bottom;
+		else _dy = _r2.bbox_bottom - _r1.bbox_top;
+		if (abs(_dx) > abs(_dy)) _dx = 0;
+		else _dy = 0;
+		
+		// Set collision normal direction
+		_contact.normal.set(_dx, _dy);
+		
+		// Set penetration
+		_contact.penetration = _contact.normal.magnitude();
+		
+		// Normalize normal
+		_contact.normal.normalize();
+		return true;
 	}
 }

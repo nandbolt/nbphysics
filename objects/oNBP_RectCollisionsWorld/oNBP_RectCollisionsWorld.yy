@@ -1,7 +1,7 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "oNBP_CircleCollisionsWorld",
+  "name": "oNBP_RectCollisionsWorld",
   "spriteId": null,
   "solid": false,
   "visible": true,
@@ -29,7 +29,7 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "CircleCollisions",
-    "path": "folders/Objects/NB/Demos/Physics/CircleCollisions.yy",
+    "name": "RectCollisions",
+    "path": "folders/Objects/NB/Demos/Physics/RectCollisions.yy",
   },
 }

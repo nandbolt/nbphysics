@@ -16,5 +16,12 @@ fgBottomSpring = new FakeSpringForceGen(new Vector2(_px, _py+128));
 bottomBox = instance_create_layer(_px, _py+128, "Instances", oNBP_BoxTD);
 nbpAddForceGen(bottomBox, fgBottomSpring);
 
+// Boxes
+with (oNBP_BoxTD)
+{
+	image_xscale = 9;
+	image_yscale = 9;
+}
+
 // Show debugger
 show_debug_overlay(true);
