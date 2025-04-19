@@ -2,6 +2,7 @@
 inverseMass = 1;
 shape = NBPShape.RECT_ROTATED;
 bounciness = 1;
+orientation = new Matrix22(image_angle);
 	
 // Movement
 velocity = new Vector2();

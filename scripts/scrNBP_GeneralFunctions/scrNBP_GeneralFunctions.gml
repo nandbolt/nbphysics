@@ -44,6 +44,24 @@ function nbpGetRadius(_rb)
 	if (_w > _h) return _h * 0.5;
 	return _w * 0.5;
 }
+
+///	@func	nbpSetAngle(rb, angle);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@param	{real}	angle	The new angle.
+///	@desc	Sets the angle of the rigid body.
+function nbpSetAngle(_rb, _angle)
+{
+	_rb.image_angle = _angle;
+}
+
+///	@func	nbpSetAngle(rb, shape);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@param	{real}	shape	The new shape.
+///	@desc	Sets the shape of the rigid body.
+function nbpSetShape(_rb, _shape)
+{
+	_rb.shape = _shape;
+}
 	
 #endregion
 	
@@ -189,7 +207,7 @@ function nbpIntegrate(_rb, _dt)
 		y += velocity.y;
 	}
 }
-	
+
 #endregion
 
 #endregion

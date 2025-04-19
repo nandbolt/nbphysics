@@ -91,6 +91,12 @@ function InstContactGen() : ContactGen() constructor
 						case NBPShape.CIRCLE:
 							break;
 						case NBPShape.RECT_ROTATED:
+							// ROTATED RECT x ROTATED RECT
+							if (rotatedRectRectCollision(_contact, _rb, _inst))
+							{
+								_used++;
+								_contactIdx++;
+							}
 							break;
 					}
 					break;
@@ -252,5 +258,130 @@ function InstContactGen() : ContactGen() constructor
 			return true;
 		}
 		return false;
+	}
+	
+	/// @func	rotatedRectRectCollision(contact, rrect1, rrect2);
+	///	@param	{Struct.Contact}	contact		The contact data.
+	///	@param	{Id.Instance}		rrect1		The first rotated rectangle.
+	///	@param	{Id.Instance}		rrect2		The second rotated rectangle.
+	///	@desc	Returns whether or not there was a collision between two non-rotating rectangles (and fills out the contact data).
+	static rotatedRectRectCollision = function(_contact, _rrect1, _rrect2)
+	{
+		// Clear contact
+		_contact.clear();
+		
+		// Set rigid bodies
+		_contact.rb1 = _rrect1;
+		_contact.rb2 = _rrect2;
+		
+		// Resitution
+		_contact.restitution = getCollisionRestitution(_rrect1, _rrect2);
+		
+		// Get base dimensions (Rotate to 0 degrees, measure, then rotate back)
+		var _angle1 = _rrect1.image_angle, _angle2 = _rrect2.image_angle;
+		_rrect1.image_angle = 0;
+		_rrect2.image_angle = 0;
+		var _hw1 = nbpGetWidth(_rrect1) * 0.5, _hh1 = nbpGetHeight(_rrect1) * 0.5;
+		var _hw2 = nbpGetWidth(_rrect2) * 0.5, _hh2 = nbpGetHeight(_rrect2) * 0.5;
+		_rrect1.image_angle = _angle1;
+		_rrect2.image_angle = _angle2;
+		
+		// Init info
+		var _bestPenetration = 99999;
+		var _bestNormal = new Vector2();
+		var _corners1 = [
+			new Vector2(_hw1, _hh1),
+			new Vector2(_hw1, -_hh1),
+			new Vector2(-_hw1, -_hh1),
+			new Vector2(-_hw1, _hh1),
+		];
+		var _corners2 = [
+			new Vector2(_hw2, _hh2),
+			new Vector2(_hw2, -_hh2),
+			new Vector2(-_hw2, -_hh2),
+			new Vector2(-_hw2, _hh2),
+		];
+		
+		// Convert corners to world space
+		for (var _i = 0; _i < array_length(_corners1); _i++)
+		{
+			_corners1[_i].multiplyMatrix22(_rrect1.orientation);
+			_corners1[_i].add(_rrect1.x, _rrect1.y);
+		}
+		for (var _i = 0; _i < array_length(_corners2); _i++)
+		{
+			_corners2[_i].multiplyMatrix22(_rrect2.orientation);
+			_corners2[_i].add(_rrect2.x, _rrect2.y);
+		}
+		
+		// Compare corner sets
+		for (var _j = 0; _j < 2; _j++)
+		{
+			// Choose corner set
+			var _corners, _local, _hw, _hh;
+			if (_j == 0)
+			{
+				_corners = _corners2;
+				_local = _rrect1;
+				_hw = _hw1;
+				_hh = _hh1;
+			}
+			else
+			{
+				_corners = _corners1;
+				_local = _rrect2;
+				_hw = _hw2;
+				_hh = _hh2;
+			}
+			
+			// Go through corners
+			for (var _i = 0; _i < 4; _i++)
+			{
+				// Check if point is inside
+				var _r = new Vector2(_corners[_i].x - _local.x, _corners[_i].y - _local.y);
+				_r.multiplyMatrix22(_local.orientation);
+				var _n = new Vector2();
+				var _penetration = 99999;
+				if (point_in_rectangle(_r.x, _r.y, -_hw, -_hh, _hw, _hh))
+				{
+					// Get min penetration in the x direction
+					_n.x = (_hw - abs(_r.x)) * sign(_r.x);
+					
+					// Get min penetration in the y direction
+					_n.y = (_hh - abs(_r.y)) * sign(_r.y);
+					
+					// Choose lowest interpenetration
+					if (abs(_n.x) < abs(_n.y))
+					{
+						_n.y = 0;
+						_penetration = abs(_n.x);
+					}
+					else
+					{
+						_n.x = 0;
+						_penetration = abs(_n.y);
+					}
+					
+					// Check if new best normal
+					if (_penetration < _bestPenetration)
+					{
+						// Rotate normal back to world space
+						_n.multiplyInverseMatrix22(_local.orientation);
+						
+						// Set new normal + penetration
+						_bestPenetration = _penetration;
+						_n.normalize();
+						_bestNormal.setVector(_n);
+					}
+				}
+			}
+		}
+		
+		// Set contact info
+		_contact.normal.setVector(_bestNormal);
+		_contact.penetration = _bestPenetration;
+		show_debug_message(string("normal: {0}", _contact.normal));
+		show_debug_message(string("penetration: {0}", _contact.penetration));
+		return true;
 	}
 }

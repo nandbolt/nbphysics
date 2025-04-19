@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "oNBP_PlayerTD",
   "spriteId": {
-    "name": "sNBP_SquareOutline",
-    "path": "sprites/sNBP_SquareOutline/sNBP_SquareOutline.yy",
+    "name": "sNBP_RectRotation",
+    "path": "sprites/sNBP_RectRotation/sNBP_RectRotation.yy",
   },
   "solid": false,
   "visible": true,
