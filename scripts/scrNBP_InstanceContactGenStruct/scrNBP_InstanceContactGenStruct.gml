@@ -377,6 +377,8 @@ function InstContactGen() : ContactGen() constructor
 						
 						// Set new normal + penetration
 						_bestPenetration = _penetration;
+						
+						// Normal is relative to rb1
 						if (_j == 0) _n.scale(-1);
 						_n.normalize();
 						_bestNormal.setVector(_n);
@@ -385,11 +387,12 @@ function InstContactGen() : ContactGen() constructor
 			}
 		}
 		
+		// Return if couldn't find a penetration
+		if (_bestPenetration == 99999) return false;
+		
 		// Set contact info
 		_contact.normal.setVector(_bestNormal);
 		_contact.penetration = _bestPenetration;
-		show_debug_message(string("normal: {0}", _contact.normal));
-		show_debug_message(string("penetration: {0}", _contact.penetration));
 		return true;
 	}
 	
@@ -402,65 +405,43 @@ function InstContactGen() : ContactGen() constructor
 	{
 		// Get distances
 		var _r = nbpGetRadius(_circ);
-		var _hw = nbpGetWidth(_rrect) * 0.5, _hh = nbpGetWidth(_rrect) * 0.5;
-		var _cdx = abs(_circ.x - _rrect.x), _cdy = abs(_circ.y - _rrect.y);
+		var _hw = nbpGetWidth(_rrect) * 0.5, _hh = nbpGetHeight(_rrect) * 0.5;
+		var _rel = new Vector2(_circ.x - _rrect.x, _circ.y - _rrect.y);
+		_rel.multiplyInverseMatrix22(_rrect.orientation);
+		var _closest = new Vector2(clamp(_rel.x, -_hw, _hw), clamp(_rel.y, -_hh, _hh));
+		var _diff = _rel.getCopy();
+		_diff.addScaledVector(_closest, -1);
+		var _distSquared = _diff.magnitudeSquared();
 		
-		// Rectangle check
-		if (_cdx > (_hw + _r)) return false;
-		if (_cdy > (_hh + _r)) return false;
+		// No collision if further than r^2
+		if (_distSquared > (_r * _r)) return false;
 		
 		// Clear contact
 		_contact.clear();
 		
 		// Set rigid bodies
-		_contact.rb1 = _rrect;
-		_contact.rb2 = _circ;
+		_contact.rb1 = _circ;
+		_contact.rb2 = _rrect;
 		
 		// Resitution
 		_contact.restitution = getCollisionRestitution(_circ, _rrect);
 		
-		// If vertical side hit
-		if (_cdx <= _hw)
-		{	
-			// Set collision normal direction
-			var _dy = _rrect.y - _circ.y;
-			_contact.normal.set(0, _dy);
-			_contact.normal.normalize();
-			
-			// Calculate penetration
-			_contact.penetration = (_hh + _r) - abs(_dy);
-			return true;
-		}
+		// Penetration
+		var _dist = sqrt(_distSquared);
+		var _penetration;
 		
-		// If horizontal side hit
-		if (_cdy <= _hh)
+		// Normalize
+		if (_dist == 0) _diff.set(0, -1);
+		else
 		{
-			// HORIZONTAL SIDE HIT
-			
-			// Set collision normal direction
-			var _dx = _rrect.x - _circ.x;
-			_contact.normal.set(_dx, 0);
-			_contact.normal.normalize();
-			
-			// Calculate penetration
-			_contact.penetration = (_hw + _r) - abs(_dx);
-			return true;
+			_diff.normalize();
+			_penetration = _r - _dist;
 		}
 		
-		// If corner hit
-		var _cornerDistSquared = sqr(_cdx - _hw) + sqr(_cdy - _hh);
-		if (_cornerDistSquared <= (_r * _r))
-		{	
-			// Set collision normal direction
-			var _dx = _rrect.x - _circ.x, _dy = _rrect.y - _circ.y;
-			_contact.normal.set(_dx, _dy);
-			_contact.normal.normalize();
-			
-			// Calculate penetration
-			var _rdx = clamp(abs(_dx), 0, _hw) * sign(_dx), _rdy = clamp(abs(_dy), 0, _hh) * sign(_dy);
-			_contact.penetration = _r - (sqrt(_dx * _dx + _dy * _dy) - sqrt(_rdx * _rdx + _rdy * _rdy));
-			return true;
-		}
-		return false;
+		// Rotate normal back
+		_diff.multiplyMatrix22(_rrect.orientation);
+		_contact.normal.setVector(_diff);
+		_contact.penetration = _penetration;
+		return true;
 	}
 }

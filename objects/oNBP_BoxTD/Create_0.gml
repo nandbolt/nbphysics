@@ -2,5 +2,5 @@
 event_inherited();
 
 // Setup box
-inverseMass = 0.125;
+inverseMass = 1 / 64;
 damping = 0.25;
