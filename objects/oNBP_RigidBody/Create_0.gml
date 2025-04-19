@@ -1,6 +1,7 @@
 // Body
 inverseMass = 1;
 shape = NBPShape.RECT_ROTATED;
+bounciness = 1;
 	
 // Movement
 velocity = new Vector2();
