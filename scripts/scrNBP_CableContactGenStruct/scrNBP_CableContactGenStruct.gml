@@ -20,7 +20,7 @@ function CableContactGen(_rb1=noone, _rb2=noone, _maxLength=128) : LinkContactGe
 		var _len = currentLength();
 		
 		// Return if not overextended
-		if (_len < maxLength) return 0;
+		if (_len <= maxLength) return 0;
 		
 		// Get contact index
 		var _contactIdx = _pw.nextContactIdx;

@@ -1,12 +1,15 @@
-///	@func	RodContactGen(rb1, rb2, length);
+///	@func	RodContactGen(rb1, rb2, length, wiggle);
 ///	@param	{Id.Instance}	rb1	The first rigid body.
 ///	@param	{Id.Instance}	rb2	The second rigid body.
-///	@param	{real}	maxLength	The max cable length.
+///	@param	{real}	maxLength	The rod length.
+///	@param	{real}	wiggle	The wiggle room for determining collisions.
 ///	@desc	Handles contacts between bodies connected via a rod.
-function RodContactGen(_rb1=noone, _rb2=noone, _length=128) : LinkContactGen(_rb1, _rb2) constructor
+function RodContactGen(_rb1=noone, _rb2=noone, _length=128, _wiggle=2) : LinkContactGen(_rb1, _rb2) constructor
 {
 	// Properties
 	length = _length;
+	wiggle = _wiggle;
+	restitution = 0.5;
 	
 	///	@func	addContact(rb, pw, limit);
 	///	@param	{Id.Instance}	rb	The rigid body.
@@ -18,8 +21,11 @@ function RodContactGen(_rb1=noone, _rb2=noone, _length=128) : LinkContactGen(_rb
 		// Get length
 		var _len = currentLength();
 		
+		// Get max/min length
+		var _minLength = length - wiggle, _maxLength = length + wiggle;
+		
 		// Return if not overextended
-		if (_len == length) return 0;
+		if (_len <= _maxLength && _len >= _minLength) return 0;
 		
 		// Get contact index
 		var _contactIdx = _pw.nextContactIdx;
@@ -38,21 +44,21 @@ function RodContactGen(_rb1=noone, _rb2=noone, _length=128) : LinkContactGen(_rb
 		_contact.normal.set(rb2.x - rb1.x, rb2.y - rb1.y);
 		_contact.normal.normalize();
 		
-		// Normal direction depends on compression or extension
-		if (_len > length)
+		// Handle collision type
+		if (_len > _maxLength)
 		{
-			// Compress
-			_contact.penetration = _len - length;
+			// COMPRESSION
+			_contact.penetration = _len - _maxLength;
 		}
 		else
 		{
-			// Extend
+			// EXTENSION
+			_contact.penetration = _minLength - _len;
 			_contact.normal.invert();
-			_contact.penetration = length - _len;
 		}
 		
-		// Zero restitution (no bounce)
-		_contact.restitution = 0;
+		// Set restitution
+		_contact.restitution = restitution;
 		
 		// Return used
 		return 1;
