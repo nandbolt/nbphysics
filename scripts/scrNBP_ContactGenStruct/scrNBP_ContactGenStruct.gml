@@ -5,11 +5,13 @@
 ///			interpenetration and then applying sufficient impulse to keep apart.
 function Contact(_rb1=undefined, _rb2=undefined) constructor
 {
-	rb1 = _rb1;					// The first body involved. Undefined == infinite mass/environment.
-	rb2 = _rb2;					// The second body involved.
-	restitution = 1;			// How quickly bodies separate (1 = bounce apart, 0 = stick together).
-	normal = new Vector2();		// The contact normal from the perspective of the first body.
-	penetration = 0;			// How much the bodies are intersecting.
+	rb1 = _rb1;						// The first body involved. Undefined == infinite mass/environment.
+	rb2 = _rb2;						// The second body involved.
+	restitution = 1;				// How quickly bodies separate (1 = bounce apart, 0 = stick together).
+	normal = new Vector2();			// The contact normal from the perspective of the first body.
+	penetration = 0;				// How much the bodies are intersecting.
+	rb1Movement = new Vector2();	// How much the first body moved during interpenetration resolution.
+	rb2Movement = new Vector2();	// How much the second body moved during interpenetration resolution.
 	
 	///	@func	cleanup();
 	///	@desc	Cleans up the contact data.
@@ -131,13 +133,18 @@ function Contact(_rb1=undefined, _rb2=undefined) constructor
 		var _movePerIMass = normal.getCopy();
 		_movePerIMass.scale(penetration / _totalIMass);
 		
-		// Apply penetration resolution for first body
-		rb1.x += _movePerIMass.x * rb1.inverseMass;
-		rb1.y += _movePerIMass.y * rb1.inverseMass;
+		// Calculate movements
+		rb1Movement.setScaledVector(_movePerIMass, rb1.inverseMass);
+		if (_rb2Moveable) rb2Movement.setScaledVector(_movePerIMass, -rb2.inverseMass);
+		else rb2Movement.set();
+		
+		// Apply penetration resolution for bodies
+		rb1.x += rb1Movement.x;
+		rb1.y += rb1Movement.y;
 		if (_rb2Moveable)
 		{
-			rb2.x -= _movePerIMass.x * rb2.inverseMass;
-			rb2.y -= _movePerIMass.y * rb2.inverseMass;
+			rb2.x += rb2Movement.x;
+			rb2.y += rb2Movement.y;
 		}
 	}
 	
@@ -150,6 +157,8 @@ function Contact(_rb1=undefined, _rb2=undefined) constructor
 		restitution = 1;
 		normal.set();
 		penetration = 0;
+		rb1Movement.set();
+		rb2Movement.set();
 	}
 }
 
@@ -191,7 +200,7 @@ function ContactResolver(_iterations=1) constructor
 			{
 				// Get separating velocity
 				var _sepVel = _contacts[_i].calculateSeparatingVelocity();
-				if (_sepVel < _max)
+				if (_sepVel < _max && (_sepVel < 0 || _contacts[_i].penetration > 0))
 				{
 					// Found new highest closing velocity
 					_max = _sepVel;
@@ -204,6 +213,34 @@ function ContactResolver(_iterations=1) constructor
 			
 			// Resolve this contact
 			_contacts[_maxIdx].resolve(_dt);
+			
+			// Update interpenetrations for all bodies
+			var _rb1Movement = _contacts[_maxIdx].rb1Movement, _rb2Movement = _contacts[_maxIdx].rb2Movement;
+			for (var _i = 0; _i < _contactCount; _i++)
+			{
+				// Interpenetration for first body
+				if (_contacts[_i].rb1 == _contacts[_maxIdx].rb1)
+				{
+					_contacts[_i].penetration -= _rb1Movement.dotProductVector(_contacts[_i].normal);
+				}
+				else if (_contacts[_i].rb1 == _contacts[_maxIdx].rb2)
+				{
+					_contacts[_i].penetration -= _rb2Movement.dotProductVector(_contacts[_i].normal);
+				}
+				
+				// Interpenetration for second body
+				if (instance_exists(_contacts[_i].rb2) && _contacts[_i].rb2.inverseMass > 0)
+				{
+					if (_contacts[_i].rb2 == _contacts[_maxIdx].rb1)
+					{
+						_contacts[_i].penetration += _rb1Movement.dotProductVector(_contacts[_i].normal);
+					}
+					else if (_contacts[_i].rb2 == _contacts[_maxIdx].rb2)
+					{
+						_contacts[_i].penetration += _rb2Movement.dotProductVector(_contacts[_i].normal);
+					}
+				}
+			}
 			
 			// Increment iterations used
 			iterationsUsed++;

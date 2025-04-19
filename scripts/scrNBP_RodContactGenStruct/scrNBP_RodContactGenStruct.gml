@@ -1,15 +1,15 @@
 ///	@func	RodContactGen(rb1, rb2, length, wiggle);
 ///	@param	{Id.Instance}	rb1	The first rigid body.
 ///	@param	{Id.Instance}	rb2	The second rigid body.
-///	@param	{real}	maxLength	The rod length.
+///	@param	{real}	length	The rod length.
 ///	@param	{real}	wiggle	The wiggle room for determining collisions.
 ///	@desc	Handles contacts between bodies connected via a rod.
-function RodContactGen(_rb1=noone, _rb2=noone, _length=128, _wiggle=2) : LinkContactGen(_rb1, _rb2) constructor
+function RodContactGen(_rb1=noone, _rb2=noone, _length=128, _wiggle=1) : LinkContactGen(_rb1, _rb2) constructor
 {
 	// Properties
 	length = _length;
 	wiggle = _wiggle;
-	restitution = 0.5;
+	restitution = 0;
 	
 	///	@func	addContact(rb, pw, limit);
 	///	@param	{Id.Instance}	rb	The rigid body.

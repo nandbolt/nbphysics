@@ -19,14 +19,14 @@ nbpAddContactGen(box2, cgCable1);
 cgCable2 = new CableContactGen(box2, box3, room_width * 1 / 8);
 nbpAddContactGen(box2, cgCable2);
 nbpAddContactGen(box3, cgCable2);
-cgRod1 = new RodContactGen(box4, box5, room_width * 1 / 8, 8);
+cgRod1 = new RodContactGen(box4, box5, room_width * 1 / 8);
 cgRod1.restitution = 1;
 nbpAddContactGen(box4, cgRod1);
 nbpAddContactGen(box5, cgRod1);
-cgRod2 = new RodContactGen(box5, box6, room_width * 1 / 8, 8);
+cgRod2 = new RodContactGen(box5, box6, room_width * 1 / 8);
+cgRod2.restitution = 1;
 nbpAddContactGen(box5, cgRod2);
 nbpAddContactGen(box6, cgRod2);
-cgRod2.restitution = 1;
 
 // Init boxes
 with (oNBP_BoxSV)
