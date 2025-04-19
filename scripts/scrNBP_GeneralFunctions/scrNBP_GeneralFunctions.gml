@@ -26,13 +26,35 @@ function nbpSetMass(_rb, _mass)
 ///	@param	{Id.Instance}	rb	The rigid body.
 ///	@return	{real}	The width of the body.
 ///	@desc	Returns the width of the body.
-function nbpGetWidth(_rb){ return _rb.bbox_right - _rb.bbox_left; }
+function nbpGetWidth(_rb)
+{
+	if (_rb.shape == NBPShape.RECT_ROTATED)
+	{
+		var _angle = _rb.image_angle;
+		_rb.image_angle = 0;
+		var _w = _rb.bbox_right - _rb.bbox_left;
+		_rb.image_angle = _angle;
+		return _w;
+	}
+	return _rb.bbox_right - _rb.bbox_left;
+}
 	
 ///	@func	nbpGetHeight(rb);
 ///	@param	{Id.Instance}	rb	The rigid body.
 ///	@return	{real}	The width of the body.
 ///	@desc	Returns the width of the body.
-function nbpGetHeight(_rb){ return _rb.bbox_bottom - _rb.bbox_top; }
+function nbpGetHeight(_rb)
+{
+	if (_rb.shape == NBPShape.RECT_ROTATED)
+	{
+		var _angle = _rb.image_angle;
+		_rb.image_angle = 0;
+		var _h = _rb.bbox_bottom - _rb.bbox_top;
+		_rb.image_angle = _angle;
+		return _h;
+	}
+	return _rb.bbox_bottom - _rb.bbox_top;
+}
 
 ///	@func	nbpGetRadius(rb);
 ///	@param	{Id.Instance}	rb	The rigid body.

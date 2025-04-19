@@ -80,6 +80,12 @@ function InstContactGen() : ContactGen() constructor
 							}
 							break;
 						case NBPShape.RECT_ROTATED:
+							// CIRCLE x ROTATED RECT
+							if (circleRotatedRectCollision(_contact, _rb, _inst))
+							{
+								_used++;
+								_contactIdx++;
+							}
 							break;
 					}
 					break;
@@ -89,6 +95,12 @@ function InstContactGen() : ContactGen() constructor
 						case NBPShape.RECT:
 							break;
 						case NBPShape.CIRCLE:
+							// ROTATED RECT x CIRCLE
+							if (circleRotatedRectCollision(_contact, _inst, _rb))
+							{
+								_used++;
+								_contactIdx++;
+							}
 							break;
 						case NBPShape.RECT_ROTATED:
 							// ROTATED RECT x ROTATED RECT
@@ -198,7 +210,7 @@ function InstContactGen() : ContactGen() constructor
 	{
 		// Get distances
 		var _r = nbpGetRadius(_circ);
-		var _hw = (_rect.bbox_right - _rect.bbox_left) * 0.5, _hh = (_rect.bbox_bottom - _rect.bbox_top) * 0.5;
+		var _hw = nbpGetWidth(_rect) * 0.5, _hh = nbpGetHeight(_rect) * 0.5;
 		var _cdx = abs(_circ.x - _rect.x), _cdy = abs(_circ.y - _rect.y);
 		
 		// Rectangle check
@@ -277,14 +289,9 @@ function InstContactGen() : ContactGen() constructor
 		// Resitution
 		_contact.restitution = getCollisionRestitution(_rrect1, _rrect2);
 		
-		// Get base dimensions (Rotate to 0 degrees, measure, then rotate back)
-		var _angle1 = _rrect1.image_angle, _angle2 = _rrect2.image_angle;
-		_rrect1.image_angle = 0;
-		_rrect2.image_angle = 0;
+		// Get base dimensions
 		var _hw1 = nbpGetWidth(_rrect1) * 0.5, _hh1 = nbpGetHeight(_rrect1) * 0.5;
 		var _hw2 = nbpGetWidth(_rrect2) * 0.5, _hh2 = nbpGetHeight(_rrect2) * 0.5;
-		_rrect1.image_angle = _angle1;
-		_rrect2.image_angle = _angle2;
 		
 		// Init info
 		var _bestPenetration = 99999;
@@ -384,5 +391,76 @@ function InstContactGen() : ContactGen() constructor
 		show_debug_message(string("normal: {0}", _contact.normal));
 		show_debug_message(string("penetration: {0}", _contact.penetration));
 		return true;
+	}
+	
+	/// @func	circleRotatedRectCollision(contact, circ, rrect);
+	///	@param	{Struct.Contact}	contact		The contact data.
+	///	@param	{Id.Instance}		circ		The circle.
+	///	@param	{Id.Instance}		rrect		The rotated rectangle.
+	///	@desc	Returns whether or not there was a collision between a circle and rotated rectangle (and fills out the contact data).
+	static circleRotatedRectCollision = function(_contact, _circ, _rrect)
+	{
+		// Get distances
+		var _r = nbpGetRadius(_circ);
+		var _hw = nbpGetWidth(_rrect) * 0.5, _hh = nbpGetWidth(_rrect) * 0.5;
+		var _cdx = abs(_circ.x - _rrect.x), _cdy = abs(_circ.y - _rrect.y);
+		
+		// Rectangle check
+		if (_cdx > (_hw + _r)) return false;
+		if (_cdy > (_hh + _r)) return false;
+		
+		// Clear contact
+		_contact.clear();
+		
+		// Set rigid bodies
+		_contact.rb1 = _rrect;
+		_contact.rb2 = _circ;
+		
+		// Resitution
+		_contact.restitution = getCollisionRestitution(_circ, _rrect);
+		
+		// If vertical side hit
+		if (_cdx <= _hw)
+		{	
+			// Set collision normal direction
+			var _dy = _rrect.y - _circ.y;
+			_contact.normal.set(0, _dy);
+			_contact.normal.normalize();
+			
+			// Calculate penetration
+			_contact.penetration = (_hh + _r) - abs(_dy);
+			return true;
+		}
+		
+		// If horizontal side hit
+		if (_cdy <= _hh)
+		{
+			// HORIZONTAL SIDE HIT
+			
+			// Set collision normal direction
+			var _dx = _rrect.x - _circ.x;
+			_contact.normal.set(_dx, 0);
+			_contact.normal.normalize();
+			
+			// Calculate penetration
+			_contact.penetration = (_hw + _r) - abs(_dx);
+			return true;
+		}
+		
+		// If corner hit
+		var _cornerDistSquared = sqr(_cdx - _hw) + sqr(_cdy - _hh);
+		if (_cornerDistSquared <= (_r * _r))
+		{	
+			// Set collision normal direction
+			var _dx = _rrect.x - _circ.x, _dy = _rrect.y - _circ.y;
+			_contact.normal.set(_dx, _dy);
+			_contact.normal.normalize();
+			
+			// Calculate penetration
+			var _rdx = clamp(abs(_dx), 0, _hw) * sign(_dx), _rdy = clamp(abs(_dy), 0, _hh) * sign(_dy);
+			_contact.penetration = _r - (sqrt(_dx * _dx + _dy * _dy) - sqrt(_rdx * _rdx + _rdy * _rdy));
+			return true;
+		}
+		return false;
 	}
 }
