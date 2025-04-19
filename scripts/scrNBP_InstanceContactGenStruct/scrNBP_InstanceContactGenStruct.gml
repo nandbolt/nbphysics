@@ -2,6 +2,9 @@
 ///	@desc	Handles contacts between instances (squares, rects, circles).
 function InstContactGen() : ContactGen() constructor
 {
+	// Properties
+	restitution = 1;
+	
 	///	@func	addContact(rb, pw, limit);
 	///	@param	{Id.Instance}	rb	The rigid body.
 	///	@param	{Id.Instance}	pw	The physics world.
@@ -127,6 +130,9 @@ function InstContactGen() : ContactGen() constructor
 		
 			// Penetration
 			_contact.penetration = (_r1 + _r2) - _dist;
+			
+			// Resitution
+			_contact.restitution = restitution;
 			return true;
 		}
 		return false;
@@ -163,6 +169,9 @@ function InstContactGen() : ContactGen() constructor
 		
 		// Normalize normal
 		_contact.normal.normalize();
+		
+		// Resitution
+		_contact.restitution = restitution;
 		return true;
 	}
 	
@@ -199,6 +208,9 @@ function InstContactGen() : ContactGen() constructor
 			
 			// Calculate penetration
 			_contact.penetration = (_hh + _r) - abs(_dy);
+			
+			// Resitution
+			_contact.restitution = restitution;
 			return true;
 		}
 		
@@ -221,6 +233,9 @@ function InstContactGen() : ContactGen() constructor
 			
 			// Calculate penetration
 			_contact.penetration = (_hw + _r) - abs(_dx);
+			
+			// Resitution
+			_contact.restitution = restitution;
 			return true;
 		}
 		
@@ -243,6 +258,9 @@ function InstContactGen() : ContactGen() constructor
 			// Calculate penetration
 			var _rdx = clamp(abs(_dx), 0, _hw) * sign(_dx), _rdy = clamp(abs(_dy), 0, _hh) * sign(_dy);
 			_contact.penetration = _r - (sqrt(_dx * _dx + _dy * _dy) - sqrt(_rdx * _rdx + _rdy * _rdy));
+			
+			// Resitution
+			_contact.restitution = restitution;
 			return true;
 		}
 		return false;
