@@ -339,7 +339,7 @@ function InstContactGen() : ContactGen() constructor
 			{
 				// Check if point is inside
 				var _r = new Vector2(_corners[_i].x - _local.x, _corners[_i].y - _local.y);
-				_r.multiplyMatrix22(_local.orientation);
+				_r.multiplyInverseMatrix22(_local.orientation);
 				var _n = new Vector2();
 				var _penetration = 99999;
 				if (point_in_rectangle(_r.x, _r.y, -_hw, -_hh, _hw, _hh))
@@ -366,10 +366,11 @@ function InstContactGen() : ContactGen() constructor
 					if (_penetration < _bestPenetration)
 					{
 						// Rotate normal back to world space
-						_n.multiplyInverseMatrix22(_local.orientation);
+						_n.multiplyMatrix22(_local.orientation);
 						
 						// Set new normal + penetration
 						_bestPenetration = _penetration;
+						if (_j == 0) _n.scale(-1);
 						_n.normalize();
 						_bestNormal.setVector(_n);
 					}

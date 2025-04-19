@@ -6,5 +6,10 @@ moveInput.scale(moveStrength * inverseMass);
 nbpAddForceVector(self.id, moveInput);
 
 // Rotation
-var _angle = image_angle + (keyboard_check(vk_up) - keyboard_check(vk_down));
-nbpSetAngle(self.id, _angle);
+var _da = keyboard_check(vk_up) - keyboard_check(vk_down);
+if (_da != 0)
+{
+	var _angle = image_angle + _da;
+	nbpSetAngle(self.id, _angle);
+	orientation.setRotation(-_angle);
+}
