@@ -13,3 +13,25 @@ yCursor += ySpacing;
 draw_text(xCursor, yCursor, "next demo : ->");
 yCursor += ySpacing;
 draw_text(xCursor, yCursor, "prev demo : <-");
+
+// Player debug
+if (instance_exists(oNBP_PlayerTD))
+{
+	yCursor += ySpacing * 2;
+	draw_text(xCursor, yCursor, "player");
+	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("fgs: {0}", string(oNBP_PlayerTD.forceGens)));
+	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("cgs: {0}", string(oNBP_PlayerTD.contactGens)));
+}
+else if (instance_exists(oNBP_PlayerSV))
+{
+	yCursor += ySpacing * 2;
+	draw_text(xCursor, yCursor, "player");
+	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("fgs: {0}", string(oNBP_PlayerSV.forceGens)));
+	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("cgs: {0}", string(oNBP_PlayerSV.contactGens)));
+	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("grav: {0}", string(oNBP_PlayerSV.grav)));
+}

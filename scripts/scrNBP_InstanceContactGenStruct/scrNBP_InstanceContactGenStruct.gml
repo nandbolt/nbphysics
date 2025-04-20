@@ -2,6 +2,8 @@
 ///	@desc	Handles contacts between instances (squares, rects, circles).
 function InstContactGen() : ContactGen() constructor
 {
+	name = "instance";
+	
 	///	@func	addContact(rb, pw, limit);
 	///	@param	{Id.Instance}	rb	The rigid body.
 	///	@param	{Id.Instance}	pw	The physics world.

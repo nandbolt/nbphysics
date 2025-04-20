@@ -6,6 +6,8 @@
 ///			for collisions).
 function FakeSpringForceGen(_anchor, _k=1, _damping=0) : ForceGen() constructor
 {
+	name = "fake spring";
+	
 	// Spring
 	anchor = _anchor;
 	k = _k;

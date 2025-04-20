@@ -4,6 +4,8 @@
 ///	@desc	Handles contacts between linked bodies. Only inherited contact generators will be instanced.
 function LinkContactGen(_rb1=noone, _rb2=noone) : ContactGen() constructor
 {
+	name = "link";
+	
 	// Bodies
 	rb1 = _rb1;
 	rb2 = _rb2;

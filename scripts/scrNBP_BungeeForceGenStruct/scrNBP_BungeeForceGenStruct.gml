@@ -5,6 +5,8 @@
 ///	@desc	A force generator representing a bungee cord.
 function BungeeForceGen(_rb, _k=1, _restLength=128) : ForceGen() constructor
 {
+	name = "bungee";
+	
 	// Spring
 	rb = _rb;
 	k = _k;

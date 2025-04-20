@@ -4,6 +4,8 @@
 ///	@desc	A force generator representing wind.
 function WindForceGen(_fx=1, _fy=0) : ForceGen() constructor
 {
+	name = "wind";
+	
 	// Gravity vector
 	windForce = new Vector2(_fx, _fy);
 	windStrength = windForce.magnitude();

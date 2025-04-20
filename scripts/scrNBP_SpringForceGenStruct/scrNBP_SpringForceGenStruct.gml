@@ -5,6 +5,8 @@
 ///	@desc	A force generator representing a spring.
 function SpringForceGen(_rb, _k=1, _restLength=0) : ForceGen() constructor
 {
+	name = "spring";
+	
 	// Spring
 	rb = _rb;
 	k = _k;

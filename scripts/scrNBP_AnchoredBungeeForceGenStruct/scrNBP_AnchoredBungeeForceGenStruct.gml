@@ -5,6 +5,8 @@
 ///	@desc	A force generator representing a bungee cord.
 function AnchoredBungeeForceGen(_anchor, _k=1, _restLength=128) : ForceGen() constructor
 {
+	name = "anchored bungee";
+	
 	// Spring
 	anchor = _anchor;
 	k = _k;

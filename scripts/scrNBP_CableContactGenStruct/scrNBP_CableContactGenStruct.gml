@@ -5,6 +5,8 @@
 ///	@desc	Handles contacts between bodies connected via a cable.
 function CableContactGen(_rb1=noone, _rb2=noone, _maxLength=128) : LinkContactGen(_rb1, _rb2) constructor
 {
+	name = "cable";
+	
 	// Properties
 	maxLength = _maxLength;
 	restitution = 1;

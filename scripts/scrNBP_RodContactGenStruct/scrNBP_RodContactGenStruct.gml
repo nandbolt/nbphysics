@@ -6,6 +6,8 @@
 ///	@desc	Handles contacts between bodies connected via a rod.
 function RodContactGen(_rb1=noone, _rb2=noone, _length=128, _wiggle=1) : LinkContactGen(_rb1, _rb2) constructor
 {
+	name = "rod";
+	
 	// Properties
 	length = _length;
 	wiggle = _wiggle;

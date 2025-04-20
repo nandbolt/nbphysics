@@ -5,6 +5,8 @@
 ///	@desc	A force generator representing an anchored spring.
 function AnchoredSpringForceGen(_anchor, _k=1, _restLength=0) : ForceGen() constructor
 {
+	name = "anchored spring";
+	
 	// Spring
 	anchor = _anchor;
 	k = _k;

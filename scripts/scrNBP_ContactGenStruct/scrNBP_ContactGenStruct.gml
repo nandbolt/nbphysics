@@ -252,10 +252,16 @@ function ContactResolver(_iterations=1) constructor
 ///	@desc	Adds contacts applied to registered bodies. Only inherited contact generators will be instanced.
 function ContactGen() constructor
 {
+	name = "contact gen";
+	
 	///	@func	addContact(rb, pw, limit);
 	///	@param	{Id.Instance}	rb	The rigid body.
 	///	@param	{Id.Instance}	pw	The physics world.
 	///	@param	{real}	limit		The number of contacts that can be written to.
 	///	@desc	Fills the contact structure with generated contacts.
 	static addContact = function(_rb, _pw, _limit){ return 0; }
+	
+	///	@func	toString();
+	///	@desc	Returns the name of the contact generator.
+	static toString = function(){ return name; }
 }

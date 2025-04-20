@@ -4,6 +4,8 @@
 ///	@desc	A force generator representing buoyancy in water.
 function BuoyancyForceGen(_waterLevel, _liquidDensity=0.1) : ForceGen() constructor
 {
+	name = "buoyancy";
+	
 	// Spring
 	waterLevel = _waterLevel;
 	liquidDensity = _liquidDensity;
