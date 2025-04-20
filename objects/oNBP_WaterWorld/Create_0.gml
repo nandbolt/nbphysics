@@ -6,3 +6,6 @@ name = "Water";
 
 // Link boxes to buoyancy force
 fgBuoyancy = new BuoyancyForceGen(room_height * 0.75);
+
+// Add box collisions
+cgInst = new InstContactGen();

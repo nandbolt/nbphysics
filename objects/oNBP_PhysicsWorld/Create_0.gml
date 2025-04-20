@@ -1,6 +1,10 @@
 ///	@desc	Init
 
 /*
+nbphysics v0.9
+*/
+
+/*
 Holds and processes the physics world. You can generally house a physics world within any object,
 but this one showcases what should be present to simulate it.
 */

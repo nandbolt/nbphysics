@@ -43,4 +43,7 @@ switch (shape)
 		draw_circle(x, y, nbpGetRadius(self.id), true);
 		break;
 }
+
+// Forces
+//for (var _i
 draw_set_color(c_white);
