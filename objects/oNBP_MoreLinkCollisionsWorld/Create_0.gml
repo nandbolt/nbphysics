@@ -50,7 +50,7 @@ nbpAddContactGen(box12, cgRod4);
 // Init boxes
 with (oNBP_BoxSV)
 {
-	shape = NBPShape.CIRCLE;
+	nbpSetShape(self.id, NBPShape.CIRCLE);
 	grav.set();
 	image_xscale = 9;
 	image_yscale = 9;

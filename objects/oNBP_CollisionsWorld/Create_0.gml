@@ -6,3 +6,6 @@ name = "Collisions";
 
 // Contact generator
 cgInst = new InstContactGen();
+
+// Rotate
+rotate = true;

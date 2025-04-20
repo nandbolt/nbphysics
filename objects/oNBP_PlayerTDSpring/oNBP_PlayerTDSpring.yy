@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "oNBP_PlayerTDSpring",
   "spriteId": {
-    "name": "sNBP_RectRotation",
-    "path": "sprites/sNBP_RectRotation/sNBP_RectRotation.yy",
+    "name": "sNBP_RectOutline",
+    "path": "sprites/sNBP_RectOutline/sNBP_RectOutline.yy",
   },
   "solid": false,
   "visible": true,

@@ -1,6 +1,6 @@
 // Init player
 with (oNBP_PlayerTD)
 {
-	shape = NBPShape.RECT;
+	nbpSetShape(self.id, NBPShape.RECT);
 	nbpAddContactGen(self.id, other.cgInst);
 }

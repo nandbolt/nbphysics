@@ -74,15 +74,26 @@ function nbpGetRadius(_rb)
 function nbpSetAngle(_rb, _angle)
 {
 	_rb.image_angle = _angle;
+	if (_rb.shape == NBPShape.RECT_ROTATED) _rb.orientation.setRotation(-_rb.image_angle);
 }
 
-///	@func	nbpSetAngle(rb, shape);
+///	@func	nbpSetShape(rb, shape);
 ///	@param	{Id.Instance}	rb	The rigid body.
 ///	@param	{real}	shape	The new shape.
 ///	@desc	Sets the shape of the rigid body.
 function nbpSetShape(_rb, _shape)
 {
 	_rb.shape = _shape;
+	switch (_shape)
+	{
+		case NBPShape.RECT:
+		case NBPShape.CIRCLE:
+			_rb.orientation.setRotation(0);
+			break;
+		case NBPShape.RECT_ROTATED:
+			_rb.orientation.setRotation(-_rb.image_angle);
+			break;
+	}
 }
 	
 #endregion

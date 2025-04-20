@@ -1,6 +1,6 @@
 /// @desc Link Contact Gen
 with (oNBP_RigidBody)
 {
-	shape = NBPShape.RECT_ROTATED;
+	nbpSetShape(self.id, NBPShape.RECT_ROTATED);
 	nbpAddContactGen(self.id, other.cgInst);
 }

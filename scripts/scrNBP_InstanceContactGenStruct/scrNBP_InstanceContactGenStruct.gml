@@ -57,6 +57,12 @@ function InstContactGen() : ContactGen() constructor
 							}
 							break;
 						case NBPShape.RECT_ROTATED:
+							// RECT x ROTATED RECT
+							if (rotatedRectRectCollision(_contact, _rb, _inst))
+							{
+								_used++;
+								_contactIdx++;
+							}
 							break;
 					}
 					break;
@@ -93,6 +99,12 @@ function InstContactGen() : ContactGen() constructor
 					switch (_inst.shape)
 					{
 						case NBPShape.RECT:
+							// ROTATED RECT x RECT
+							if (rotatedRectRectCollision(_contact, _rb, _inst))
+							{
+								_used++;
+								_contactIdx++;
+							}
 							break;
 						case NBPShape.CIRCLE:
 							// ROTATED RECT x CIRCLE

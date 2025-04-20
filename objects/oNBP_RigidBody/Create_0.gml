@@ -1,6 +1,6 @@
 // Body
 inverseMass = 1;
-shape = NBPShape.RECT;
+shape = NBPShape.RECT_ROTATED;
 bounciness = 1;
 orientation = new Matrix22(-image_angle);
 	

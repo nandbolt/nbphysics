@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "oNBP_Raindrop",
   "spriteId": {
-    "name": "sNBP_RectRotation",
-    "path": "sprites/sNBP_RectRotation/sNBP_RectRotation.yy",
+    "name": "sNBP_RectFill",
+    "path": "sprites/sNBP_RectFill/sNBP_RectFill.yy",
   },
   "solid": false,
   "visible": true,
