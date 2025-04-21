@@ -1,7 +1,7 @@
 /// @func	SpringForceGen(rb, k, restLength);
-///	@paran	{real}	rb			The rigid body.
-///	@paran	{real}	k			The spring constant.
-///	@paran	{real}	restLength	The rest length of the spring.
+///	@param	{real}	rb			The rigid body.
+///	@param	{real}	k			The spring constant.
+///	@param	{real}	restLength	The rest length of the spring.
 ///	@desc	A force generator representing a spring.
 function SpringForceGen(_rb, _k=1, _restLength=0) : ForceGen() constructor
 {
@@ -40,5 +40,8 @@ function SpringForceGen(_rb, _k=1, _restLength=0) : ForceGen() constructor
 		_force.normalize();
 		_force.scale(_len * _dir);
 		nbpAddForceVector(_rb, _force);
+		
+		// Wake
+		if (!_rb.isAwake) nbpSetAwake(_rb, true);
 	}
 }

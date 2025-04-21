@@ -1,7 +1,7 @@
 /// @func	AnchoredSpringForceGen(anchor, k, restLength);
-///	@paran	{Struct.Vector2}	anchor		The anchor position.
-///	@paran	{real}	k			The spring constant.
-///	@paran	{real}	restLength	The rest length of the spring.
+///	@param	{Struct.Vector2}	anchor		The anchor position.
+///	@param	{real}	k			The spring constant.
+///	@param	{real}	restLength	The rest length of the spring.
 ///	@desc	A force generator representing an anchored spring.
 function AnchoredSpringForceGen(_anchor, _k=1, _restLength=0) : ForceGen() constructor
 {
@@ -40,5 +40,8 @@ function AnchoredSpringForceGen(_anchor, _k=1, _restLength=0) : ForceGen() const
 		_force.normalize();
 		_force.scale(_len * _dir);
 		nbpAddForceVector(_rb, _force);
+		
+		// Wake
+		if (!_rb.isAwake) nbpSetAwake(_rb, true);
 	}
 }

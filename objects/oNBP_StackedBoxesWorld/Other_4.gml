@@ -8,6 +8,9 @@ with (oNBP_RigidBody)
 with (oNBP_BoxSV)
 {
 	bounciness = 1;
+	
+	// Wake
+	nbpSetAwake(self.id, true);
 }
 with (oNBP_PlayerSV)
 {

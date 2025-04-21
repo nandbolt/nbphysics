@@ -160,6 +160,21 @@ function Contact(_rb1=undefined, _rb2=undefined) constructor
 		rb1Movement.set();
 		rb2Movement.set();
 	}
+	
+	///	@func	matchAwakeState();
+	///	@desc	Matches awake states between bodies. Called whenever a collision is about to be resolved.
+	static matchAwakeState = function()
+	{
+		// Return if world collision
+		if (!instance_exists(rb2)) return;
+		
+		// Wake up only the sleeping body
+		if (rb1.isAwake ^ rb2.isAwake)
+		{
+			if (rb1.isAwake) nbpSetAwake(rb2, true);
+			else nbpSetAwake(rb1, true);
+		}
+	}
 }
 
 ///	@func	ContactResolver(iterations);
@@ -210,6 +225,9 @@ function ContactResolver(_iterations=1) constructor
 			
 			// Break if found nothing
 			if (_maxIdx == _contactCount) break;
+			
+			// Update awake state
+			_contacts[_maxIdx].matchAwakeState();
 			
 			// Resolve this contact
 			_contacts[_maxIdx].resolve(_dt);

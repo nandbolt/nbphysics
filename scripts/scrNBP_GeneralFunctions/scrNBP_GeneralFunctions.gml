@@ -150,7 +150,32 @@ function nbpSetLayers(_rb, _b1=1, _b2=0, _b3=0, _b4=0, _b5=0, _b6=0, _b7=0, _b8=
 	//	}
 	//}
 }
-	
+
+///	@func	nbpSetAwake(rb, awake);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@param	{bool}	awake	Whether or not its awake.
+///	@desc	Sets the body's state to either awake or asleep.
+function nbpSetAwake(_rb, _awake=true)
+{
+	with (_rb)
+	{
+		if (_awake)
+		{
+			// WAKE
+			isAwake = true;
+			
+			// Add some motion to avoid immediately sleeping
+			motion = NBP_SLEEP_EPSILON * 2;
+		}
+		else
+		{
+			// SLEEP
+			isAwake = false;
+			velocity.set();
+		}
+	}
+}
+
 #endregion
 	
 #region Properties
@@ -278,6 +303,9 @@ function nbpClearContactGens(_rb){ _rb.contactGens = []; }
 ///			net force -> acceleration -> velocity -> position.
 function nbpIntegrate(_rb, _dt)
 {
+	// Make sure body is awake
+	if (_rb.canSleep && !_rb.isAwake) return;
+	
 	// Make sure time isn't zero
 	if (_dt <= 0) throw("Integration error. Delta time can't be <= 0!");
 	
@@ -302,6 +330,28 @@ function nbpIntegrate(_rb, _dt)
 		// Calculate position
 		x += velocity.x;
 		y += velocity.y;
+		
+		#region Sleep
+		
+		// Check if can sleep
+		if (canSleep)
+		{
+			// Calculate current motion
+			var _currentMotion = velocity.dotProductVector(velocity);
+		
+			// Calculate bias
+			var _bias = power(NBP_MOTION_BIAS, _dt);
+		
+			// Get the recency-weighted average motion over several frames
+			motion = _bias * motion + (1 - _bias) * _currentMotion;
+		
+			// Check motion clamp
+			if (motion > (10 * NBP_SLEEP_EPSILON)) motion = 10 * NBP_SLEEP_EPSILON;
+			// Check if bedtime
+			else if (motion < NBP_SLEEP_EPSILON) nbpSetAwake(self.id, false);
+		}
+		
+		#endregion
 	}
 }
 

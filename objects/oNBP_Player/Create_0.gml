@@ -2,6 +2,7 @@
 event_inherited();
 
 // Properties
+canSleep = false;
 damping = 0.25;
 inverseMass = 0.125;
 bounciness = 0.5;

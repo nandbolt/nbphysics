@@ -32,6 +32,21 @@ When changing the angle of the rigid body, use nbpSetAngle(rb, angle) to automat
 */
 orientation = new Matrix22(-image_angle);
 
+/*
+Holds the motion of the body, used for putting the body to sleep or not.
+*/
+motion = 0;
+
+/*
+Rigid bodies can be put to sleep to avoid integration/collision functions.
+*/
+isAwake = true;
+
+/*
+Used to prevent specific bodies from being put to sleep, such as the player.
+*/
+canSleep = true;
+
 #endregion
 
 #region Environmental Properties

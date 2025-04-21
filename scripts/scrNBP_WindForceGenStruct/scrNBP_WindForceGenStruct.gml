@@ -1,6 +1,6 @@
 /// @func	WindForceGen(fx, fy);
-///	@paran	{real}	fx	The wind x-strength.
-///	@paran	{real}	fy	The wind y-strength.
+///	@param	{real}	fx	The wind x-strength.
+///	@param	{real}	fy	The wind y-strength.
 ///	@desc	A force generator representing wind.
 function WindForceGen(_fx=1, _fy=0) : ForceGen() constructor
 {
@@ -23,6 +23,9 @@ function WindForceGen(_fx=1, _fy=0) : ForceGen() constructor
 		
 		// Apply wind
 		nbpAddForce(_rb, windForce.x * _h * _wc, windForce.y * _w * _hc);
+		
+		// Wake
+		if (!_rb.isAwake) nbpSetAwake(_rb, true);
 	}
 	
 	///	@func	setWindDir(dx, dy);

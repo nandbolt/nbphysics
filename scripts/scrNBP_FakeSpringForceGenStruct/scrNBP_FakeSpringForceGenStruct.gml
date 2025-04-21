@@ -59,6 +59,9 @@ function FakeSpringForceGen(_anchor, _k=1, _damping=0) : ForceGen() constructor
 		_accel.scale(-nbpGetMass(_rb));
 		nbpAddForceVector(_rb, _accel);
 		
+		// Wake
+		if (!_rb.isAwake) nbpSetAwake(_rb, true);
+		
 		// Delete vectors
 		delete _accel;
 		delete _targ;

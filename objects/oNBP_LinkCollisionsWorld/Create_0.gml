@@ -34,6 +34,9 @@ with (oNBP_BoxSV)
 	nbpSetShape(self.id, NBPShape.CIRCLE);
 	image_xscale = 9;
 	image_yscale = 9;
+	
+	// Wake
+	nbpSetAwake(self.id, true);
 }
 
 // Environment boxes

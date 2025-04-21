@@ -1,7 +1,7 @@
 /// @func	AnchoredBungeeForceGen(anchor, k, restLength);
-///	@paran	{Struct.Vector2}	anchor	The anchor position.
-///	@paran	{real}	k			The spring constant.
-///	@paran	{real}	restLength	The rest length of the bungee cord.
+///	@param	{Struct.Vector2}	anchor	The anchor position.
+///	@param	{real}	k			The spring constant.
+///	@param	{real}	restLength	The rest length of the bungee cord.
 ///	@desc	A force generator representing a bungee cord.
 function AnchoredBungeeForceGen(_anchor, _k=1, _restLength=128) : ForceGen() constructor
 {
@@ -43,5 +43,8 @@ function AnchoredBungeeForceGen(_anchor, _k=1, _restLength=128) : ForceGen() con
 		_force.normalize();
 		_force.scale(_len * _dir);
 		nbpAddForceVector(_rb, _force);
+		
+		// Wake
+		if (!_rb.isAwake) nbpSetAwake(_rb, true);
 	}
 }

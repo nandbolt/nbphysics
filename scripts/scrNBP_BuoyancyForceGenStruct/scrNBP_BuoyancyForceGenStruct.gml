@@ -1,6 +1,6 @@
 /// @func	BuoyancyForceGen(waterLevel, liquidDensity);
-///	@paran	{real}	waterLevel		The y-position of the water level.
-///	@paran	{real}	liquidDensity	The liquid density.
+///	@param	{real}	waterLevel		The y-position of the water level.
+///	@param	{real}	liquidDensity	The liquid density.
 ///	@desc	A force generator representing buoyancy in water.
 function BuoyancyForceGen(_waterLevel, _liquidDensity=0.1) : ForceGen() constructor
 {
@@ -47,5 +47,8 @@ function BuoyancyForceGen(_waterLevel, _liquidDensity=0.1) : ForceGen() construc
 		// Partially submerged
 		_force.y = -liquidDensity * _area * (_depth - waterLevel) / _h;
 		nbpAddForceVector(_rb, _force);
+		
+		// Wake
+		if (!_rb.isAwake) nbpSetAwake(_rb, true);
 	}
 }

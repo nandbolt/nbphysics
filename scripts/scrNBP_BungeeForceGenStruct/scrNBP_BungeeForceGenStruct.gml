@@ -1,7 +1,7 @@
 /// @func	BungeeForceGen(rb, k, restLength);
-///	@paran	{real}	rb			The rigid body.
-///	@paran	{real}	k			The spring constant.
-///	@paran	{real}	restLength	The rest length of the bungee cord.
+///	@param	{real}	rb			The rigid body.
+///	@param	{real}	k			The spring constant.
+///	@param	{real}	restLength	The rest length of the bungee cord.
 ///	@desc	A force generator representing a bungee cord.
 function BungeeForceGen(_rb, _k=1, _restLength=128) : ForceGen() constructor
 {
@@ -43,5 +43,8 @@ function BungeeForceGen(_rb, _k=1, _restLength=128) : ForceGen() constructor
 		_force.normalize();
 		_force.scale(_len * _dir);
 		nbpAddForceVector(_rb, _force);
+		
+		// Wake
+		if (!_rb.isAwake) nbpSetAwake(_rb, true);
 	}
 }
