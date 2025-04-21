@@ -46,6 +46,14 @@ Applies general friction, slowing down bodies (0 = max friction, 1 = no friction
 */
 damping = 0.995;
 
+/*
+Used for collision checks. There are 8 potential layers, or bits and can be set using nbpSetBitmask(rb, bits).
+Collisions will only occur between bodies having at least one similar bit, or layer, with each other.
+The default mask is 1 => 10000000.
+*/
+bitmask = 1;
+bitmaskString = "10000000";		// Updates everytime the bitmask is changed. Used for reference.
+
 #endregion
 
 #region Movement Vectors

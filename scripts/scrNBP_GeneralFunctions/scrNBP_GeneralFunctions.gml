@@ -109,6 +109,47 @@ function nbpSetShape(_rb, _shape)
 			break;
 	}
 }
+
+///	@func	nbpSetLayers(rb, b1, b2, b3, b4, b5, b6, b7, b8);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@param	{real}	b1	The first layer's bit	(generally the world/environment)
+///	@param	{real}	b2	The second layer's bit	(generally the actors)
+///	@param	{real}	b3	The third layer's bit	(generally the projectiles)
+///	@param	{real}	b4	The fourth layer's bit
+///	@param	{real}	b5	The fifth layer's bit
+///	@param	{real}	b6	The sixth layer's bit
+///	@param	{real}	b7	The seventh layer's bit
+///	@param	{real}	b8	The eighth layer's bit
+///	@desc	Sets the current collision bitmask used for detecting what the body can collide with.
+function nbpSetLayers(_rb, _b1=1, _b2=0, _b3=0, _b4=0, _b5=0, _b6=0, _b7=0, _b8=0)
+{
+	// Set bitmask real value
+	bitmask = _b1 + _b2 * 2 + _b3 * 4 + _b4 * 8 + _b5 * 16 + _b6 * 32 + _b7 * 64 + _b8 * 128;
+	
+	// Set bitmask string
+	var _n = bitmask;
+	bitmaskString = "";
+	for (var _i = 0; _i < 8; _i++)
+	{
+		if (_n > 0)
+		{
+			bitmaskString += string(_n % 2);
+			_n = _n div 2;
+		}
+		else bitmaskString += "0";
+	}
+	//if (bitmask == 0) bitmaskString = "0";
+	//else
+	//{
+			
+	//	var _n = bitmask;
+	//	while (_n > 0)
+	//	{
+	//		bitmaskString = string(_n % 2) + bitmaskString;
+	//		_n = _n div 2;
+	//	}
+	//}
+}
 	
 #endregion
 	
@@ -118,6 +159,15 @@ function nbpSetShape(_rb, _shape)
 ///	@param	{Id.Instance}	rb	The rigid body.
 ///	@desc	Returns true if the body has finite mass, false if infinite (or immoveable).
 function nbpHasFiniteMass(_rb){ return _rb.inverseMass > 0; }
+
+///	@func	nbpHasSharedLayer(rb1, rb2);
+///	@param	{Id.Instance}	rb1	The first rigid body.
+///	@param	{Id.Instance}	rb2	The second rigid body.
+///	@desc	Returns whether or not there is a similarity within the rigid body's collision bitmask layers.
+function nbpHasSharedLayer(_rb1, _rb2)
+{
+	return !((_rb1.bitmask & _rb2.bitmask) == 0);
+}
 	
 #endregion
 	

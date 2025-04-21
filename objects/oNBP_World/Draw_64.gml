@@ -34,6 +34,8 @@ if (instance_exists(oNBP_Player))
 	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, string("bounciness: {0}", string(oNBP_Player.bounciness)));
 	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("bitmask: {0}", oNBP_Player.bitmaskString));
+	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, "change shape : left click");
 	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, "rotate : scroll wheel");

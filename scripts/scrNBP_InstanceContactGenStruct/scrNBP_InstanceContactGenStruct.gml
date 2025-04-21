@@ -28,7 +28,9 @@ function InstContactGen() : ContactGen() constructor
 			{
 				_inst = instance_place(x, y, _pw.rbObject);
 			}
-			if (!instance_exists(_inst)) return _used;
+			
+			// Return if doesn't exist or they don't share layers
+			if (!instance_exists(_inst) || !nbpHasSharedLayer(_rb, _inst)) return _used;
 			
 			// Get contact index
 			var _contactIdx = _pw.nextContactIdx;
