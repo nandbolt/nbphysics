@@ -47,8 +47,5 @@ function BuoyancyForceGen(_waterLevel, _liquidDensity=0.1) : ForceGen() construc
 		// Partially submerged
 		_force.y = -liquidDensity * _area * (_depth - waterLevel) / _h;
 		nbpAddForceVector(_rb, _force);
-		
-		// Wake
-		if (!_rb.isAwake) nbpSetAwake(_rb, true);
 	}
 }

@@ -208,13 +208,25 @@ function nbpClearForces(_rb){ _rb.force.set(); }
 ///	@param	{real}	fx	The force x-coordinate to add.	
 ///	@param	{real}	fy	The force y-coordinate to add.	
 ///	@desc	Adds the force to the net force.
-function nbpAddForce(_rb, _fx, _fy){ _rb.force.add(_fx, _fy); }
+function nbpAddForce(_rb, _fx, _fy)
+{
+	_rb.force.add(_fx, _fy);
+	
+	// Wake
+	if (!_rb.isAwake) nbpSetAwake(_rb, true);
+}
 	
 ///	@func	nbpAddForceVector(rb, f);
 ///	@param	{Id.Instance}	rb	The rigid body.
 ///	@param	{Struct.Vector2}	f	The force vector to add.	
 ///	@desc	Adds the force to the net force.
-function nbpAddForceVector(_rb, _f){ _rb.force.addVector(_f); }
+function nbpAddForceVector(_rb, _f)
+{
+	_rb.force.addVector(_f);
+	
+	// Wake
+	if (!_rb.isAwake) nbpSetAwake(_rb, true);
+}
 
 ///	@func	nbpAddForceGen(rb, fg);
 ///	@param	{Id.Instance}	rb	The rigid body.

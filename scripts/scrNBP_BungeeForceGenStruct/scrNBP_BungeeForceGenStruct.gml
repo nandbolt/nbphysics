@@ -43,8 +43,5 @@ function BungeeForceGen(_rb, _k=1, _restLength=128) : ForceGen() constructor
 		_force.normalize();
 		_force.scale(_len * _dir);
 		nbpAddForceVector(_rb, _force);
-		
-		// Wake
-		if (!_rb.isAwake) nbpSetAwake(_rb, true);
 	}
 }
