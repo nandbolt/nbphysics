@@ -1,0 +1,1 @@
+inverseMass = 0;

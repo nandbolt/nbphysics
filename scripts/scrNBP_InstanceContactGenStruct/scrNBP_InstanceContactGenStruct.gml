@@ -358,7 +358,7 @@ function InstContactGen() : ContactGen() constructor
 			}
 			
 			// Go through corners
-			for (var _i = 0; _i < 4; _i++)
+			for (var _i = 0; _i < array_length(_corners); _i++)
 			{
 				// Check if point is inside
 				var _r = new Vector2(_corners[_i].x - _local.x, _corners[_i].y - _local.y);
@@ -374,7 +374,7 @@ function InstContactGen() : ContactGen() constructor
 					_n.y = (_hh - abs(_r.y)) * sign(_r.y);
 					
 					// Choose lowest interpenetration
-					if (abs(_n.x) < abs(_n.y))
+					if (abs(_n.x) < abs(_n.y) || _n.y == 0)
 					{
 						_n.y = 0;
 						_penetration = abs(_n.x);
@@ -386,7 +386,7 @@ function InstContactGen() : ContactGen() constructor
 					}
 					
 					// Check if new best normal
-					if (_penetration < _bestPenetration)
+					if (_penetration < _bestPenetration && _penetration > 0)
 					{
 						// Rotate normal back to world space
 						_n.multiplyMatrix22(_local.orientation);
