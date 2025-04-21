@@ -7,14 +7,8 @@ repeat (8 * oNBP_PhysicsWorld.simulationSpeed)
 	var _x = random(room_width), _y = random_range(-64, -4);
 	with (instance_create_layer(_x, _y, "Instances", oNBP_Raindrop))
 	{
-		// Gravity
-		grav.y = 100;
-		
 		// Wind
 		nbpAddForceGen(self.id, other.fgWind);
-		
-		// Hide outlines
-		outlines = false;
 	}
 }
 

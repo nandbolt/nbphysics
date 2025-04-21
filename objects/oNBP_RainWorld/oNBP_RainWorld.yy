@@ -32,7 +32,7 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Rain",
-    "path": "folders/Objects/NB/Demos/Physics/Rain.yy",
+    "name": "Rooms",
+    "path": "folders/Objects/NB/Demos/Physics/Rooms.yy",
   },
 }

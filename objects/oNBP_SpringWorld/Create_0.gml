@@ -4,6 +4,9 @@ event_inherited();
 // Name
 name = "Springs";
 
+// Collisions
+cgInst = new InstContactGen();
+
 // Anchored spring
 var _px = 608, _py = 352;
 fgLeftSpring = new AnchoredSpringForceGen(new Vector2(_px-128, _py));

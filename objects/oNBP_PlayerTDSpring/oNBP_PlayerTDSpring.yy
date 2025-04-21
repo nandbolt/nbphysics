@@ -35,7 +35,7 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Spring",
-    "path": "folders/Objects/NB/Demos/Physics/Spring.yy",
+    "name": "Player",
+    "path": "folders/Objects/NB/Demos/Physics/Player.yy",
   },
 }

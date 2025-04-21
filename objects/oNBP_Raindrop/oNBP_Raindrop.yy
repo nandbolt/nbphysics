@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "oNBP_Raindrop",
   "spriteId": {
-    "name": "sNBP_RectFill",
-    "path": "sprites/sNBP_RectFill/sNBP_RectFill.yy",
+    "name": "sNBP_RectOutline",
+    "path": "sprites/sNBP_RectOutline/sNBP_RectOutline.yy",
   },
   "solid": false,
   "visible": true,
@@ -28,8 +28,8 @@
   "physicsKinematic": false,
   "physicsShapePoints": [],
   "eventList": [
-    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,},
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":3,"collisionObjectId":null,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,},
   ],
   "properties": [],
   "overriddenProperties": [],

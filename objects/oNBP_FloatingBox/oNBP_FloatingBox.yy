@@ -1,16 +1,19 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "oNBP_RectCollisionsWorld",
-  "spriteId": null,
+  "name": "oNBP_FloatingBox",
+  "spriteId": {
+    "name": "sNBP_RectOutline",
+    "path": "sprites/sNBP_RectOutline/sNBP_RectOutline.yy",
+  },
   "solid": false,
   "visible": true,
   "managed": true,
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": {
-    "name": "oNBP_World",
-    "path": "objects/oNBP_World/oNBP_World.yy",
+    "name": "oNBP_BoxSV",
+    "path": "objects/oNBP_BoxSV/oNBP_BoxSV.yy",
   },
   "physicsObject": false,
   "physicsSensor": false,
@@ -25,13 +28,14 @@
   "physicsKinematic": false,
   "physicsShapePoints": [],
   "eventList": [
-    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":4,"eventType":7,"collisionObjectId":null,},
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":4,"eventType":7,"collisionObjectId":null,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":8,"collisionObjectId":null,},
   ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Rooms",
-    "path": "folders/Objects/NB/Demos/Physics/Rooms.yy",
+    "name": "Water",
+    "path": "folders/Objects/NB/Demos/Physics/Water.yy",
   },
 }

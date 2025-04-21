@@ -13,25 +13,43 @@ yCursor += ySpacing;
 draw_text(xCursor, yCursor, "next demo : ->");
 yCursor += ySpacing;
 draw_text(xCursor, yCursor, "prev demo : <-");
+yCursor += ySpacing;
+draw_text(xCursor, yCursor, "fullscreen : f11");
+yCursor += ySpacing;
+draw_text(xCursor, yCursor, "screenshot : f10");
+
+// Player
+if (instance_exists(oNBP_Player))
+{
+	yCursor += ySpacing * 2;
+	draw_text(xCursor, yCursor, "player");
+	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("fgs: {0}", string(oNBP_Player.forceGens)));
+	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("cgs: {0}", string(oNBP_Player.contactGens)));
+	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("grav: {0}", string(oNBP_Player.grav)));
+	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("damping: {0}", string(oNBP_Player.damping)));
+	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("bounciness: {0}", string(oNBP_Player.bounciness)));
+	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, "change shape : left click");
+	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, "rotate : scroll wheel");
+}
 
 // Player debug
 if (instance_exists(oNBP_PlayerTD))
 {
-	yCursor += ySpacing * 2;
-	draw_text(xCursor, yCursor, "player");
 	yCursor += ySpacing;
-	draw_text(xCursor, yCursor, string("fgs: {0}", string(oNBP_PlayerTD.forceGens)));
-	yCursor += ySpacing;
-	draw_text(xCursor, yCursor, string("cgs: {0}", string(oNBP_PlayerTD.contactGens)));
+	draw_text(xCursor, yCursor, "move : awsd");
 }
 else if (instance_exists(oNBP_PlayerSV))
 {
-	yCursor += ySpacing * 2;
-	draw_text(xCursor, yCursor, "player");
+	// Move
 	yCursor += ySpacing;
-	draw_text(xCursor, yCursor, string("fgs: {0}", string(oNBP_PlayerSV.forceGens)));
+	draw_text(xCursor, yCursor, "run : ad");
 	yCursor += ySpacing;
-	draw_text(xCursor, yCursor, string("cgs: {0}", string(oNBP_PlayerSV.contactGens)));
-	yCursor += ySpacing;
-	draw_text(xCursor, yCursor, string("grav: {0}", string(oNBP_PlayerSV.grav)));
+	draw_text(xCursor, yCursor, "jump : space");
 }

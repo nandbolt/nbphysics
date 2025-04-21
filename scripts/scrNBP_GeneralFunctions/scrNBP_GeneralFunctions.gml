@@ -87,11 +87,25 @@ function nbpSetShape(_rb, _shape)
 	switch (_shape)
 	{
 		case NBPShape.RECT:
+			_rb.orientation.setRotation(0);
+			
+			// Draw
+			_rb.funcDrawShape = nbpDrawRect;
+			_rb.color = #ffff55;
+			break;
 		case NBPShape.CIRCLE:
 			_rb.orientation.setRotation(0);
+			
+			// Draw
+			_rb.funcDrawShape = nbpDrawCircle;
+			_rb.color = #55ff55;
 			break;
 		case NBPShape.RECT_ROTATED:
 			_rb.orientation.setRotation(-_rb.image_angle);
+			
+			// Draw
+			_rb.funcDrawShape = nbpDrawRotatedRect;
+			_rb.color = #ff5555;
 			break;
 	}
 }
@@ -101,7 +115,7 @@ function nbpSetShape(_rb, _shape)
 #region Properties
 	
 ///	@func	nbpHasFiniteMass(rb);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@desc	Returns true if the body has finite mass, false if infinite (or immoveable).
 function nbpHasFiniteMass(_rb){ return _rb.inverseMass > 0; }
 	
@@ -110,25 +124,25 @@ function nbpHasFiniteMass(_rb){ return _rb.inverseMass > 0; }
 #region Simulation
 	
 ///	@func	nbpClearForces(rb);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@desc	Clears the forces acting on the body.
 function nbpClearForces(_rb){ _rb.force.set(); }
 	
 ///	@func	nbpAddForce(rb, fx, fy);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@param	{real}	fx	The force x-coordinate to add.	
 ///	@param	{real}	fy	The force y-coordinate to add.	
 ///	@desc	Adds the force to the net force.
 function nbpAddForce(_rb, _fx, _fy){ _rb.force.add(_fx, _fy); }
 	
 ///	@func	nbpAddForceVector(rb, f);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@param	{Struct.Vector2}	f	The force vector to add.	
 ///	@desc	Adds the force to the net force.
 function nbpAddForceVector(_rb, _f){ _rb.force.addVector(_f); }
 
 ///	@func	nbpAddForceGen(rb, fg);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@param	{Struct.ForceGen}	fg	The force gen.
 ///	@desc	Adds a force generator to the rigid body.
 function nbpAddForceGen(_rb, _fg)
@@ -137,7 +151,7 @@ function nbpAddForceGen(_rb, _fg)
 }
 
 ///	@func	nbpRemoveForceGen(rb, fg);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@param	{Struct.ForceGen}	fg	The force gen.
 ///	@desc	Removes a force generator from the rigid body.
 function nbpRemoveForceGen(_rb, _fg)
@@ -156,12 +170,12 @@ function nbpRemoveForceGen(_rb, _fg)
 }
 
 ///	@func	nbpClearForceGens(rb);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@desc	Clears all force generators from the rigid body.
 function nbpClearForceGens(_rb){ _rb.forceGens = []; }
 
 ///	@func	nbpApplyForceGens(rb, dt);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@param	{real}	dt	The change in time in the simulation.
 ///	@desc	Applies all of the registered force gens to the rigid body.
 function nbpApplyForceGens(_rb, _dt)
@@ -175,7 +189,7 @@ function nbpApplyForceGens(_rb, _dt)
 }
 
 ///	@func	nbpAddContactGen(rb, cg);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@param	{Struct.ContactGen}	cg	The contact gen.
 ///	@desc	Adds a contact generator to the rigid body.
 function nbpAddContactGen(_rb, _cg)
@@ -184,7 +198,7 @@ function nbpAddContactGen(_rb, _cg)
 }
 
 ///	@func	nbpRemoveContactGen(rb, cg);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@param	{Struct.ContactGen}	cg	The contact gen.
 ///	@desc	Removes a contact generator from the rigid body.
 function nbpRemoveContactGen(_rb, _cg)
@@ -203,12 +217,12 @@ function nbpRemoveContactGen(_rb, _cg)
 }
 
 ///	@func	nbpClearContactGens(rb);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@desc	Clears all contact generators from the rigid body.
 function nbpClearContactGens(_rb){ _rb.contactGens = []; }
 
 ///	@func	nbpIntegrate(rb, dt);
-///	@param	{Instance.Id}	rb	The rigid body.
+///	@param	{Id.Instance}	rb	The rigid body.
 ///	@param	{real}	dt	The change in time of the simulation.
 ///	@desc	Updates the body forward in time in the simulation. This means turning a
 ///			net force -> acceleration -> velocity -> position.
@@ -220,14 +234,14 @@ function nbpIntegrate(_rb, _dt)
 	// Rigid body scope
 	with (_rb)
 	{
-		// Add gravity
-		force.addVector(grav);
-		
 		// Store previous force
 		prevForce.setVector(force);
 		
 		// Calculate acceleration
 		acceleration.setScaledVector(force, inverseMass);
+		
+		// Add gravity
+		acceleration.addVector(grav);
 		
 		// Calculate velocity
 		velocity.addScaledVector(acceleration, _dt);
@@ -238,6 +252,105 @@ function nbpIntegrate(_rb, _dt)
 		// Calculate position
 		x += velocity.x;
 		y += velocity.y;
+	}
+}
+
+#endregion
+
+#region Debug
+
+///	@func	nbpDrawRect(rb);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@desc	Draws the rigid body as a rectangle (using the bounding box).
+function nbpDrawRect(_rb)
+{
+	with (_rb)
+	{
+		// Outlines
+		if (outlines)
+		{
+			image_blend = c_dkgray;
+			draw_set_color(c_dkgray);
+			draw_self();
+			draw_circle(x, y, nbpGetRadius(self.id), true);
+		}
+		
+		// Rectangle
+		draw_set_color(color);
+		draw_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, true);
+		
+		// Infinite mass dot
+		if (inverseMass == 0)
+		{
+			draw_set_color(c_orange);
+			draw_circle(x, y, 4, true);
+		}
+		
+		// Reset color
+		draw_set_color(c_white);
+	}
+}
+
+///	@func	nbpDrawRotatedRect(rb);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@desc	Draws the rigid body as a rotated rectangle.
+function nbpDrawRotatedRect(_rb)
+{
+	with (_rb)
+	{
+		// Outlines
+		if (outlines)
+		{
+			draw_set_color(c_dkgray);
+			draw_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, true);
+			draw_circle(x, y, nbpGetRadius(self.id), true);
+		}
+		
+		// Rotated rectangle
+		image_blend = color;
+		draw_self();
+		
+		// Infinite mass dot
+		if (inverseMass == 0)
+		{
+			draw_set_color(c_orange);
+			draw_circle(x, y, 4, true);
+		}
+		
+		// Reset color
+		draw_set_color(c_white);
+	}
+}
+
+///	@func	nbpDrawCircle(rb);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@desc	Draws the rigid body as a rectangle (using the bounding box).
+function nbpDrawCircle(_rb)
+{
+	with (_rb)
+	{
+		// Outlines
+		if (outlines)
+		{
+			image_blend = c_dkgray;
+			draw_set_color(c_dkgray);
+			draw_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, true);
+			draw_self();
+		}
+		
+		// Circle
+		draw_set_color(color);
+		draw_circle(x, y, nbpGetRadius(self.id), true);
+		
+		// Infinite mass dot
+		if (inverseMass == 0)
+		{
+			draw_set_color(c_orange);
+			draw_circle(x, y, 4, true);
+		}
+		
+		// Reset color
+		draw_set_color(c_white);
 	}
 }
 

@@ -7,3 +7,7 @@ delete velocity;
 
 // Matrices
 delete orientation;
+
+// Arrays
+forceGens = -1;
+contactGens = -1;

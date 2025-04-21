@@ -1,5 +1,2 @@
-// Rotate
-image_angle = velocity.angle();
-
-// Destroy if not in view
+///	@desc Destroy Off Screen
 if (bbox_top > room_height) instance_destroy();

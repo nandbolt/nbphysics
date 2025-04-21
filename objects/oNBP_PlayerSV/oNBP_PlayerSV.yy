@@ -12,8 +12,8 @@
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": {
-    "name": "oNBP_RigidBody",
-    "path": "objects/oNBP_RigidBody/oNBP_RigidBody.yy",
+    "name": "oNBP_Player",
+    "path": "objects/oNBP_Player/oNBP_Player.yy",
   },
   "physicsObject": false,
   "physicsSensor": false,
@@ -28,13 +28,13 @@
   "physicsKinematic": false,
   "physicsShapePoints": [],
   "eventList": [
-    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":3,"collisionObjectId":null,},
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":3,"collisionObjectId":null,},
   ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Physics",
-    "path": "folders/Objects/NB/Demos/Physics.yy",
+    "name": "Player",
+    "path": "folders/Objects/NB/Demos/Physics/Player.yy",
   },
 }

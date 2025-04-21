@@ -2,4 +2,4 @@
 event_inherited();
 
 // Properties
-grav.y = 20;
+inverseMass = 1 / 32;

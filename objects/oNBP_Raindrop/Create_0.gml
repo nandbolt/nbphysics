@@ -1,5 +1,8 @@
 // Inherit the parent event
 event_inherited();
 
-// Color
-image_blend = c_aqua;
+// Gravity
+grav.y = 50;
+
+// Hide outlines
+outlines = false;

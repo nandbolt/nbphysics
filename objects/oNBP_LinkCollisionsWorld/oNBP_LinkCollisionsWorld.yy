@@ -31,7 +31,7 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "LinkCollisions",
-    "path": "folders/Objects/NB/Demos/Physics/LinkCollisions.yy",
+    "name": "Rooms",
+    "path": "folders/Objects/NB/Demos/Physics/Rooms.yy",
   },
 }

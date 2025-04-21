@@ -65,7 +65,7 @@ for rigid bodies. Feel free to change:
 rbBall = instance_create_layer(0, 0, "Instances", oNBP_RigidBody);
 with (rbBall)
 {
-	grav.y = 100;
+	grav.y = 10;
 }
 `
 
