@@ -10,6 +10,17 @@ function BuoyancyForceGen(_waterLevel, _liquidDensity=0.1) : ForceGen() construc
 	waterLevel = _waterLevel;
 	liquidDensity = _liquidDensity;
 	
+	///	@func	draw();
+	///	@desc	Draws the spring.
+	static draw = function()
+	{
+		draw_set_color(c_aqua);
+		var _x1 = camera_get_view_x(view_camera[0]);
+		var _x2 = _x1 + camera_get_view_width(view_camera[0]);
+		draw_line(_x1, waterLevel, _x2, waterLevel);
+		draw_set_color(c_white);
+	}
+	
 	///	@func	updateForce(rigidBody, dt);
 	///	@param	{Struct.RigidBody}	rigidBody	The rigid body the force is being applied to.
 	///	@param	{real}	dt	The change in time of the simulation.

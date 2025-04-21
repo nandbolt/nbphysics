@@ -4,8 +4,6 @@ event_inherited();
 // Springs
 with (oNBP_BoxTD)
 {
-	draw_line(other.x, other.y, x, y);
+	other.fgSpring.draw(self.id);
 }
-
-// Bungee
-draw_line(x, y, fgBungee.anchor.x, fgBungee.anchor.y);
+fgBungee.draw(self.id);

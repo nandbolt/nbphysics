@@ -1,7 +1,7 @@
 /// @func	FakeSpringForceGen(anchor, k, damping);
-///	@paran	{Struct.Vector2}	anchor		The anchor position.
-///	@paran	{real}	k			The spring constant.
-///	@paran	{real}	damping		The rest length of the spring.
+///	@param	{Struct.Vector2}	anchor		The anchor position.
+///	@param	{real}	k			The spring constant.
+///	@param	{real}	damping		The rest length of the spring.
 ///	@desc	A force generator representing a fake, stiff spring (potentially useful
 ///			for collisions).
 function FakeSpringForceGen(_anchor, _k=1, _damping=0) : ForceGen() constructor
@@ -12,6 +12,15 @@ function FakeSpringForceGen(_anchor, _k=1, _damping=0) : ForceGen() constructor
 	anchor = _anchor;
 	k = _k;
 	damping = _damping;
+	
+	///	@func	draw(rb);
+	///	@desc	Draws the spring.
+	static draw = function(_rb)
+	{
+		draw_set_color(c_fuchsia);
+		draw_line(anchor.x, anchor.y, _rb.x, _rb.y);
+		draw_set_color(c_white);
+	}
 	
 	///	@func	updateForce(rigidBody, dt);
 	///	@param	{Struct.RigidBody}	rigidBody	The rigid body the force is being applied to.

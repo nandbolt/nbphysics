@@ -19,6 +19,14 @@ function LinkContactGen(_rb1=noone, _rb2=noone) : ContactGen() constructor
 		return point_distance(rb1.x, rb1.y, rb2.x, rb2.y);
 	}
 	
+	///	@func	draw();
+	///	@desc	Draws the link between the rigid bodies.
+	static draw = function()
+	{
+		draw_set_color(c_white);
+		draw_line(rb1.x, rb1.y, rb2.x, rb2.y);
+	}
+	
 	///	@func	addContact(rb, pw, limit);
 	///	@param	{Id.Instance}	rb	The rigid body.
 	///	@param	{Id.Instance}	pw	The physics world.

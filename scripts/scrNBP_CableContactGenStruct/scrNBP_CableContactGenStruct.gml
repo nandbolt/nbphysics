@@ -11,6 +11,15 @@ function CableContactGen(_rb1=noone, _rb2=noone, _maxLength=128) : LinkContactGe
 	maxLength = _maxLength;
 	restitution = 1;
 	
+	///	@func	draw();
+	///	@desc	Draws the link between the rigid bodies.
+	static draw = function()
+	{
+		draw_set_color(point_distance(rb1.x, rb1.y, rb2.x, rb2.y) > maxLength ? c_yellow : c_aqua);
+		draw_line(rb1.x, rb1.y, rb2.x, rb2.y);
+		draw_set_color(c_white);
+	}
+	
 	///	@func	addContact(rb, pw, limit);
 	///	@param	{Id.Instance}	rb	The rigid body.
 	///	@param	{Id.Instance}	pw	The physics world.

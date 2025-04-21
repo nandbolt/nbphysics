@@ -13,6 +13,19 @@ function RodContactGen(_rb1=noone, _rb2=noone, _length=128, _wiggle=1) : LinkCon
 	wiggle = _wiggle;
 	restitution = 0;
 	
+	///	@func	draw();
+	///	@desc	Draws the link between the rigid bodies.
+	static draw = function()
+	{
+		var _r = point_distance(rb1.x, rb1.y, rb2.x, rb2.y);
+		var _c = c_red;
+		if (_r > (length + wiggle)) _c = c_yellow;
+		if (_r < (length - wiggle)) _c = c_orange;
+		draw_set_color(_c);
+		draw_line(rb1.x, rb1.y, rb2.x, rb2.y);
+		draw_set_color(c_white);
+	}
+	
 	///	@func	addContact(rb, pw, limit);
 	///	@param	{Id.Instance}	rb	The rigid body.
 	///	@param	{Id.Instance}	pw	The physics world.
