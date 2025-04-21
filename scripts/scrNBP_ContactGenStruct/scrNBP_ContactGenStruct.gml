@@ -184,6 +184,7 @@ function ContactResolver(_iterations=1) constructor
 {
 	iterations = _iterations;
 	iterationsUsed = 0;			// For performance testing
+	penetrationEpsilon = 0.1;	// Tolerance for determining what is considered a collision
 	
 	///	@func	setIterations(iterations);
 	///	@param	{real}	iterations	The number of iterations that can be used.
@@ -209,16 +210,31 @@ function ContactResolver(_iterations=1) constructor
 		while (iterationsUsed < iterations)
 		{
 			// Find contact with largest closing velocity (opposite to separating)
-			var _max = 0;
+			//var _max = 0;
+			//var _maxIdx = _contactCount;
+			//for (var _i = 0; _i < _contactCount; _i++)
+			//{
+			//	// Get separating velocity
+			//	var _sepVel = _contacts[_i].calculateSeparatingVelocity();
+			//	if (_sepVel < _max && (_sepVel < 0 || _contacts[_i].penetration > 0))
+			//	{
+			//		// Found new highest closing velocity
+			//		_max = _sepVel;
+			//		_maxIdx = _i;
+			//	}
+			//}
+			
+			// Find contact with largest penetration (works better with rotating bodies)
+			var _worstPenetration = penetrationEpsilon;
 			var _maxIdx = _contactCount;
 			for (var _i = 0; _i < _contactCount; _i++)
 			{
 				// Get separating velocity
-				var _sepVel = _contacts[_i].calculateSeparatingVelocity();
-				if (_sepVel < _max && (_sepVel < 0 || _contacts[_i].penetration > 0))
+				var _penetration = _contacts[_i].penetration;
+				if (_contacts[_i].penetration > _worstPenetration)
 				{
 					// Found new highest closing velocity
-					_max = _sepVel;
+					_worstPenetration = _contacts[_i].penetration;
 					_maxIdx = _i;
 				}
 			}
