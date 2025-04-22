@@ -24,9 +24,13 @@ if (instance_exists(oNBP_Player))
 	yCursor += ySpacing * 2;
 	draw_text(xCursor, yCursor, "player");
 	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("shape: {0}", string(oNBP_Player.shape)));
+	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, string("fgs: {0}", string(oNBP_Player.forceGens)));
 	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, string("cgs: {0}", string(oNBP_Player.contactGens)));
+	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("tgs: {0}", string(oNBP_Player.triggerGens)));
 	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, string("grav: {0}", string(oNBP_Player.grav)));
 	yCursor += ySpacing;

@@ -15,6 +15,7 @@ simulationSpeed = 1;
 
 // Bodies
 rbObject = oNBP_RigidBody;
+tObject = oNBP_Trigger;
 
 // Contacts
 maxContacts = 32;

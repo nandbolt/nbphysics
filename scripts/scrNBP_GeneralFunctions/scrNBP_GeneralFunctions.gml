@@ -308,6 +308,58 @@ function nbpRemoveContactGen(_rb, _cg)
 ///	@desc	Clears all contact generators from the rigid body.
 function nbpClearContactGens(_rb){ _rb.contactGens = []; }
 
+///	@func	nbpAddTriggerGen(rb, tg);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@param	{Struct.ForceGen}	tg	The trigger gen.
+///	@desc	Adds a trigger generator to the rigid body.
+function nbpAddTriggerGen(_rb, _tg)
+{
+	array_push(_rb.triggerGens, _tg);
+}
+
+///	@func	nbpRemoveTriggerGen(rb, tg);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@param	{Struct.ForceGen}	tg	The trigger gen.
+///	@desc	Removes a trigger generator from the rigid body.
+function nbpRemoveTriggerGen(_rb, _tg)
+{
+	// Go through force gens
+	for (var _i = 0; _i < array_length(_rb.triggerGens); _i++)
+	{
+		// If found force gen
+		if (_rb.triggerGens[_i] == _tg)
+		{
+			// Remove force gen and exit loop
+			array_delete(_rb.triggerGens, _i, 1);
+			break;
+		}
+	}
+}
+
+///	@func	nbpClearTriggerGens(rb);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@desc	Clears all trigger generators from the rigid body.
+function nbpClearTriggerGens(_rb){ _rb.triggerGens = []; }
+
+///	@func	nbpUpdateTriggerGens(rb, pw, dt);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@param	{Id.Instance}	pw	The physics world.
+///	@param	{real}	dt	The change in time in the simulation.
+///	@desc	Updates all of the registered trigger gens on the rigid body.
+function nbpUpdateTriggerGens(_rb, _pw, _dt)
+{
+	// Go through trigger gens
+	for (var _i = 0; _i < array_length(_rb.triggerGens); _i++)
+	{
+		var _tg = _rb.triggerGens[_i];
+		var _trigger = _tg.trigger(_rb, _pw, _dt);
+		if (instance_exists(_trigger))
+		{
+			_trigger.triggeredThisFrame = true;
+		}
+	}
+}
+
 ///	@func	nbpIntegrate(rb, dt);
 ///	@param	{Id.Instance}	rb	The rigid body.
 ///	@param	{real}	dt	The change in time of the simulation.
@@ -391,13 +443,6 @@ function nbpDrawRect(_rb)
 		draw_set_color(color);
 		draw_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, true);
 		
-		// Infinite mass dot
-		if (inverseMass == 0)
-		{
-			draw_set_color(c_orange);
-			draw_circle(x, y, 4, true);
-		}
-		
 		// Reset color
 		draw_set_color(c_white);
 	}
@@ -421,13 +466,6 @@ function nbpDrawRotatedRect(_rb)
 		// Rotated rectangle
 		image_blend = color;
 		draw_self();
-		
-		// Infinite mass dot
-		if (inverseMass == 0)
-		{
-			draw_set_color(c_orange);
-			draw_circle(x, y, 4, true);
-		}
 		
 		// Reset color
 		draw_set_color(c_white);
@@ -454,19 +492,24 @@ function nbpDrawCircle(_rb)
 		draw_set_color(color);
 		draw_circle(x, y, nbpGetRadius(self.id), true);
 		
-		// Infinite mass dot
-		if (inverseMass == 0)
-		{
-			draw_set_color(c_orange);
-			draw_circle(x, y, 4, true);
-		}
-		
 		// Reset color
 		draw_set_color(c_white);
 	}
 }
 
 #endregion
+
+#endregion
+
+#region Trigger
+
+///	@func	nbpInitTrigger(trigger);
+///	@param	{Id.Instance}	trigger	The trigger.
+///	@desc	Initializes the trigger for the frame.
+function nbpInitTrigger(_trigger)
+{
+	_trigger.triggeredThisFrame = false;
+}
 
 #endregion
 
@@ -478,6 +521,11 @@ function nbpDrawCircle(_rb)
 ///	@param	{Id.Instance}	pw	The physics world.
 ///	@desc	Returns the amount of rigid bodies within the physics simulation.
 function nbpGetRigidBodyCount(_pw){ return instance_number(_pw.rbObject); }
+
+///	@func	nbpGetTriggerCount(pw);
+///	@param	{Id.Instance}	pw	The physics world.
+///	@desc	Returns the amount of triggers within the physics simulation.
+function nbpGetTriggerCount(_pw){ return instance_number(_pw.tObject); }
 
 #endregion
 
@@ -502,6 +550,12 @@ function nbpInitNextPhysicsFrame(_pw)
 ///	@desc	Processes all physics within the simulation.
 function nbpRunPhysics(_pw, _dt)
 {
+	// Reset triggers
+	with (_pw.tObject)
+	{
+		nbpInitTrigger(self.id);
+	}
+	
 	// Apply force generators
 	with (_pw.rbObject)
 	{
@@ -512,6 +566,12 @@ function nbpRunPhysics(_pw, _dt)
 	with (_pw.rbObject)
 	{
 		nbpIntegrate(self.id, _dt);
+	}
+	
+	// Update triggers
+	with (_pw.rbObject)
+	{
+		nbpUpdateTriggerGens(self.id, _pw, _dt);
 	}
 		
 	// Generate contacts

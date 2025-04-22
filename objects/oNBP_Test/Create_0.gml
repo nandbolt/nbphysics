@@ -6,3 +6,6 @@ name = "TEST (Rotated Rect Corners)";
 
 // Contact generator
 cgInst = new InstContactGen();
+
+// Trigger generator
+tgInst = new InstTriggerGen();

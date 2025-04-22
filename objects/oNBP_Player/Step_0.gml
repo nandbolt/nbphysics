@@ -7,7 +7,6 @@ if (_da != 0)
 {
 	var _angle = image_angle + _da;
 	nbpSetAngle(self.id, _angle);
-	orientation.setRotation(-_angle);
 }
 
 // Shape change

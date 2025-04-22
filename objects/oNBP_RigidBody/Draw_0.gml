@@ -1,6 +1,13 @@
 // Shape
 funcDrawShape(self.id);
 
+// Infinite mass dot
+if (inverseMass == 0)
+{
+	draw_set_color(c_orange);
+	draw_circle(x, y, 4, true);
+}
+
 // If asleep
 if (!isAwake)
 {

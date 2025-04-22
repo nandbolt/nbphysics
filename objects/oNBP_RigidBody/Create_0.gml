@@ -94,6 +94,12 @@ To add a contact generator, use nbpAddContactGen(rb, cg).
 */
 contactGens = [];
 
+/*
+Holds registered trigger generators that will activate once in contact
+To add a trigger generator, use nbpAddContactGen(rb, cg).
+*/
+triggerGens = [];
+
 #endregion
 
 #region Debug

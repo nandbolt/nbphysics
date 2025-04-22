@@ -11,3 +11,4 @@ delete orientation;
 // Arrays
 forceGens = -1;
 contactGens = -1;
+triggerGens = -1;
