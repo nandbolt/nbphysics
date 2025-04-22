@@ -312,93 +312,63 @@ function InstContactGen() : ContactGen() constructor
 		// Init info
 		var _bestPenetration = 99999;
 		var _bestNormal = new Vector2();
-		var _corners1 = [
+		var _points = [
 			new Vector2(_hw1, _hh1),
 			new Vector2(_hw1, -_hh1),
 			new Vector2(-_hw1, -_hh1),
 			new Vector2(-_hw1, _hh1),
 		];
-		var _corners2 = [
-			new Vector2(_hw2, _hh2),
-			new Vector2(_hw2, -_hh2),
-			new Vector2(-_hw2, -_hh2),
-			new Vector2(-_hw2, _hh2),
-		];
 		
-		// Convert corners to world space
-		for (var _i = 0; _i < array_length(_corners1); _i++)
+		// Convert rect points to world space
+		for (var _i = 0; _i < array_length(_points); _i++)
 		{
-			_corners1[_i].multiplyMatrix22(_rrect1.orientation);
-			_corners1[_i].add(_rrect1.x, _rrect1.y);
-		}
-		for (var _i = 0; _i < array_length(_corners2); _i++)
-		{
-			_corners2[_i].multiplyMatrix22(_rrect2.orientation);
-			_corners2[_i].add(_rrect2.x, _rrect2.y);
+			_points[_i].multiplyMatrix22(_rrect1.orientation);
+			_points[_i].add(_rrect1.x, _rrect1.y);
 		}
 		
-		// Compare corner sets
-		for (var _j = 0; _j < 2; _j++)
+		// Go through corners
+		for (var _i = 0; _i < array_length(_points); _i++)
 		{
-			// Choose corner set
-			var _corners, _local, _hw, _hh;
-			if (_j == 0)
+			// Check if point is inside
+			var _r = new Vector2(_points[_i].x - _rrect2.x, _points[_i].y - _rrect2.y);
+			_r.multiplyInverseMatrix22(_rrect2.orientation);
+			if (point_in_rectangle(_r.x, _r.y, -_hw2, -_hh2, _hw2, _hh2))
 			{
-				_corners = _corners2;
-				_local = _rrect1;
-				_hw = _hw1;
-				_hh = _hh1;
-			}
-			else
-			{
-				_corners = _corners1;
-				_local = _rrect2;
-				_hw = _hw2;
-				_hh = _hh2;
-			}
-			
-			// Go through corners
-			for (var _i = 0; _i < array_length(_corners); _i++)
-			{
-				// Check if point is inside
-				var _r = new Vector2(_corners[_i].x - _local.x, _corners[_i].y - _local.y);
-				_r.multiplyInverseMatrix22(_local.orientation);
-				var _n = new Vector2();
+				// Get min penetration
 				var _penetration = 99999;
-				if (point_in_rectangle(_r.x, _r.y, -_hw, -_hh, _hw, _hh))
+				var _n = new Vector2((_hw2 - abs(_r.x)) * sign(_r.x), (_hh2 - abs(_r.y)) * sign(_r.y));
+				
+				// Calculate point to first rect vector (r2)
+				var _r2 = new Vector2(_rrect1.x - _points[_i].x, _rrect1.y - _points[_i].y);
+				
+				// Calculate r2 in local space
+				var _r2r = _r2.getCopy();
+				_r2r.multiplyInverseMatrix22(_rrect2.orientation);
+				
+				// Choose lowest interpenetration
+				if (abs(_n.x) <= abs(_n.y) && _n.y != 0 && _r2r.dotProduct(_n.x, 0) > 0)
 				{
-					// Get min penetration in the x direction
-					_n.x = (_hw - abs(_r.x)) * sign(_r.x);
+					_n.y = 0;
+					_penetration = abs(_n.x);
+				}
+				else
+				{
+					_n.x = 0;
+					_penetration = abs(_n.y);
+				}
 					
-					// Get min penetration in the y direction
-					_n.y = (_hh - abs(_r.y)) * sign(_r.y);
+				// Flip normal to world orientation
+				_n.multiplyMatrix22(_rrect2.orientation);
 					
-					// Choose lowest interpenetration
-					if (abs(_n.x) < abs(_n.y) || _n.y == 0)
-					{
-						_n.y = 0;
-						_penetration = abs(_n.x);
-					}
-					else
-					{
-						_n.x = 0;
-						_penetration = abs(_n.y);
-					}
-					
-					// Check if new best normal
-					if (_penetration < _bestPenetration && _penetration > 0)
-					{
-						// Rotate normal back to world space
-						_n.multiplyMatrix22(_local.orientation);
+				// Check if new best and valid normal
+				if (_penetration < _bestPenetration && _penetration > 0 && _n.dotProductVector(_r2) >= 0)
+				{
+					// Set new normal + penetration
+					_bestPenetration = _penetration;
 						
-						// Set new normal + penetration
-						_bestPenetration = _penetration;
-						
-						// Normal is relative to rb1
-						if (_j == 0) _n.scale(-1);
-						_n.normalize();
-						_bestNormal.setVector(_n);
-					}
+					// Normalize and set best normal
+					_n.normalize();
+					_bestNormal.setVector(_n);
 				}
 			}
 		}
