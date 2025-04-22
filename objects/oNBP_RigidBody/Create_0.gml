@@ -102,6 +102,25 @@ triggerGens = [];
 
 #endregion
 
+#region Triggers
+
+/*
+Holds the triggers currently being triggered. Used to detect onTriggerExit(trigger).
+*/
+triggers = [];
+
+///	@func	onTriggerEnter(trigger);
+///	@param	{Id.Instance}	trigger	The trigger.
+///	@desc	Called once when the body enters the trigger.
+onTriggerEnter = function(_trigger){}
+
+///	@func	onTriggerExit(trigger);
+///	@param	{Id.Instance}	trigger	The trigger.
+///	@desc	Called once when the body exits the trigger.
+onTriggerExit = function(_trigger){}
+
+#endregion
+
 #region Debug
 
 // Draw

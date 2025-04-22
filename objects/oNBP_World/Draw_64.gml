@@ -32,6 +32,8 @@ if (instance_exists(oNBP_Player))
 	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, string("tgs: {0}", string(oNBP_Player.triggerGens)));
 	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("triggers: {0}", string(oNBP_Player.triggers)));
+	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, string("grav: {0}", string(oNBP_Player.grav)));
 	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, string("damping: {0}", string(oNBP_Player.damping)));

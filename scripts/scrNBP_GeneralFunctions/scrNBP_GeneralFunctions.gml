@@ -341,6 +341,55 @@ function nbpRemoveTriggerGen(_rb, _tg)
 ///	@desc	Clears all trigger generators from the rigid body.
 function nbpClearTriggerGens(_rb){ _rb.triggerGens = []; }
 
+///	@func	nbpAddTrigger(rb, trigger);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@param	{Id.Instance}	trigger	The trigger.
+///	@desc	Adds a trigger reference to the rigid body.
+function nbpAddTrigger(_rb, _trigger)
+{
+	array_push(_rb.triggers, _trigger);
+}
+
+///	@func	nbpRemoveTrigger(rb, trigger);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@param	{Struct.ForceGen}	trigger	The trigger.
+///	@desc	Removes a trigger from the rigid body.
+function nbpRemoveTrigger(_rb, _trigger)
+{
+	// Go through force gens
+	for (var _i = 0; _i < array_length(_rb.triggers); _i++)
+	{
+		// If found force gen
+		if (_rb.triggers[_i] == _trigger)
+		{
+			// Remove force gen and exit loop
+			array_delete(_rb.triggers, _i, 1);
+			break;
+		}
+	}
+}
+
+///	@func	nbpHasTrigger(rb, trigger);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@param	{Struct.ForceGen}	trigger	The trigger.
+///	@return {bool}	Whether it has the trigger.
+///	@desc	Checks if a trigger was in contact with the rigid body.
+function nbpHasTrigger(_rb, _trigger)
+{
+	// Go through force gens
+	for (var _i = 0; _i < array_length(_rb.triggers); _i++)
+	{
+		// If found force gen
+		if (_rb.triggers[_i] == _trigger) return true;
+	}
+	return false;
+}
+
+///	@func	nbpClearTriggers(rb);
+///	@param	{Id.Instance}	rb	The rigid body.
+///	@desc	Clears triggers referenced to the rigid body.
+function nbpClearTriggers(_rb, _trigger){ _rb.triggers = []; }
+
 ///	@func	nbpUpdateTriggerGens(rb, pw, dt);
 ///	@param	{Id.Instance}	rb	The rigid body.
 ///	@param	{Id.Instance}	pw	The physics world.
@@ -349,6 +398,7 @@ function nbpClearTriggerGens(_rb){ _rb.triggerGens = []; }
 function nbpUpdateTriggerGens(_rb, _pw, _dt)
 {
 	// Go through trigger gens
+	var _triggers = [];
 	for (var _i = 0; _i < array_length(_rb.triggerGens); _i++)
 	{
 		var _tg = _rb.triggerGens[_i];
@@ -356,6 +406,44 @@ function nbpUpdateTriggerGens(_rb, _pw, _dt)
 		if (instance_exists(_trigger))
 		{
 			_trigger.triggeredThisFrame = true;
+			if (!nbpHasTrigger(_rb, _trigger.id))
+			{
+				// Add trigger and call onTriggerEnter
+				nbpAddTrigger(_rb, _trigger.id);
+				with (_rb)
+				{
+					onTriggerEnter(_trigger);
+				}
+			}
+			array_push(_triggers, _trigger.id);
+		}
+	}
+	
+	// Loop through triggers last frame + new one this frame
+	for (var _i = array_length(_rb.triggers) - 1; _i >= 0; _i--)
+	{
+		// Loop through triggers this frame
+		var _triggerFound = false;
+		for (var _j = 0; _j < array_length(_triggers); _j++)
+		{
+			// If there's a trigger in both last frame and this frame
+			if (_rb.triggers[_i] == _triggers[_j])
+			{
+				// Found trigger
+				_triggerFound = true;
+				break;
+			}
+		}
+		
+		// If trigger not triggered this frame
+		if (!_triggerFound)
+		{
+			// Remove trigger and call onTriggerExit
+			with (_rb)
+			{
+				onTriggerExit(_trigger);
+			}
+			array_delete(_rb.triggers, _i, 1);
 		}
 	}
 }
