@@ -1,19 +1,16 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "oNBP_TestTrigger",
-  "spriteId": {
-    "name": "sNBP_RectFill",
-    "path": "sprites/sNBP_RectFill/sNBP_RectFill.yy",
-  },
+  "name": "oNBP_TopDownWorld",
+  "spriteId": null,
   "solid": false,
   "visible": true,
   "managed": true,
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": {
-    "name": "oNBP_Trigger",
-    "path": "objects/oNBP_Trigger/oNBP_Trigger.yy",
+    "name": "oNBP_World",
+    "path": "objects/oNBP_World/oNBP_World.yy",
   },
   "physicsObject": false,
   "physicsSensor": false,
@@ -33,7 +30,7 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Physics",
-    "path": "folders/Objects/NB/Demos/Physics.yy",
+    "name": "Rooms",
+    "path": "folders/Objects/NB/Demos/Physics/Rooms.yy",
   },
 }

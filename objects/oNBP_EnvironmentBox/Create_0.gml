@@ -1,5 +1,6 @@
 // Inherit the parent event
 event_inherited();
 
-// Wake
-nbpSetAwake(self.id, true);
+// Properties
+inverseMass = 0;
+bounciness = 0;

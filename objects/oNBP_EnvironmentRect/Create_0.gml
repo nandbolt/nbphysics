@@ -1,5 +1,5 @@
 // Inherit the parent event
 event_inherited();
 
-// Set shape
+// Shape
 nbpSetShape(self.id, NBPShape.RECT);

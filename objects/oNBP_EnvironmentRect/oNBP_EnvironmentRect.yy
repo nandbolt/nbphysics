@@ -1,16 +1,19 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "oNBP_Test",
-  "spriteId": null,
+  "name": "oNBP_EnvironmentRect",
+  "spriteId": {
+    "name": "sNBP_RectOutlineYellow",
+    "path": "sprites/sNBP_RectOutlineYellow/sNBP_RectOutlineYellow.yy",
+  },
   "solid": false,
   "visible": true,
   "managed": true,
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": {
-    "name": "oNBP_World",
-    "path": "objects/oNBP_World/oNBP_World.yy",
+    "name": "oNBP_EnvironmentBox",
+    "path": "objects/oNBP_EnvironmentBox/oNBP_EnvironmentBox.yy",
   },
   "physicsObject": false,
   "physicsSensor": false,
@@ -25,13 +28,12 @@
   "physicsKinematic": false,
   "physicsShapePoints": [],
   "eventList": [
-    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":4,"eventType":7,"collisionObjectId":null,},
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,},
   ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Rooms",
-    "path": "folders/Objects/NB/Demos/Physics/Rooms.yy",
+    "name": "Environment",
+    "path": "folders/Objects/NB/Demos/Physics/Environment.yy",
   },
 }

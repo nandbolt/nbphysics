@@ -6,6 +6,7 @@ if (inverseMass == 0)
 {
 	draw_set_color(c_orange);
 	draw_circle(x, y, 4, true);
+	draw_set_color(c_white);
 }
 
 // If asleep

@@ -1,10 +1,10 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "oNBP_TestBox",
+  "name": "oNBP_EnvironmentCircle",
   "spriteId": {
-    "name": "sNBP_RectOutline",
-    "path": "sprites/sNBP_RectOutline/sNBP_RectOutline.yy",
+    "name": "sNBP_RectOutlineGreen",
+    "path": "sprites/sNBP_RectOutlineGreen/sNBP_RectOutlineGreen.yy",
   },
   "solid": false,
   "visible": true,
@@ -12,8 +12,8 @@
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": {
-    "name": "oNBP_BoxTD",
-    "path": "objects/oNBP_BoxTD/oNBP_BoxTD.yy",
+    "name": "oNBP_EnvironmentBox",
+    "path": "objects/oNBP_EnvironmentBox/oNBP_EnvironmentBox.yy",
   },
   "physicsObject": false,
   "physicsSensor": false,
@@ -29,12 +29,11 @@
   "physicsShapePoints": [],
   "eventList": [
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,},
-    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":3,"collisionObjectId":null,},
   ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Physics",
-    "path": "folders/Objects/NB/Demos/Physics.yy",
+    "name": "Environment",
+    "path": "folders/Objects/NB/Demos/Physics/Environment.yy",
   },
 }

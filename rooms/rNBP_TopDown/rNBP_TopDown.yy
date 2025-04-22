@@ -1,7 +1,7 @@
 {
   "resourceType": "GMRoom",
   "resourceVersion": "1.0",
-  "name": "rNBP_Test",
+  "name": "rNBP_TopDown",
   "isDnd": false,
   "volume": 1.0,
   "parentRoom": null,
@@ -17,9 +17,8 @@
   ],
   "layers": [
     {"resourceType":"GMRInstanceLayer","resourceVersion":"1.0","name":"Instances","instances":[
-        {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_449FC470","properties":[],"isDnd":false,"objectId":{"name":"oNBP_Test","path":"objects/oNBP_Test/oNBP_Test.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":0.0,"y":0.0,},
-        {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_D7B5EAF","properties":[],"isDnd":false,"objectId":{"name":"oNBP_PlayerTD","path":"objects/oNBP_PlayerTD/oNBP_PlayerTD.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":17.0,"scaleY":17.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":256.0,"y":192.0,},
-        {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_419FFC90","properties":[],"isDnd":false,"objectId":{"name":"oNBP_TestTrigger","path":"objects/oNBP_TestTrigger/oNBP_TestTrigger.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":38.113415,"scaleX":120.99999,"scaleY":25.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":608.0,"y":384.0,},
+        {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_3DEAA215","properties":[],"isDnd":false,"objectId":{"name":"oNBP_TopDownWorld","path":"objects/oNBP_TopDownWorld/oNBP_TopDownWorld.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":0.0,"y":0.0,},
+        {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_BEC6E38","properties":[],"isDnd":false,"objectId":{"name":"oNBP_PlayerTD","path":"objects/oNBP_PlayerTD/oNBP_PlayerTD.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":9.0,"scaleY":9.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":272.0,"y":176.0,},
       ],"visible":true,"depth":0,"userdefinedDepth":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritVisibility":true,"inheritSubLayers":true,"gridX":32,"gridY":32,"layers":[],"hierarchyFrozen":false,"effectEnabled":true,"effectType":null,"properties":[],},
     {"resourceType":"GMRBackgroundLayer","resourceVersion":"1.0","name":"Background","spriteId":null,"colour":4278190080,"x":0,"y":0,"htiled":false,"vtiled":false,"hspeed":0.0,"vspeed":0.0,"stretch":false,"animationFPS":15.0,"animationSpeedType":0,"userdefinedAnimFPS":false,"visible":true,"depth":100,"userdefinedDepth":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritVisibility":true,"inheritSubLayers":true,"gridX":32,"gridY":32,"layers":[],"hierarchyFrozen":false,"effectEnabled":true,"effectType":null,"properties":[],},
   ],
@@ -27,9 +26,8 @@
   "creationCodeFile": "",
   "inheritCode": false,
   "instanceCreationOrder": [
-    {"name":"inst_449FC470","path":"rooms/rNBP_Test/rNBP_Test.yy",},
-    {"name":"inst_D7B5EAF","path":"rooms/rNBP_Test/rNBP_Test.yy",},
-    {"name":"inst_419FFC90","path":"rooms/rNBP_Test/rNBP_Test.yy",},
+    {"name":"inst_3DEAA215","path":"rooms/rNBP_TopDown/rNBP_TopDown.yy",},
+    {"name":"inst_BEC6E38","path":"rooms/rNBP_TopDown/rNBP_TopDown.yy",},
   ],
   "inheritCreationOrder": false,
   "sequenceId": null,
@@ -53,7 +51,7 @@
     "PhysicsWorldPixToMetres": 0.1,
   },
   "parent": {
-    "name": "Demos",
-    "path": "folders/Rooms/NB/Demos.yy",
+    "name": "Games",
+    "path": "folders/Rooms/NB/Demos/Games.yy",
   },
 }
