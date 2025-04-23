@@ -22,116 +22,130 @@ function InstContactGen() : ContactGen() constructor
 		}
 		if (_placeMet)
 		{
-			// Get instance
-			var _inst = noone;
+			// Get collision list
+			var _collisionList = ds_list_create();
+			var _collisionCount = 0;
 			with (_rb)
 			{
-				_inst = instance_place(x, y, _pw.rbObject);
+				_collisionCount = instance_place_list(x, y, _pw.rbObject, _collisionList, false);
 			}
 			
-			// Return if doesn't exist or they don't share layers
-			if (!instance_exists(_inst) || !nbpHasLayerCollision(_rb.collisionBitmask, _inst.bitmask)) return _used;
-			
-			// Return if both have infinite mass
-			if (_rb.inverseMass == 0 && _inst.inverseMass == 0) return _used;
-			
-			// Get contact index
-			var _contactIdx = _pw.nextContactIdx;
-			
-			// Get and clear contact
-			var _contact = _pw.contacts[_contactIdx];
-			
-			// Check collision
-			switch (_rb.shape)
+			// Loop through potential collisions
+			for (var _i = 0; _i < _collisionCount; _i++)
 			{
-				case NBPShape.RECT:
-					switch (_inst.shape)
-					{
-						case NBPShape.RECT:
-							// RECT x RECT
-							if (rectRectCollision(_contact, _rb, _inst))
-							{
-								_used++;
-								_contactIdx++;
-							}
-							break;
-						case NBPShape.CIRCLE:
-							// RECT x CIRCLE
-							if (circleRectCollision(_contact, _inst, _rb))
-							{
-								_used++;
-								_contactIdx++;
-							}
-							break;
-						case NBPShape.RECT_ROTATED:
-							// RECT x ROTATED RECT
-							if (rotatedRectRectCollision(_contact, _rb, _inst))
-							{
-								_used++;
-								_contactIdx++;
-							}
-							break;
-					}
-					break;
-				case NBPShape.CIRCLE:
-					switch (_inst.shape)
-					{
-						case NBPShape.RECT:
-							// CIRCLE x RECT
-							if (circleRectCollision(_contact, _rb, _inst))
-							{
-								_used++;
-								_contactIdx++;
-							}
-							break;
-						case NBPShape.CIRCLE:
-							// CIRCLE x CIRCLE
-							if (circleCircleCollision(_contact, _rb, _inst))
-							{
-								_used++;
-								_contactIdx++;
-							}
-							break;
-						case NBPShape.RECT_ROTATED:
-							// CIRCLE x ROTATED RECT
-							if (circleRotatedRectCollision(_contact, _rb, _inst))
-							{
-								_used++;
-								_contactIdx++;
-							}
-							break;
-					}
-					break;
-				case NBPShape.RECT_ROTATED:
-					switch (_inst.shape)
-					{
-						case NBPShape.RECT:
-							// ROTATED RECT x RECT
-							if (rotatedRectRectCollision(_contact, _rb, _inst))
-							{
-								_used++;
-								_contactIdx++;
-							}
-							break;
-						case NBPShape.CIRCLE:
-							// ROTATED RECT x CIRCLE
-							if (circleRotatedRectCollision(_contact, _inst, _rb))
-							{
-								_used++;
-								_contactIdx++;
-							}
-							break;
-						case NBPShape.RECT_ROTATED:
-							// ROTATED RECT x ROTATED RECT
-							if (rotatedRectRectCollision(_contact, _rb, _inst))
-							{
-								_used++;
-								_contactIdx++;
-							}
-							break;
-					}
-					break;
+				// Break if at the limit
+				if (_used >= _limit) break;
+				
+				// Get instance
+				var _inst = _collisionList[| _i];
+			
+				// Return if doesn't exist or they don't share layers
+				if (!instance_exists(_inst) || !nbpHasLayerCollision(_rb.collisionBitmask, _inst.bitmask)) continue;
+			
+				// Return if both have infinite mass
+				if (_rb.inverseMass == 0 && _inst.inverseMass == 0) continue;
+			
+				// Get contact index
+				var _contactIdx = _pw.nextContactIdx;
+			
+				// Get and clear contact
+				var _contact = _pw.contacts[_contactIdx];
+			
+				// Check collision
+				switch (_rb.shape)
+				{
+					case NBPShape.RECT:
+						switch (_inst.shape)
+						{
+							case NBPShape.RECT:
+								// RECT x RECT
+								if (rectRectCollision(_contact, _rb, _inst))
+								{
+									_used++;
+									_contactIdx++;
+								}
+								break;
+							case NBPShape.CIRCLE:
+								// RECT x CIRCLE
+								if (circleRectCollision(_contact, _inst, _rb))
+								{
+									_used++;
+									_contactIdx++;
+								}
+								break;
+							case NBPShape.RECT_ROTATED:
+								// RECT x ROTATED RECT
+								if (rotatedRectRectCollision(_contact, _rb, _inst))
+								{
+									_used++;
+									_contactIdx++;
+								}
+								break;
+						}
+						break;
+					case NBPShape.CIRCLE:
+						switch (_inst.shape)
+						{
+							case NBPShape.RECT:
+								// CIRCLE x RECT
+								if (circleRectCollision(_contact, _rb, _inst))
+								{
+									_used++;
+									_contactIdx++;
+								}
+								break;
+							case NBPShape.CIRCLE:
+								// CIRCLE x CIRCLE
+								if (circleCircleCollision(_contact, _rb, _inst))
+								{
+									_used++;
+									_contactIdx++;
+								}
+								break;
+							case NBPShape.RECT_ROTATED:
+								// CIRCLE x ROTATED RECT
+								if (circleRotatedRectCollision(_contact, _rb, _inst))
+								{
+									_used++;
+									_contactIdx++;
+								}
+								break;
+						}
+						break;
+					case NBPShape.RECT_ROTATED:
+						switch (_inst.shape)
+						{
+							case NBPShape.RECT:
+								// ROTATED RECT x RECT
+								if (rotatedRectRectCollision(_contact, _rb, _inst))
+								{
+									_used++;
+									_contactIdx++;
+								}
+								break;
+							case NBPShape.CIRCLE:
+								// ROTATED RECT x CIRCLE
+								if (circleRotatedRectCollision(_contact, _inst, _rb))
+								{
+									_used++;
+									_contactIdx++;
+								}
+								break;
+							case NBPShape.RECT_ROTATED:
+								// ROTATED RECT x ROTATED RECT
+								if (rotatedRectRectCollision(_contact, _rb, _inst))
+								{
+									_used++;
+									_contactIdx++;
+								}
+								break;
+						}
+						break;
+				}
 			}
+			
+			// Destroy list
+			ds_list_destroy(_collisionList);
 		}
 		
 		// Return contacts used
