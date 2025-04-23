@@ -8,83 +8,98 @@ function InstTriggerGen() : TriggerGen() constructor
 	///	@param	{Id.Instance}	rb	The rigid body.
 	///	@param	{Id.Instance}	pw	The physics world.
 	///	@param	{real}	dt	The change in time of the simulation.
-	///	@return	{Id.Instance}	The trigger that was triggered (or noone).
-	///	@desc	Returns the trigger the rigid body triggered. Should be overwritten.
+	///	@return	{array}	The triggers that were triggered (or an empty array).
+	///	@desc	Returns an array of triggers the rigid body triggered. Should be overwritten.
 	static trigger = function(_rb, _pw, _dt)
 	{
+		// Init trigger array
+		var _arr = [];
+		
 		// Bounding box check
 		with (_rb)
 		{
-			if (!place_meeting(x, y, _pw.tObject)) return noone;
+			if (!place_meeting(x, y, _pw.tObject)) return _arr;
 		}
 		
-		// Get instance
-		var _trigger = noone;
+		// Get triggers
+		var _triggerList = ds_list_create();
+		var _triggerCount = 0;
 		with (_rb)
 		{
-			_trigger = instance_place(x, y, _pw.tObject);
-		}
-			
-		// Return if doesn't exist or they don't share layers
-		if (!instance_exists(_trigger) || !nbpHasLayerCollision(_rb.collisionBitmask, _trigger.bitmask)) return noone;
-			
-		// Check collision
-		switch (_rb.shape)
-		{
-			case NBPShape.RECT:
-				switch (_trigger.shape)
-				{
-					case NBPShape.RECT:
-						// RECT x RECT
-						return _trigger;
-					case NBPShape.CIRCLE:
-						// RECT x CIRCLE
-						if (circleRectTrigger(_trigger, _rb)) return _trigger;
-						break;
-					case NBPShape.RECT_ROTATED:
-						// RECT x ROTATED RECT
-						if (rotatedRectRectTrigger(_rb, _trigger)) return _trigger;
-						break;
-				}
-				break;
-			case NBPShape.CIRCLE:
-				switch (_trigger.shape)
-				{
-					case NBPShape.RECT:
-						// CIRCLE x RECT
-						if (circleRectTrigger(_rb, _trigger)) return _trigger;
-						break;
-					case NBPShape.CIRCLE:
-						// CIRCLE x CIRCLE
-						if (circleCircleTrigger(_rb, _trigger)) return _trigger;
-						break;
-					case NBPShape.RECT_ROTATED:
-						// CIRCLE x ROTATED RECT
-						if (circleRotatedRectTrigger(_rb, _trigger)) return _trigger;
-						break;
-				}
-				break;
-			case NBPShape.RECT_ROTATED:
-				switch (_trigger.shape)
-				{
-					case NBPShape.RECT:
-						// ROTATED RECT x RECT
-						if (rotatedRectRectTrigger(_rb, _trigger)) return _trigger;
-						break;
-					case NBPShape.CIRCLE:
-						// ROTATED RECT x CIRCLE
-						if (circleRotatedRectTrigger(_trigger, _rb)) return _trigger;
-						break;
-					case NBPShape.RECT_ROTATED:
-						// ROTATED RECT x ROTATED RECT
-						if (rotatedRectRectTrigger(_rb, _trigger)) return _trigger;
-						break;
-				}
-				break;
+			_triggerCount = instance_place_list(x, y, _pw.tObject, _triggerList, false);
 		}
 		
-		// No collision
-		return noone;
+		// Loop through potential triggers
+		for (var _i = 0; _i < _triggerCount; _i++)
+		{
+			// Get trigger
+			var _trigger = _triggerList[| _i];
+			
+			// Return if doesn't exist or they don't share layers
+			if (!instance_exists(_trigger) || !nbpHasLayerCollision(_rb.collisionBitmask, _trigger.bitmask)) continue;
+			
+			// Check collision
+			switch (_rb.shape)
+			{
+				case NBPShape.RECT:
+					switch (_trigger.shape)
+					{
+						case NBPShape.RECT:
+							// RECT x RECT
+							array_push(_arr, _trigger);
+							break;
+						case NBPShape.CIRCLE:
+							// RECT x CIRCLE
+							if (circleRectTrigger(_trigger, _rb)) array_push(_arr, _trigger);
+							break;
+						case NBPShape.RECT_ROTATED:
+							// RECT x ROTATED RECT
+							if (rotatedRectRectTrigger(_rb, _trigger)) array_push(_arr, _trigger);
+							break;
+					}
+					break;
+				case NBPShape.CIRCLE:
+					switch (_trigger.shape)
+					{
+						case NBPShape.RECT:
+							// CIRCLE x RECT
+							if (circleRectTrigger(_rb, _trigger)) array_push(_arr, _trigger);
+							break;
+						case NBPShape.CIRCLE:
+							// CIRCLE x CIRCLE
+							if (circleCircleTrigger(_rb, _trigger)) array_push(_arr, _trigger);
+							break;
+						case NBPShape.RECT_ROTATED:
+							// CIRCLE x ROTATED RECT
+							if (circleRotatedRectTrigger(_rb, _trigger)) array_push(_arr, _trigger);
+							break;
+					}
+					break;
+				case NBPShape.RECT_ROTATED:
+					switch (_trigger.shape)
+					{
+						case NBPShape.RECT:
+							// ROTATED RECT x RECT
+							if (rotatedRectRectTrigger(_rb, _trigger)) array_push(_arr, _trigger);
+							break;
+						case NBPShape.CIRCLE:
+							// ROTATED RECT x CIRCLE
+							if (circleRotatedRectTrigger(_trigger, _rb)) array_push(_arr, _trigger);
+							break;
+						case NBPShape.RECT_ROTATED:
+							// ROTATED RECT x ROTATED RECT
+							if (rotatedRectRectTrigger(_rb, _trigger)) array_push(_arr, _trigger);
+							break;
+					}
+					break;
+			}
+		}
+		
+		// Destroy list
+		ds_list_destroy(_triggerList);
+		
+		// Return array
+		return _arr;
 	}
 	
 	/// @func	circleCircleTrigger(circ1, circ2);

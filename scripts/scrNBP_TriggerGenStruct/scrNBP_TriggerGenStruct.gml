@@ -8,9 +8,9 @@ function TriggerGen() constructor
 	///	@param	{Id.Instance}	rb	The rigid body.
 	///	@param	{Id.Instance}	pw	The physics world.
 	///	@param	{real}	dt	The change in time of the simulation.
-	///	@return	{Id.Instance}	The trigger that was triggered (or noone).
-	///	@desc	Returns the trigger the rigid body triggered. Should be overwritten.
-	static trigger = function(_rb, _pw, _dt){ return noone; }
+	///	@return	{array}	The triggers that were triggered (or an empty array).
+	///	@desc	Returns an array of triggers the rigid body triggered. Should be overwritten.
+	static trigger = function(_rb, _pw, _dt){ return []; }
 	
 	///	@func	toString();
 	///	@desc	Returns the name of the trigger generator.

@@ -406,10 +406,14 @@ function nbpUpdateTriggerGens(_rb, _pw, _dt)
 	for (var _i = 0; _i < array_length(_rb.triggerGens); _i++)
 	{
 		var _tg = _rb.triggerGens[_i];
-		var _trigger = _tg.trigger(_rb, _pw, _dt);
-		if (instance_exists(_trigger))
+		var _arr = _tg.trigger(_rb, _pw, _dt);
+		for (var _j = 0; _j < array_length(_arr); _j++)
 		{
+			// Get trigger
+			var _trigger = _arr[_j];
 			_trigger.triggeredThisFrame = true;
+			
+			// If hasn't been triggered before
 			if (!nbpHasTrigger(_rb, _trigger.id))
 			{
 				// Add trigger and call onTriggerEnter
@@ -419,6 +423,8 @@ function nbpUpdateTriggerGens(_rb, _pw, _dt)
 					onTriggerEnter(_trigger);
 				}
 			}
+			
+			// Add to triggers this frame
 			array_push(_triggers, _trigger.id);
 		}
 	}
@@ -445,7 +451,7 @@ function nbpUpdateTriggerGens(_rb, _pw, _dt)
 			// Remove trigger and call onTriggerExit
 			with (_rb)
 			{
-				onTriggerExit(_trigger);
+				onTriggerExit(_rb.triggers[_i]);
 			}
 			array_delete(_rb.triggers, _i, 1);
 		}
