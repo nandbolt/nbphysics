@@ -5,6 +5,7 @@ event_inherited();
 grav.y = 20;
 
 // Jump
+jumpDir = new Vector2(0, -1);
 jumpBufferAmount = 10;
 jumpBuffer = 0;
 coyoteBufferAmount = 10;
