@@ -31,6 +31,7 @@ function InstContactGen() : ContactGen() constructor
 			}
 			
 			// Loop through potential collisions
+			var _contactIdx = _pw.nextContactIdx;
 			for (var _i = 0; _i < _collisionCount; _i++)
 			{
 				// Break if at the limit
@@ -44,9 +45,6 @@ function InstContactGen() : ContactGen() constructor
 			
 				// Return if both have infinite mass
 				if (_rb.inverseMass == 0 && _inst.inverseMass == 0) continue;
-			
-				// Get contact index
-				var _contactIdx = _pw.nextContactIdx;
 			
 				// Get and clear contact
 				var _contact = _pw.contacts[_contactIdx];
