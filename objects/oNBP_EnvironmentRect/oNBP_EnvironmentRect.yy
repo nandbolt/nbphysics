@@ -34,6 +34,6 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Environment",
-    "path": "folders/Objects/NB/Demos/Physics/Environment.yy",
+    "path": "folders/Objects/NB/Demos/Physics/RigidBodies/Environment.yy",
   },
 }

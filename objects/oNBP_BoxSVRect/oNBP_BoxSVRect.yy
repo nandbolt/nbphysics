@@ -34,6 +34,6 @@
   "overriddenProperties": [],
   "parent": {
     "name": "BoxesSV",
-    "path": "folders/Objects/NB/Demos/Physics/BoxesSV.yy",
+    "path": "folders/Objects/NB/Demos/Physics/RigidBodies/BoxesSV.yy",
   },
 }

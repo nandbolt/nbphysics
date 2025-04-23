@@ -36,6 +36,6 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Player",
-    "path": "folders/Objects/NB/Demos/Physics/Player.yy",
+    "path": "folders/Objects/NB/Demos/Physics/RigidBodies/Player.yy",
   },
 }

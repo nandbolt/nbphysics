@@ -34,7 +34,7 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Rain",
-    "path": "folders/Objects/NB/Demos/Physics/Rain.yy",
+    "name": "RigidBodies",
+    "path": "folders/Objects/NB/Demos/Physics/RigidBodies.yy",
   },
 }

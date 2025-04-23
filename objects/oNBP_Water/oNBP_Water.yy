@@ -33,7 +33,7 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Platformer",
-    "path": "folders/Objects/NB/Demos/Physics/Platformer.yy",
+    "name": "Triggers",
+    "path": "folders/Objects/NB/Demos/Physics/Triggers.yy",
   },
 }

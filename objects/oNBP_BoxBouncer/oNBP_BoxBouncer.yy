@@ -34,7 +34,7 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Platformer",
-    "path": "folders/Objects/NB/Demos/Physics/Platformer.yy",
+    "name": "RigidBodies",
+    "path": "folders/Objects/NB/Demos/Physics/RigidBodies.yy",
   },
 }
