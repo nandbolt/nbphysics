@@ -3,10 +3,10 @@ if (triggeredThisFrame) image_blend = #ffff55;
 else image_blend = c_white;
 
 // Shape
-draw_set_alpha(image_alpha);
 switch (shape)
 {
 	case NBPShape.RECT:
+		draw_set_alpha(imageAlpha);
 		draw_set_color(image_blend);
 		draw_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, false);
 		break;
@@ -14,6 +14,7 @@ switch (shape)
 		draw_self();
 		break;
 	case NBPShape.CIRCLE:
+		draw_set_alpha(imageAlpha);
 		draw_set_color(image_blend);
 		draw_circle(x, y, nbpGetRadius(self.id), false);
 		break;

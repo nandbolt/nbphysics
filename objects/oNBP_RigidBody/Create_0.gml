@@ -79,6 +79,11 @@ The default mask is 1 => 10000000.
 collisionBitmask = 1;
 collisionBitmaskString = "10000000";		// Updates everytime the bitmask is changed. Used for reference.
 
+/*
+Holds all contact normals currently generated this frame.
+*/
+normals = [];
+
 #endregion
 
 #region Movement Vectors

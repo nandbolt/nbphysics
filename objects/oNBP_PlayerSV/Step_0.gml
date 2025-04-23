@@ -1,7 +1,34 @@
 /// @desc Set Move input
 moveInput.x = (keyboard_check(ord("D")) - keyboard_check(ord("A"))) * moveStrength;
 moveInput.y = 0;
-if (keyboard_check_pressed(vk_space)) moveInput.y = -50000;
+
+// Grounded
+if (array_length(normals) > 0)
+{
+	groundBuffer = groundBufferAmount;
+	groundNormal.setVector(normals[0]);
+}
+else groundBuffer = clamp(groundBuffer - 1, 0, groundBufferAmount);
+
+// Jump buffer
+if (keyboard_check_pressed(vk_space)) jumpBuffer = jumpBufferAmount;
+else jumpBuffer = clamp(jumpBuffer - 1, 0, jumpBufferAmount);
+
+// Coyote buffer
+if (groundBuffer > 0) coyoteBuffer = coyoteBufferAmount;
+else coyoteBuffer = clamp(coyoteBuffer - 1, 0, coyoteBufferAmount);
+
+// Ground friction
+if (groundBuffer > 0 && moveInput.x == 0 && !keyboard_check(vk_space)) damping = lerp(damping, 0, 0.1);
+else damping = 0.25;
+
+// Jump
+if (jumpBuffer > 0 && coyoteBuffer > 0)
+{
+	moveInput.y = -50000;
+	jumpBuffer = 0;
+	coyoteBuffer = 0;
+}
 
 // Inherit the parent event
 event_inherited();

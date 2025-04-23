@@ -1,17 +1,20 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "oNBP_Trigger",
+  "name": "oNBP_BoxSVCircle",
   "spriteId": {
-    "name": "sNBP_RectFillTransparent",
-    "path": "sprites/sNBP_RectFillTransparent/sNBP_RectFillTransparent.yy",
+    "name": "sNBP_RectOutlineGreen",
+    "path": "sprites/sNBP_RectOutlineGreen/sNBP_RectOutlineGreen.yy",
   },
   "solid": false,
   "visible": true,
   "managed": true,
   "spriteMaskId": null,
   "persistent": false,
-  "parentObjectId": null,
+  "parentObjectId": {
+    "name": "oNBP_BoxSV",
+    "path": "objects/oNBP_BoxSV/oNBP_BoxSV.yy",
+  },
   "physicsObject": false,
   "physicsSensor": false,
   "physicsShape": 1,
@@ -26,13 +29,11 @@
   "physicsShapePoints": [],
   "eventList": [
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,},
-    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":12,"collisionObjectId":null,},
-    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":8,"collisionObjectId":null,},
   ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Physics",
-    "path": "folders/Objects/NB/Physics.yy",
+    "name": "BoxesSV",
+    "path": "folders/Objects/NB/Demos/Physics/BoxesSV.yy",
   },
 }

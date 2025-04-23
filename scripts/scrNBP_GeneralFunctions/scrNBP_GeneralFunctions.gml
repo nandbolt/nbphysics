@@ -693,12 +693,20 @@ function nbpGenerateContacts(_pw)
 	// Loop through bodies
 	with (_pw.rbObject)
 	{
+		// Reset normals
+		normals = [];
+		
 		// Loop through registered contact generators
 		for (var _i = 0; _i < array_length(contactGens); _i++)
 		{
 			// Check for contacts
 			var _used = contactGens[_i].addContact(self.id, _pw, _limit);
 			_limit -= _used;
+			
+			// Add to local normals
+			if (_used > 0) array_push(normals, _pw.contacts[_pw.nextContactIdx].normal);
+			
+			// Increment index
 			_pw.nextContactIdx += _used;
 			
 			// Return if limit reached (meaning we'll have to ignore some contacts this step)

@@ -11,4 +11,5 @@ with (oNBP_PlayerSV)
 {
 	bounciness = 0;
 	nbpSetShape(self.id, NBPShape.CIRCLE);
+	nbpAddTriggerGen(self.id, other.tgInst);
 }

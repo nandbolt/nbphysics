@@ -6,3 +6,4 @@ name = "Platformer Demo";
 
 // Collisions
 cgInst = new InstContactGen();
+tgInst = new InstTriggerGen();

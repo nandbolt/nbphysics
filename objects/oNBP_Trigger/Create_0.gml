@@ -50,4 +50,4 @@ collisionBitmaskString = "10000000";		// Updates everytime the bitmask is change
 
 // Color
 triggerColor = #ffff55;
-image_alpha = 0.25;
+imageAlpha = 0.25;
