@@ -9,6 +9,9 @@ repeat (8 * oNBP_PhysicsWorld.simulationSpeed)
 	{
 		// Wind
 		nbpAddForceGen(self.id, other.fgWind);
+		
+		// Gravity
+		grav.y = 100;
 	}
 }
 

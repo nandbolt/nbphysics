@@ -42,6 +42,8 @@ if (instance_exists(oNBP_Player))
 	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, string("bitmask: {0}", oNBP_Player.bitmaskString));
 	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("collision bitmask: {0}", oNBP_Player.collisionBitmaskString));
+	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, "change shape : left click");
 	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, "rotate : scroll wheel");

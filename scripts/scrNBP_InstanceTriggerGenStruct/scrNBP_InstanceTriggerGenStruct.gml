@@ -26,7 +26,7 @@ function InstTriggerGen() : TriggerGen() constructor
 		}
 			
 		// Return if doesn't exist or they don't share layers
-		if (!instance_exists(_trigger) || !nbpHasSharedLayer(_rb, _trigger)) return noone;
+		if (!instance_exists(_trigger) || !nbpHasLayerCollision(_rb.collisionBitmask, _trigger.bitmask)) return noone;
 			
 		// Check collision
 		switch (_rb.shape)

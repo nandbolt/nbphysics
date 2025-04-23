@@ -30,7 +30,10 @@ function InstContactGen() : ContactGen() constructor
 			}
 			
 			// Return if doesn't exist or they don't share layers
-			if (!instance_exists(_inst) || !nbpHasSharedLayer(_rb, _inst)) return _used;
+			if (!instance_exists(_inst) || !nbpHasLayerCollision(_rb.collisionBitmask, _inst.bitmask)) return _used;
+			
+			// Return if both have infinite mass
+			if (_rb.inverseMass == 0 && _inst.inverseMass == 0) return _used;
 			
 			// Get contact index
 			var _contactIdx = _pw.nextContactIdx;
@@ -414,7 +417,7 @@ function InstContactGen() : ContactGen() constructor
 		
 		// Penetration
 		var _dist = sqrt(_distSquared);
-		var _penetration;
+		var _penetration = 0.01;
 		
 		// Normalize
 		if (_dist == 0) _diff.set(0, -1);
