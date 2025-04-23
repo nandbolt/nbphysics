@@ -289,15 +289,27 @@ function InstContactGen() : ContactGen() constructor
 		// If corner hit
 		var _cornerDistSquared = sqr(_cdx - _hw) + sqr(_cdy - _hh);
 		if (_cornerDistSquared <= (_r * _r))
-		{	
-			// Set collision normal direction
+		{
+			// Get center displacement
 			var _dx = _rect.x - _circ.x, _dy = _rect.y - _circ.y;
+			
+			// Get corner displacement
+			var _cornerX = _rect.bbox_left, _cornerY = _rect.bbox_top;
+			if (_dx < 0)
+			{
+				_cornerX = _rect.bbox_right;
+				if (_dy < 0) _cornerY = _rect.bbox_bottom;
+			}
+			else if (_dy < 0) _cornerY = _rect.bbox_bottom;
+			_dx = _cornerX - _circ.x;
+			_dy = _cornerY - _circ.y;
+			
+			// Calculate normal
 			_contact.normal.set(_dx, _dy);
 			_contact.normal.normalize();
 			
 			// Calculate penetration
-			var _rdx = clamp(abs(_dx), 0, _hw) * sign(_dx), _rdy = clamp(abs(_dy), 0, _hh) * sign(_dy);
-			_contact.penetration = _r - (sqrt(_dx * _dx + _dy * _dy) - sqrt(_rdx * _rdx + _rdy * _rdy));
+			_contact.penetration = _r - sqrt(_dx * _dx + _dy * _dy);
 			return true;
 		}
 		return false;
