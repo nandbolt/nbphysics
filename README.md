@@ -1,4 +1,5 @@
-![nphysics-icon](https://github.com/user-attachments/assets/2181bbf2-e44f-4500-bd1a-51a40fe415d9)
+![nphysics-thumb-1](https://github.com/user-attachments/assets/88605752-31ef-4200-87a7-dfd005f705fc)
+
 
 nbphysics is a 2D hybrid physics engine made for GameMaker in GameMaker Studio 2 LTS. It supports collision detection and resolution of non-rotated rectangles, rotated rectangles, and circles. I made it because I plan to use it in my future games so it should get better over time!
 
