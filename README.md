@@ -31,3 +31,10 @@ You can look at the demos to give you an idea of how to work with it. Generally:
 4. link the generators to the desired bodies (using nbpAddForceGen() or nbpAddContactGen())
 5. (optional) create a trigger and link it to the rigid body
 And that's it! The generators should apply the forces/check collisions every frame. When you're done with a rigid body, you can safely destroy it!
+
+# Future features
+- torque generators
+- impulse torques for collision resolution
+- friction force generators
+- built-in friction
+- less jittery stacked boxes
