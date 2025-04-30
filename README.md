@@ -32,6 +32,8 @@ You can look at the demos to give you an idea of how to work with it. Generally:
 5. (optional) create a trigger and link it to the rigid body
 And that's it! The generators should apply the forces/check collisions every frame. When you're done with a rigid body, you can safely destroy it!
 
+I've also made various videos on youtube explaining different parts of the engine: https://youtube.com/playlist?list=PLxkOinbeoc8mUngx7fxn71Dfs-wBP3IqC&si=7iQltSWte1pbzk1i
+
 # Future features
 - torque generators
 - impulse torques for collision resolution
