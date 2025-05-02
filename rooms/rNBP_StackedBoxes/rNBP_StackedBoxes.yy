@@ -63,7 +63,7 @@
     "PhysicsWorldPixToMetres": 0.1,
   },
   "parent": {
-    "name": "Demos",
-    "path": "folders/Rooms/NB/Demos.yy",
+    "name": "Collisions",
+    "path": "folders/Rooms/NB/Demos/Physics/Collisions.yy",
   },
 }

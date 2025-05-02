@@ -99,7 +99,7 @@
     "PhysicsWorldPixToMetres": 0.1,
   },
   "parent": {
-    "name": "Demos",
-    "path": "folders/Rooms/NB/Demos.yy",
+    "name": "Game",
+    "path": "folders/Rooms/NB/Demos/Physics/Game.yy",
   },
 }
