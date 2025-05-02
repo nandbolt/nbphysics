@@ -86,7 +86,7 @@ function InstContactGen() : ContactGen() constructor
 						{
 							case NBPShape.RECT:
 								// CIRCLE x RECT
-								if (circleRectCollision(_contact, _rb, _inst))
+								if (circleRectCollision(_contact, _rb, _inst, true))
 								{
 									_used++;
 									_contactIdx++;
@@ -232,12 +232,13 @@ function InstContactGen() : ContactGen() constructor
 		return true;
 	}
 	
-	/// @func	circleRectCollision(contact, circ, rect);
+	/// @func	circleRectCollision(contact, circ, rect, flip);
 	///	@param	{Struct.Contact}	contact		The contact data.
 	///	@param	{Id.Instance}		circ		The circle.
 	///	@param	{Id.Instance}		rect		The rectangle.
+	///	@param	{bool}				flip		Whether to flip the normal.
 	///	@desc	Returns whether or not there was a collision between a circle and rectangle (and fills out the contact data).
-	static circleRectCollision = function(_contact, _circ, _rect)
+	static circleRectCollision = function(_contact, _circ, _rect, _flip=false)
 	{
 		// Get distances
 		var _r = nbpGetRadius(_circ);
@@ -254,6 +255,11 @@ function InstContactGen() : ContactGen() constructor
 		// Set rigid bodies
 		_contact.rb1 = _rect;
 		_contact.rb2 = _circ;
+		if (_flip)
+		{
+			_contact.rb1 = _circ;
+			_contact.rb2 = _rect;
+		}
 		
 		// Resitution
 		_contact.restitution = getCollisionRestitution(_circ, _rect);
@@ -265,6 +271,7 @@ function InstContactGen() : ContactGen() constructor
 			var _dy = _rect.y - _circ.y;
 			_contact.normal.set(0, _dy);
 			_contact.normal.normalize();
+			if (_flip) _contact.normal.invert()
 			
 			// Calculate penetration
 			_contact.penetration = (_hh + _r) - abs(_dy);
@@ -280,6 +287,7 @@ function InstContactGen() : ContactGen() constructor
 			var _dx = _rect.x - _circ.x;
 			_contact.normal.set(_dx, 0);
 			_contact.normal.normalize();
+			if (_flip) _contact.normal.invert()
 			
 			// Calculate penetration
 			_contact.penetration = (_hw + _r) - abs(_dx);
@@ -307,6 +315,7 @@ function InstContactGen() : ContactGen() constructor
 			// Calculate normal
 			_contact.normal.set(_dx, _dy);
 			_contact.normal.normalize();
+			if (_flip) _contact.normal.invert()
 			
 			// Calculate penetration
 			_contact.penetration = _r - sqrt(_dx * _dx + _dy * _dy);
