@@ -3,5 +3,5 @@ event_inherited();
 
 onTriggerEnter = function()
 {
-	nbpAddForce(self.id, 1000, 0);
+	nbpAddForce(self.id, 10000, 0);
 }
