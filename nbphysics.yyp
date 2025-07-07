@@ -16,6 +16,7 @@
     {"id":{"name":"oNBP_EnvironmentRotatedRect","path":"objects/oNBP_EnvironmentRotatedRect/oNBP_EnvironmentRotatedRect.yy",},"order":1,},
     {"id":{"name":"rNBP_StackedBoxes","path":"rooms/rNBP_StackedBoxes/rNBP_StackedBoxes.yy",},"order":7,},
     {"id":{"name":"oNBP_RainWorld","path":"objects/oNBP_RainWorld/oNBP_RainWorld.yy",},"order":17,},
+    {"id":{"name":"oNBP_TestHighSpeedBall","path":"objects/oNBP_TestHighSpeedBall/oNBP_TestHighSpeedBall.yy",},"order":2,},
     {"id":{"name":"sNBP_RectOutlineRed","path":"sprites/sNBP_RectOutlineRed/sNBP_RectOutlineRed.yy",},"order":0,},
     {"id":{"name":"oNBP_CollisionsWorld","path":"objects/oNBP_CollisionsWorld/oNBP_CollisionsWorld.yy",},"order":20,},
     {"id":{"name":"sNBP_RectFillTransparent","path":"sprites/sNBP_RectFillTransparent/sNBP_RectFillTransparent.yy",},"order":2,},
@@ -105,8 +106,8 @@
     "children": [],
   },
   "RoomOrderNodes": [
-    {"roomId":{"name":"rNBP_Platformer","path":"rooms/rNBP_Platformer/rNBP_Platformer.yy",},},
     {"roomId":{"name":"rNBP_Test","path":"rooms/rNBP_Test/rNBP_Test.yy",},},
+    {"roomId":{"name":"rNBP_Platformer","path":"rooms/rNBP_Platformer/rNBP_Platformer.yy",},},
     {"roomId":{"name":"rNBP_Rain","path":"rooms/rNBP_Rain/rNBP_Rain.yy",},},
     {"roomId":{"name":"rNBP_RectCollisions","path":"rooms/rNBP_RectCollisions/rNBP_RectCollisions.yy",},},
     {"roomId":{"name":"rNBP_CircleRectCollisions","path":"rooms/rNBP_CircleRectCollisions/rNBP_CircleRectCollisions.yy",},},
