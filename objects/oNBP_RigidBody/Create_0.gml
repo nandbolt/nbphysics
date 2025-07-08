@@ -54,10 +54,10 @@ speed bodies less likely to pass through walls.
 speedy = false;
 
 /*
-Only used if speedy: toggles on if going faster that the radius size of the body.
-Gets reset/checked every frame for speedy bodies.
+Only used if speedy: the amount of speed over the limit. The limit is based off of
+the body's radius, and is recalculated every frame.
 */
-speeding = false;
+speedOverflow = 0;
 
 #endregion
 

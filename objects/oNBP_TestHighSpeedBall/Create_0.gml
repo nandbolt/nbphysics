@@ -8,3 +8,6 @@ nbpAddForce(self.id, 400000, 0);
 
 // Speedy
 speedy = true;
+
+// DEBUG
+frame = 0;

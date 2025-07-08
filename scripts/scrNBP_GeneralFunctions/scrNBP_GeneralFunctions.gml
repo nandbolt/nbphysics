@@ -502,13 +502,13 @@ function nbpIntegrate(_rb, _dt)
 			if (_speed > _maxSpeed)
 			{
 				// Slow down there, you're speeding!
-				speeding = true;
+				speedOverflow = _speed - _maxSpeed;
 				
 				// Clamped speed
 				_vx = _vx / _speed * _maxSpeed;
 				_vy = _vy / _speed * _maxSpeed;
 			}
-			else speeding = false;
+			else speedOverflow = 0;
 		}
 		
 		#endregion
@@ -730,11 +730,13 @@ function nbpGenerateContacts(_pw)
 		while (true)
 		{
 			// Loop through registered contact generators
+			var _contacts = 0;
 			for (var _i = 0; _i < array_length(contactGens); _i++)
 			{
 				// Check for contacts
 				var _used = contactGens[_i].addContact(self.id, _pw, _limit);
 				_limit -= _used;
+				_contacts += _used;
 			
 				// Add to local normals
 				if (_used > 0) array_push(normals, _pw.contacts[_pw.nextContactIdx].normal);
@@ -746,10 +748,23 @@ function nbpGenerateContacts(_pw)
 				if (_limit <= 0) return _pw.maxContacts;
 			}
 			
-			// Break if not a speedy object
-			if (!speedy) break;
-			// (Temp: will rerun checks for speedy objects later if speeding)
-			else break;
+			// Break if: 1.) not a speedy object, 2.) speedy, but not speeding, 3.) speedy, speeding, but already hit something
+			if (!speedy || speedOverflow <= 0 || _contacts > 0) break;
+			// Alright, you're speeding. We'll process you a bit more.
+			else
+			{
+				// Break if no more speed overflow
+				if (speedOverflow <= 0) break;
+				
+				// Move by clamped speed (but need actual speed to normalize)
+				var _speed = velocity.magnitude();
+				var _speedClamped = min(nbpGetRadius(self.id), speedOverflow);
+				x += velocity.x / _speed * _speedClamped;
+				y += velocity.y / _speed * _speedClamped;
+				
+				// Update speed overflow
+				speedOverflow -= _speedClamped;
+			}
 		}
 	}
 	
