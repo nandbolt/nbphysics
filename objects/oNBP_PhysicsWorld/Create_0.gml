@@ -1,7 +1,7 @@
 ///	@desc	Init
 
 /*
-nbphysics v1.0.1
+nbphysics v1.0.2
 */
 
 /*
@@ -27,4 +27,4 @@ for (var _i = 0; _i < maxContacts; _i++)
 	contacts[_i] = new Contact();
 }
 nextContactIdx = 0;
-maxSpeedyChecks = 100;	// The max amount of extra collision checks to do per frame for speedy bodies
+maxSpeedyChecks = 10;	// The max amount of extra collision checks to do per frame for speedy bodies
