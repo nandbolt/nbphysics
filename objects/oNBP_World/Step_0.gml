@@ -38,7 +38,8 @@ else if (keyboard_check_pressed(vk_right))
 	else if (room == rNBP_MoreLinkCollisions) _room = rNBP_StackedBoxes;
 	else if (room == rNBP_StackedBoxes) _room = rNBP_RotatedRectCollisions;
 	else if (room == rNBP_RotatedRectCollisions) _room = rNBP_Collisions;
-	else if (room == rNBP_Collisions) _room = rNBP_Platformer;
+	else if (room == rNBP_Collisions) _room = rNBP_HighSpeedCollisions;
+	else if (room == rNBP_HighSpeedCollisions) _room = rNBP_Platformer;
 	else if (room == rNBP_Platformer) _room = rNBP_Rain;
 	if (room_exists(_room)) room_goto(_room);
 }
@@ -56,6 +57,7 @@ else if (keyboard_check_pressed(vk_left))
 	else if (room == rNBP_StackedBoxes) _room = rNBP_MoreLinkCollisions;
 	else if (room == rNBP_RotatedRectCollisions) _room = rNBP_StackedBoxes;
 	else if (room == rNBP_Collisions) _room = rNBP_RotatedRectCollisions;
-	else if (room == rNBP_Platformer) _room = rNBP_Collisions;
+	else if (room == rNBP_HighSpeedCollisions) _room = rNBP_Collisions;
+	else if (room == rNBP_Platformer) _room = rNBP_HighSpeedCollisions;
 	if (room_exists(_room)) room_goto(_room);
 }

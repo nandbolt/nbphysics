@@ -65,3 +65,11 @@ else if (instance_exists(oNBP_PlayerSV))
 	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, "jump : space");
 }
+
+// Mouse push
+if (instance_exists(oNBP_PlayerTDSpeedy))
+{
+	// Move
+	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, "highspeed push : right click");
+}

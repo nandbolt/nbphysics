@@ -726,6 +726,9 @@ function nbpGenerateContacts(_pw)
 		// Reset normals
 		normals = [];
 		
+		// Extra checks (for speedy bodies)
+		var _checksLeft = _pw.maxSpeedyChecks;
+		
 		// Loop for checking speedy bodies
 		while (true)
 		{
@@ -764,6 +767,10 @@ function nbpGenerateContacts(_pw)
 				
 				// Update speed overflow
 				speedOverflow -= _speedClamped;
+				
+				// Check limit
+				_checksLeft--;
+				if (_checksLeft <= 0) break;
 			}
 		}
 	}
