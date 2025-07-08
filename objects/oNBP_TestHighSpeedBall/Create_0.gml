@@ -5,3 +5,6 @@ event_inherited();
 nbpSetAwake(self.id, true);
 nbpSetShape(self.id, NBPShape.CIRCLE);
 nbpAddForce(self.id, 400000, 0);
+
+// Speedy
+speedy = true;

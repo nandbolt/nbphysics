@@ -488,10 +488,34 @@ function nbpIntegrate(_rb, _dt)
 		
 		// Apply velocity damping
 		velocity.scale(power(damping, _dt));
+		var _vx = velocity.x;
+		var _vy = velocity.y;
+		
+		#region Speedy
+		
+		// Check if speedy
+		if (speedy)
+		{
+			// Check if speeding
+			var _speed = velocity.magnitude();
+			var _maxSpeed = nbpGetRadius(self.id);
+			if (_speed > _maxSpeed)
+			{
+				// Slow down there, you're speeding!
+				speeding = true;
+				
+				// Clamped speed
+				_vx = _vx / _speed * _maxSpeed;
+				_vy = _vy / _speed * _maxSpeed;
+			}
+			else speeding = false;
+		}
+		
+		#endregion
 		
 		// Calculate position
-		x += velocity.x;
-		y += velocity.y;
+		x += _vx;
+		y += _vy;
 		
 		#region Sleep
 		
@@ -702,21 +726,30 @@ function nbpGenerateContacts(_pw)
 		// Reset normals
 		normals = [];
 		
-		// Loop through registered contact generators
-		for (var _i = 0; _i < array_length(contactGens); _i++)
+		// Loop for checking speedy bodies
+		while (true)
 		{
-			// Check for contacts
-			var _used = contactGens[_i].addContact(self.id, _pw, _limit);
-			_limit -= _used;
+			// Loop through registered contact generators
+			for (var _i = 0; _i < array_length(contactGens); _i++)
+			{
+				// Check for contacts
+				var _used = contactGens[_i].addContact(self.id, _pw, _limit);
+				_limit -= _used;
 			
-			// Add to local normals
-			if (_used > 0) array_push(normals, _pw.contacts[_pw.nextContactIdx].normal);
+				// Add to local normals
+				if (_used > 0) array_push(normals, _pw.contacts[_pw.nextContactIdx].normal);
 			
-			// Increment index
-			_pw.nextContactIdx += _used;
+				// Increment index
+				_pw.nextContactIdx += _used;
 			
-			// Return if limit reached (meaning we'll have to ignore some contacts this step)
-			if (_limit <= 0) return _pw.maxContacts;
+				// Return if limit reached (meaning we'll have to ignore some contacts this step)
+				if (_limit <= 0) return _pw.maxContacts;
+			}
+			
+			// Break if not a speedy object
+			if (!speedy) break;
+			// (Temp: will rerun checks for speedy objects later if speeding)
+			else break;
 		}
 	}
 	

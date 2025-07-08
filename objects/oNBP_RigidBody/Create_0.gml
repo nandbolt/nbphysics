@@ -47,6 +47,18 @@ Used to prevent specific bodies from being put to sleep, such as the player.
 */
 canSleep = true;
 
+/*
+Will check collisions based on distance traveled rather than speed, making high
+speed bodies less likely to pass through walls.
+*/
+speedy = false;
+
+/*
+Only used if speedy: toggles on if going faster that the radius size of the body.
+Gets reset/checked every frame for speedy bodies.
+*/
+speeding = false;
+
 #endregion
 
 #region Environmental Properties
