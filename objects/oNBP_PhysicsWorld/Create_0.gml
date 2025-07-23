@@ -1,7 +1,7 @@
 ///	@desc	Init
 
 /*
-nbphysics v1.0.2
+nbphysics v1.0.3
 */
 
 /*
