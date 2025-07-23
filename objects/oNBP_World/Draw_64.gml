@@ -36,6 +36,8 @@ if (instance_exists(oNBP_Player))
 	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, string("normals: {0}", string(oNBP_Player.normals)));
 	yCursor += ySpacing;
+	draw_text(xCursor, yCursor, string("bodies: {0}", string(oNBP_Player.bodies)));
+	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, string("grav: {0}", string(oNBP_Player.grav)));
 	yCursor += ySpacing;
 	draw_text(xCursor, yCursor, string("damping: {0}", string(oNBP_Player.damping)));

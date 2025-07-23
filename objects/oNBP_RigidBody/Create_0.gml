@@ -96,6 +96,11 @@ Holds all contact normals currently generated this frame.
 */
 normals = [];
 
+/*
+Holds all bodies contacted this frame.
+*/
+bodies = [];
+
 #endregion
 
 #region Movement Vectors
