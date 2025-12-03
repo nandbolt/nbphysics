@@ -24,6 +24,8 @@ nbphysics is a 2D hybrid physics engine made for GameMaker in GameMaker Studio 2
 - Adjustable simulation speed
 
 # How to use
+There is a wiki that's attached to this repository (or if you click [here](https://github.com/nandbolt/nbphysics/wiki)) that explains functions in detail which can be used as documentation.
+
 You can look at the demos to give you an idea of how to work with it. Generally:
 1. instantiate a physics world
 2. create rigid bodies (they'll automatically get recognized by the physics world)
