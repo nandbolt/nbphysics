@@ -418,52 +418,105 @@ function InstContactGen() : ContactGen() constructor
 		return true;
 	}
 	
-	/// @func	circleRotatedRectCollision(contact, circ, rrect);
+	/// @func	circleRotatedRectCollision(contact, circ, rrect, flip);
 	///	@param	{Struct.Contact}	contact		The contact data.
 	///	@param	{Id.Instance}		circ		The circle.
 	///	@param	{Id.Instance}		rrect		The rotated rectangle.
+	///	@param	{bool}				flip		Whether to flip the normal.
 	///	@desc	Returns whether or not there was a collision between a circle and rotated rectangle (and fills out the contact data).
-	static circleRotatedRectCollision = function(_contact, _circ, _rrect)
+	static circleRotatedRectCollision = function(_contact, _circ, _rrect, _flip=false)
 	{
-		// Get distances
-		var _r = nbpGetRadius(_circ);
+		// Get dimensions
+		var _radius = nbpGetRadius(_circ);
 		var _hw = nbpGetWidth(_rrect) * 0.5, _hh = nbpGetHeight(_rrect) * 0.5;
-		var _rel = new Vector2(_circ.x - _rrect.x, _circ.y - _rrect.y);
-		_rel.multiplyInverseMatrix22(_rrect.orientation);
-		var _closest = new Vector2(clamp(_rel.x, -_hw, _hw), clamp(_rel.y, -_hh, _hh));
-		var _diff = _rel.getCopy();
-		_diff.addScaledVector(_closest, -1);
-		var _distSquared = _diff.magnitudeSquared();
 		
-		// No collision if further than r^2
-		if (_distSquared > (_r * _r)) return false;
+		// Rotate the circle based on the rotated rectangle's coordinates
+		var _rcirc = new Vector2(_circ.x - _rrect.x, _circ.y - _rrect.y);		// Displacement								
+		_rcirc.multiplyInverseMatrix22(_rrect.orientation);						// Rotate based on rectangle's rotation
+		_rcirc.add(_rrect.x, _rrect.y);											// Place rotated circle in global coordinates
+		
+		// Get distances
+		var _rcdx = abs(_rcirc.x - _rrect.x), _rcdy = abs(_rcirc.y - _rrect.y);
+		
+		// Rectangle check
+		if (_rcdx > (_hw + _radius)) return false;
+		if (_rcdy > (_hh + _radius)) return false;
 		
 		// Clear contact
 		_contact.clear();
 		
 		// Set rigid bodies
-		_contact.rb1 = _circ;
-		_contact.rb2 = _rrect;
+		_contact.rb1 = _rrect;
+		_contact.rb2 = _circ;
+		if (_flip)
+		{
+			_contact.rb1 = _circ;
+			_contact.rb2 = _rrect;
+		}
 		
 		// Resitution
 		_contact.restitution = getCollisionRestitution(_circ, _rrect);
 		
-		// Penetration
-		var _dist = sqrt(_distSquared);
-		var _penetration = 0.01;
-		
-		// Normalize
-		if (_dist == 0) _diff.set(0, -1);
-		else
-		{
-			_diff.normalize();
-			_penetration = _r - _dist;
+		// If vertical side hit
+		if (_rcdx <= _hw)
+		{	
+			// Set collision normal direction
+			var _dy = _rrect.y - _rcirc.y;
+			_contact.normal.set(0, _dy);
+			_contact.normal.normalize();
+			_contact.normal.multiplyMatrix22(_rrect.orientation);
+			if (_flip) _contact.normal.invert()
+			
+			// Calculate penetration
+			_contact.penetration = (_hh + _radius) - abs(_dy);
+			return true;
 		}
 		
-		// Rotate normal back
-		_diff.multiplyMatrix22(_rrect.orientation);
-		_contact.normal.setVector(_diff);
-		_contact.penetration = _penetration;
-		return true;
+		// If horizontal side hit
+		if (_rcdy <= _hh)
+		{
+			// HORIZONTAL SIDE HIT
+			
+			// Set collision normal direction
+			var _dx = _rrect.x - _rcirc.x;
+			_contact.normal.set(_dx, 0);
+			_contact.normal.normalize();
+			_contact.normal.multiplyMatrix22(_rrect.orientation);
+			if (_flip) _contact.normal.invert()
+			
+			// Calculate penetration
+			_contact.penetration = (_hw + _radius) - abs(_dx);
+			return true;
+		}
+		
+		// If corner hit
+		var _cornerDistSquared = sqr(_rcdx - _hw) + sqr(_rcdy - _hh);
+		if (_cornerDistSquared <= (_radius * _radius))
+		{
+			// Get center displacement
+			var _dx = _rrect.x - _rcirc.x, _dy = _rrect.y - _rcirc.y;
+			
+			// Get corner displacement
+			var _cornerX = _rrect.x - _hw, _cornerY = _rrect.y - _hh;
+			if (_dx < 0)
+			{
+				_cornerX = _rrect.x + _hw;
+				if (_dy < 0) _cornerY = _rrect.y + _hh;
+			}
+			else if (_dy < 0) _cornerY = _rrect.y + _hh;
+			_dx = _cornerX - _rcirc.x;
+			_dy = _cornerY - _rcirc.y;
+			
+			// Calculate normal
+			_contact.normal.set(_dx, _dy);
+			_contact.normal.normalize();
+			_contact.normal.multiplyMatrix22(_rrect.orientation);
+			if (_flip) _contact.normal.invert()
+			
+			// Calculate penetration
+			_contact.penetration = _radius - sqrt(_dx * _dx + _dy * _dy);
+			return true;
+		}
+		return false;
 	}
 }
