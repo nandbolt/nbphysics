@@ -19,6 +19,8 @@ function Contact(_rb1=undefined, _rb2=undefined) constructor
 	{
 		// Vectors
 		delete normal;
+		delete rb1Movement;
+		delete rb2Movement;
 	}
 	
 	///	@func	resolve(dt);

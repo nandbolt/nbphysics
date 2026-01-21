@@ -28,3 +28,9 @@ for (var _i = 0; _i < maxContacts; _i++)
 }
 nextContactIdx = 0;
 maxSpeedyChecks = 10;	// The max amount of extra collision checks to do per frame for speedy bodies
+
+///	@func	GetDeltaTime();
+GetDeltaTime = function()
+{
+	return deltaTime * simulationSpeed;
+}
