@@ -102,7 +102,7 @@ function InstContactGen() : ContactGen() constructor
 								break;
 							case NBPShape.RECT_ROTATED:
 								// CIRCLE x ROTATED RECT
-								if (circleRotatedRectCollision(_contact, _rb, _inst))
+								if (circleRotatedRectCollision(_contact, _rb, _inst, true))
 								{
 									_used++;
 									_contactIdx++;
