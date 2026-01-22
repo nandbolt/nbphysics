@@ -92,14 +92,9 @@ collisionBitmask = 1;
 collisionBitmaskString = "10000000";		// Updates everytime the bitmask is changed. Used for reference.
 
 /*
-Holds all contact normals currently generated this frame.
+Holds all contacts generated this frame.
 */
-normals = [];
-
-/*
-Holds all bodies contacted this frame.
-*/
-bodies = [];
+contacts = [];
 
 #endregion
 

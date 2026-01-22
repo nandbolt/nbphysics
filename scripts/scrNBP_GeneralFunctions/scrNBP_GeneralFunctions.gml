@@ -723,9 +723,8 @@ function nbpGenerateContacts(_pw)
 	// Loop through bodies
 	with (_pw.rbObject)
 	{
-		// Reset normals
-		normals = [];
-		bodies = [];
+		// Reset contacts
+		contacts = [];
 		
 		// Extra checks (for speedy bodies)
 		var _checksLeft = _pw.maxSpeedyChecks;
@@ -742,13 +741,8 @@ function nbpGenerateContacts(_pw)
 				_limit -= _used;
 				_contacts += _used;
 			
-				// Add to local normals
-				if (_used > 0)
-				{
-					array_push(normals, _pw.contacts[_pw.nextContactIdx].normal);
-					if (_pw.contacts[_pw.nextContactIdx].rb1 == self.id) array_push(bodies, _pw.contacts[_pw.nextContactIdx].rb2);
-					else array_push(bodies, _pw.contacts[_pw.nextContactIdx].rb1);
-				}
+				// Add to contacts
+				if (_used > 0) array_push(contacts, _pw.contacts[_pw.nextContactIdx]);
 			
 				// Increment index
 				_pw.nextContactIdx += _used;

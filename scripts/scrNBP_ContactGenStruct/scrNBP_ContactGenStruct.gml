@@ -177,6 +177,12 @@ function Contact(_rb1=undefined, _rb2=undefined) constructor
 			else nbpSetAwake(rb1, true);
 		}
 	}
+	
+	///	@func	toString();
+	static toString = function()
+	{
+		return string("[{0},{1}]=>[{2},{3}]", rb1, rb2, normal, penetration);
+	}
 }
 
 ///	@func	ContactResolver(iterations);

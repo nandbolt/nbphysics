@@ -3,10 +3,10 @@ moveInput.x = (keyboard_check(ord("D")) - keyboard_check(ord("A"))) * moveStreng
 moveInput.y = 0;
 
 // Grounded
-if (array_length(normals) > 0)
+if (array_length(contacts) > 0)
 {
 	groundBuffer = groundBufferAmount;
-	groundNormal.setVector(normals[0]);
+	groundNormal.setVector(contacts[0].normal);
 }
 else groundBuffer = clamp(groundBuffer - 1, 0, groundBufferAmount);
 
