@@ -672,6 +672,9 @@ function nbpInitNextPhysicsFrame(_pw)
 ///	@desc	Processes all physics within the simulation.
 function nbpRunPhysics(_pw, _dt)
 {
+	// Exit if no time has passed
+	if (_dt <= 0) return;
+	
 	// Reset triggers
 	with (_pw.tObject)
 	{
