@@ -144,14 +144,14 @@ function nbpSetLayers(_rb, _isCollision=false, _b1=1, _b2=0, _b3=0, _b4=0, _b5=0
 	if (_isCollision)
 	{
 		// Collision check layer
-		collisionBitmask = _bitmask;
-		collisionBitmaskString = _bitmaskString;
+		_rb.collisionBitmask = _bitmask;
+		_rb.collisionBitmaskString = _bitmaskString;
 	}
 	else
 	{
 		// Lived layer
-		bitmask = _bitmask;
-		bitmaskString = _bitmaskString;
+		_rb.bitmask = _bitmask;
+		_rb.bitmaskString = _bitmaskString;
 	}
 }
 

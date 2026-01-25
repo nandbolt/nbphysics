@@ -63,6 +63,7 @@
     {"id":{"name":"scrNBP_InstanceContactGenStruct","path":"scripts/scrNBP_InstanceContactGenStruct/scrNBP_InstanceContactGenStruct.yy",},"order":0,},
     {"id":{"name":"scrNBP_TriggerGenStruct","path":"scripts/scrNBP_TriggerGenStruct/scrNBP_TriggerGenStruct.yy",},"order":9,},
     {"id":{"name":"oNBP_Water","path":"objects/oNBP_Water/oNBP_Water.yy",},"order":0,},
+    {"id":{"name":"rNBP_LayerCollisions","path":"rooms/rNBP_LayerCollisions/rNBP_LayerCollisions.yy",},"order":9,},
     {"id":{"name":"sNBP_RectOutlineGreen","path":"sprites/sNBP_RectOutlineGreen/sNBP_RectOutlineGreen.yy",},"order":2,},
     {"id":{"name":"oNBP_BoxSVRect","path":"objects/oNBP_BoxSVRect/oNBP_BoxSVRect.yy",},"order":1,},
     {"id":{"name":"oNBP_Player","path":"objects/oNBP_Player/oNBP_Player.yy",},"order":0,},
@@ -89,6 +90,7 @@
     {"id":{"name":"oNBP_PlatformerWorld","path":"objects/oNBP_PlatformerWorld/oNBP_PlatformerWorld.yy",},"order":22,},
     {"id":{"name":"rNBP_RectCollisions","path":"rooms/rNBP_RectCollisions/rNBP_RectCollisions.yy",},"order":5,},
     {"id":{"name":"rNBP_Spring","path":"rooms/rNBP_Spring/rNBP_Spring.yy",},"order":1,},
+    {"id":{"name":"oNBP_LayerCollisionsWorld","path":"objects/oNBP_LayerCollisionsWorld/oNBP_LayerCollisionsWorld.yy",},"order":25,},
     {"id":{"name":"scrNBP_GeneralFunctions","path":"scripts/scrNBP_GeneralFunctions/scrNBP_GeneralFunctions.yy",},"order":4,},
   ],
   "Options": [
@@ -123,6 +125,7 @@
     {"roomId":{"name":"rNBP_RotatedRectCollisions","path":"rooms/rNBP_RotatedRectCollisions/rNBP_RotatedRectCollisions.yy",},},
     {"roomId":{"name":"rNBP_Collisions","path":"rooms/rNBP_Collisions/rNBP_Collisions.yy",},},
     {"roomId":{"name":"rNBP_HighSpeedCollisions","path":"rooms/rNBP_HighSpeedCollisions/rNBP_HighSpeedCollisions.yy",},},
+    {"roomId":{"name":"rNBP_LayerCollisions","path":"rooms/rNBP_LayerCollisions/rNBP_LayerCollisions.yy",},},
   ],
   "Folders": [
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Animation Curves","folderPath":"folders/Animation Curves.yy","order":12,},
